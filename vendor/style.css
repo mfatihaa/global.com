@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Pemilihan Filter Warna */
+:root {
+    --cream : #FFD95A;
+    
+}
+
+.nav-item > a {
+    color: var(--cream);
+}
+
+.nav-items > a {
+    color :white;
+}
+
+.nav-items > a:hover {
+    color :var(--cream);
+}
