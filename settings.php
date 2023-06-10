@@ -1,3 +1,11 @@
+<?php
+session_start();
+include './conn.php';
+if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
+    echo '';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,23 +36,27 @@
                     <img src="./vendor/img-customer/akbar.jpeg" alt="Akbar Naufal" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
                 </picture>
             </div>
-
+            <?php
+            include './conn.php';
+            $id = $_SESSION['id_pelanggan'];
+            $read = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
+            $data = mysqli_fetch_assoc($read);
+            ?>
             <div class="col-md-4">
-                <form action="" method="post">
+                <form action="./akses.php" method="post">
                     <div class="profile">
-
-                        <h3 class="text-center fw-bold">PROFILE USER</h3>
+                        <h3 class="text-center fw-bold">PROFILE</h3>
                         <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control shadow-none" value="Akbar Naufal">
+                            <input type="text" class="form-control shadow-none" value="<?php echo $data['nama']; ?>">
                             <label class="form-label fw-bold">NAME</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control shadow-none" value="089677808322">
+                            <input type="tel" class="form-control shadow-none" value="<?php echo $data['telepon']; ?>">
                             <label class="form-label fw-bold">TELEPHONE</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control shadow-none" value="akbarnaufal@gmail.com">
+                            <input type="email" class="form-control shadow-none" value="<?php echo $data['email']; ?>">
                             <label class="form-label fw-bold">EMAIL</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -53,15 +65,15 @@
                         </div>
                         <div class="password">
                             <div class="form-floating mb-3 mt-3">
-                                <input type="password" class="form-control shadow-none" id="new_pass" value="">
+                                <input type="password" class="form-control shadow-none" id="new_pass" value="<?php echo $data['password']; ?>">
                                 <label class="form-label fw-bold">NEW PASSWORD</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control shadow-none" id="confirm_new_pass" value="">
+                                <input type="password" class="form-control shadow-none" id="confirm_new_pass" value="<?php echo $data['konfirmasi']; ?>">
                                 <label class="form-label fw-bold">CONFIRM NEW PASSWORD</label>
                             </div>
                             <div class="form-check form-switch d-flex justify-content-end mb-3">
-                                <input type="checkbox" class="form-check-input shadow-none me-2" name="" role="switch" onclick="myPassword()">
+                                <input type="checkbox" class="form-check-input shadow-none me-2" name="" role="switch" onclick="myPasswords()">
                                 <label class="form-check-label">Show Password.</label>
                             </div>
                             <div class="form-floating justify-content-center d-flex mb-3 button">

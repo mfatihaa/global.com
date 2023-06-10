@@ -28,15 +28,35 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class='bx bx-menu'></i> Menu
                     </a>
-                    <ul class="dropdown-menu">
-                        <li class="nav-items">
-                            <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
-                        </li>
-                        <li>
-                    </ul>
+                    <?php
+                    if (isset($_SESSION['id_pelanggan'])) {
+                        $id = $_SESSION['id_pelanggan'];
+                        $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
+                        $check = mysqli_fetch_assoc($view);
+                    ?>
+                        <ul class="dropdown-menu">
+                            <li class="nav-items">
+                                <a class="dropdown-item"><?php echo $check['nama']; ?></a>
+                            </li>
+                            <hr>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./log-out.php">Log-out <i class='bx bx-log-out-circle'></i></a>
+                            </li>
+                        </ul>
+                    <?php
+                    } else {
+                    ?>
+                        <ul class="dropdown-menu">
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
+                            </li>
+                        </ul>
+                    <?php
+                    }
+                    ?>
                 </li>
             </ul>
         </div>

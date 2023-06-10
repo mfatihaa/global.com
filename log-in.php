@@ -29,7 +29,7 @@
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <form action="./Page/proccess/akses.php" method="POST" enctype="multipart/form-data" role="form" autocomplete="off">
+                    <form action="./akses.php" method="POST" enctype="multipart/form-data" role="form" autocomplete="off">
                         <div class="container">
                             <div class="col-md-12">
                                 <label class="form-label fw-bold">Username :</label>
@@ -73,7 +73,7 @@
                     <h5 class="modal-title">Ganti Password?</h5>
                     <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="./Page/Proccess/akses.php" method="POST" enctype="multipart/form-data">
+                <form action="./akses.php" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="col-md-12">
                             <label class="form-label fw-bold">Email :</label>

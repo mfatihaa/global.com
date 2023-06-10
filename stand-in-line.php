@@ -1,3 +1,11 @@
+<?php
+session_start();
+include './conn.php';
+if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
+    echo '';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

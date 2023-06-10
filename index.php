@@ -1,3 +1,11 @@
+<?php
+session_start();
+include './conn.php';
+if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
+    echo '';
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +59,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col-md-3">
                 <div class="card">
-                    <img src="../Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
+                    <img src="./vendor/img-product-service/Ganti Baterai.png" class="card-img-top" alt="" width="100">
                     <div class="card-body">
                         <h5 class="card-title"></h5>
                         <h6 class="card-text"> Rp. </h6>

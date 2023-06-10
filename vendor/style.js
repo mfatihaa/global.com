@@ -13,6 +13,6 @@ function myPassword() {
     } else {
         showhide.type = "password";
     };
-
     return showhide();
 };
+

@@ -24,24 +24,26 @@
                         <a href="./cart.php" class="text-decoration-none text-dark">Cart</a>
                     </li>
                     <?php
-                    if (isset($_SESSION['username'])) {
-                        $session = $_SESSION['username'];
-                        $view = mysqli_query($koneksi, "SELECT * FROM pelanggan WHERE username='$session'");
+                    if (isset($_SESSION['id_pelanggan'])) {
+                        $id = $_SESSION['id_pelanggan'];
+                        $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
                         $check = mysqli_fetch_assoc($view);
-
-                        echo '<li class="mb-1">
-                                <a href="logout" class="text-decoration-none text-dark">Keluar</a>
-                              </li>';
+                    ?>
+                        <li class="mb-1">
+                            <a href="./log-out.php" class="text-decoration-none text-dark">log-out</a>
+                        </li>
+                    <?php
                     } else {
-                        echo '<li class="mb-1">
-                                <a href="./log-in.php" class="text-decoration-none text-dark">Sign-in</a>
-                              </li>
-                              <li class="mb-1">
-                                <a href="./registration.php" class="text-decoration-none text-dark">Registration</a>
-                              </li>';
+                    ?>
+                        <li class="mb-1">
+                            <a href="./log-in.php" class="text-decoration-none text-dark">Sign-in</a>
+                        </li>
+                        <li class="mb-1">
+                            <a href="./registration.php" class="text-decoration-none text-dark">Registration</a>
+                        </li>
+                    <?php
                     }
                     ?>
-
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
