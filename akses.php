@@ -1,4 +1,5 @@
 <?php
+// Login
 error_reporting(0);
 session_start();
 include './conn.php';
@@ -32,3 +33,5 @@ if (isset($_POST['masuk'])) {
         echo "<script>alert('Mohon Maaf Anda Tidak Dapat Login! Karena $user Tidak Ditemukan.');document.location.href='./log-in.php'</script>";
     }
 }
+
+// Update Settings
