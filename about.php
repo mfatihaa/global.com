@@ -1,11 +1,3 @@
-<?php
-session_start();
-include './conn.php';
-if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
-    echo '';
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +5,7 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+    <title>Global Techno | About</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -37,7 +29,10 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
                     <p class="fs-6">
-                        Global Techno adalah salah satu pelopor pertama dalam bisnis Jasa Service Modern di Indonesia. Global techno Didirikan pada tahun 2022. Bisnis jasa service ini dibentuk oleh mahasiswa - mahasiswa bertalenta yang masih berkuliah di kampus Jakarta Global University. Tentunya jasa service ini berdiri karena mempunyai teknisi - teknisi yang sangat profesional dan handal.
+                        Global Techno adalah salah satu pelopor pertama dalam bisnis Jasa Service Modern di Indonesia.
+                        Global techno Didirikan pada tahun 2022. Bisnis jasa service ini dibentuk oleh mahasiswa -
+                        mahasiswa bertalenta yang masih berkuliah di kampus Jakarta Global University. Tentunya jasa
+                        service ini berdiri karena mempunyai teknisi - teknisi yang sangat profesional dan handal.
                     </p>
                 </blockquote>
             </div>

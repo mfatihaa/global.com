@@ -1,11 +1,3 @@
-<?php
-session_start();
-include './conn.php';
-if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
-    echo '';
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +5,7 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
+    <title>Global Techno | Cart</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->

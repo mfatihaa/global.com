@@ -1,11 +1,3 @@
-<?php
-session_start();
-include './conn.php';
-if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
-    echo '';
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +5,7 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Global Techno | Sevice</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -31,11 +23,6 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
     <!-- content -->
     <div class="container p-2 mt-5">
         <div class="row justify-content-center  ">
-            <div class="col-md-4">
-                <picture class="ratio ratio-1x1">
-                    <img src="./vendor/img-customer/akbar.jpeg" alt="Akbar Naufal" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
-                </picture>
-            </div>
             <?php
             include './conn.php';
             $id = $_SESSION['id_pelanggan'];
@@ -43,41 +30,61 @@ if (!isset($_SESSION['id_pelanggan']) && isset($_SESSION['username'])) {
             $data = mysqli_fetch_assoc($read);
             ?>
             <div class="col-md-4">
-                <form action="./akses.php" method="post">
+                <?php
+                if (isset($data['image'])) {
+                ?>
+                    <picture class="ratio ratio-1x1">
+                        <img src="./vendor/img-customer/<?= $data['image'] ?>" alt="<?= $data['nama']; ?>" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
+                    </picture>
+                <?php
+                } else {
+                ?>
+                    <picture class="ratio ratio-1x1">
+                        <img src="./vendor/img-customer/profile.png" alt="<?= $data['nama']; ?>" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
+                    </picture>
+                <?php
+                }
+                ?>
+            </div>
+            <div class="col-md-4">
+                <form action="./akses.php" method="POST" enctype="multipart/form-data" role="form">
                     <div class="profile">
                         <h3 class="text-center fw-bold">PROFILE</h3>
                         <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control shadow-none" value="<?php echo $data['nama']; ?>">
+                            <input type="text" class="form-control shadow-none" name="id" value="<?php echo $data['id_pelanggan']; ?>" hidden>
+                            <label class="form-label fw-bold">ID</label>
+                        </div>
+                        <div class="form-floating mb-3 mt-3">
+                            <input type="text" class="form-control shadow-none" name="username" value="<?php echo $data['username']; ?>">
+                            <label class="form-label fw-bold">USERNAME</label>
+                        </div>
+                        <div class="form-floating mb-3 mt-3">
+                            <input type="text" class="form-control shadow-none" name="nama" value="<?php echo $data['nama']; ?>">
                             <label class="form-label fw-bold">NAME</label>
                         </div>
-
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control shadow-none" value="<?php echo $data['telepon']; ?>">
-                            <label class="form-label fw-bold">TELEPHONE</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control shadow-none" value="<?php echo $data['email']; ?>">
+                            <input type="email" class="form-control shadow-none" name="email" value="<?php echo $data['email']; ?>">
                             <label class="form-label fw-bold">EMAIL</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="file" class="form-control shadow-none" multiple type="image/">
+                            <input type="tel" class="form-control shadow-none" name="telepon" value="<?php echo $data['telepon']; ?>">
+                            <label class="form-label fw-bold">TELEPHONE</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="file" class="form-control shadow-none" name="image" multiple type="image/">
                             <label class="form-label fw-bold">CHANGE IMAGE</label>
                         </div>
                         <div class="password">
                             <div class="form-floating mb-3 mt-3">
-                                <input type="password" class="form-control shadow-none" id="new_pass" value="<?php echo $data['password']; ?>">
+                                <input type="password" class="form-control shadow-none" name="pass">
                                 <label class="form-label fw-bold">NEW PASSWORD</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control shadow-none" id="confirm_new_pass" value="<?php echo $data['konfirmasi']; ?>">
+                                <input type="password" class="form-control shadow-none" name="confirm">
                                 <label class="form-label fw-bold">CONFIRM NEW PASSWORD</label>
                             </div>
-                            <div class="form-check form-switch d-flex justify-content-end mb-3">
-                                <input type="checkbox" class="form-check-input shadow-none me-2" name="" role="switch" onclick="myPasswords()">
-                                <label class="form-check-label">Show Password.</label>
-                            </div>
                             <div class="form-floating justify-content-center d-flex mb-3 button">
-                                <button type="submit" class="btn btn-success shadown-none" name="">SAVE CHANGES</button>
+                                <button type="submit" class="btn btn-success shadown-none" name="update">UPDATE</button>
                             </div>
                         </div>
                     </div>

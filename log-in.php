@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log-in</title>
+    <title>Global Techno | Log-in</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -38,7 +38,7 @@
 
                             <div class="col-md-12 mt-3">
                                 <label class="form-label fw-bold">Password :</label>
-                                <input type="password" id="pass" class="form-control shadow-none" name="pass" required>
+                                <input type="password" id="pass" class="form-control shadow-none" name="password" required>
                             </div>
 
                             <div class="col-md-12 mt-3">

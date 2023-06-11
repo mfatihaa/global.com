@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Global Techno | Registration</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -29,16 +29,16 @@
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
-                    <form action="./Page/Proccess/akses.php" method="POST" enctype="multipart/form-data" role="form" autocomplete="off">
+                    <form action="./akses.php" method="POST" enctype="multipart/form-data" role="form" autocomplete="off">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label class="form-label fw-bold">Nama Lengkap :</label>
-                                    <input type="text" class="form-control shadow-none" name="nama" required>
-                                </div>
-                                <div class="col-md-6">
                                     <label class="form-label fw-bold">Username :</label>
                                     <input type="text" class="form-control shadow-none" name="username" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Nama Lengkap :</label>
+                                    <input type="text" class="form-control shadow-none" name="nama" required>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">Email :</label>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">No. Telepon :</label>
-                                    <input type="tel" class="form-control shadow-none" name="tel" required>
+                                    <input type="tel" class="form-control shadow-none" name="telepon" required>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">Password :</label>
@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">Konfirmasi Password :</label>
-                                    <input type="password" id="confirm" class="form-control shadow-none" name="konfir" required>
+                                    <input type="password" id="confirm" class="form-control shadow-none" name="confirm" required>
                                 </div>
                                 <div class="col-md-12 mt-3">
                                     <div class="form-check form-switch">
