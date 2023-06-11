@@ -2,7 +2,7 @@
 error_reporting(0);
 session_start();
 
-if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+if (!isset($_SESSION['id_pelanggan']) && !$_SESSION['username']) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
     exit();
 }
@@ -20,7 +20,8 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <!-- CSS -->
     <link rel="stylesheet" href="./vendor/style.css">
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -42,15 +43,17 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                 <?php
                 if (isset($data['image'])) {
                 ?>
-                    <picture class="ratio ratio-1x1">
-                        <img src="./vendor/img-customer/<?= $data['image'] ?>" alt="<?= $data['nama']; ?>" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
-                    </picture>
+                <picture class="ratio ratio-1x1">
+                    <img src="./vendor/img-customer/<?= $data['image'] ?>" alt="<?= $data['nama']; ?>" loading="lazy"
+                        class="mt-4 border rounded-circle w-100 h-100 object-fit-scale image">
+                </picture>
                 <?php
                 } else {
                 ?>
-                    <picture class="ratio ratio-1x1">
-                        <img src="./vendor/img-customer/profile.png" alt="<?= $data['nama']; ?>" loading="lazy" class="mt-4 border rounded-circle w-auto h-75 object-fit-scale image">
-                    </picture>
+                <picture class="ratio ratio-1x1">
+                    <img src="./vendor/img-customer/profile.png" alt="<?= $data['nama']; ?>" loading="lazy"
+                        class="mt-4 border rounded-circle w-100 h-100 object-fit-scale image">
+                </picture>
                 <?php
                 }
                 ?>
@@ -60,41 +63,36 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                     <div class="profile">
                         <h3 class="text-center fw-bold">PROFILE</h3>
                         <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control shadow-none" name="id" value="<?php echo $data['id_pelanggan']; ?>" hidden>
+                            <input type="text" class="form-control shadow-none" name="id"
+                                value="<?php echo $data['id_pelanggan']; ?>" hidden>
                             <label class="form-label fw-bold">ID</label>
                         </div>
                         <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control shadow-none" name="username" value="<?php echo $data['username']; ?>">
+                            <input type="text" class="form-control shadow-none" name="username"
+                                value="<?php echo $data['username']; ?>">
                             <label class="form-label fw-bold">USERNAME</label>
                         </div>
                         <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control shadow-none" name="nama" value="<?php echo $data['nama']; ?>">
+                            <input type="text" class="form-control shadow-none" name="nama"
+                                value="<?php echo $data['nama']; ?>">
                             <label class="form-label fw-bold">NAME</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control shadow-none" name="email" value="<?php echo $data['email']; ?>">
+                            <input type="email" class="form-control shadow-none" name="email"
+                                value="<?php echo $data['email']; ?>">
                             <label class="form-label fw-bold">EMAIL</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="tel" class="form-control shadow-none" name="telepon" value="<?php echo $data['telepon']; ?>">
+                            <input type="tel" class="form-control shadow-none" name="telepon"
+                                value="<?php echo $data['telepon']; ?>">
                             <label class="form-label fw-bold">TELEPHONE</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="file" class="form-control shadow-none" name="image" multiple type="image/">
                             <label class="form-label fw-bold">CHANGE IMAGE</label>
                         </div>
-                        <div class="password">
-                            <div class="form-floating mb-3 mt-3">
-                                <input type="password" class="form-control shadow-none" name="pass">
-                                <label class="form-label fw-bold">NEW PASSWORD</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control shadow-none" name="confirm">
-                                <label class="form-label fw-bold">CONFIRM NEW PASSWORD</label>
-                            </div>
-                            <div class="form-floating justify-content-center d-flex mb-3 button">
-                                <button type="submit" class="btn btn-success shadown-none" name="update">UPDATE</button>
-                            </div>
+                        <div class="form-floating justify-content-center d-flex mb-3 button">
+                            <button type="submit" class="btn btn-success shadown-none" name="update">UPDATE</button>
                         </div>
                     </div>
                 </form>
@@ -107,7 +105,8 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <!-- Js -->
     <script src="./vendor/style.js"></script>
     <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
     <!-- Boxicons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

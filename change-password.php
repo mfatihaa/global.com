@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +5,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Techno | Log-in</title>
+    <title>Global Techno | Ganti Password</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -28,38 +25,36 @@ session_start();
     <div class="container p-4">
         <div class="card">
             <div class="card-header">
-                Login Pelanggan
+                Daftar Pelanggan
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
                     <form action="./akses.php" method="POST" enctype="multipart/form-data" role="form" autocomplete="off">
                         <div class="container">
-                            <div class="col-md-12">
-                                <label class="form-label fw-bold">Username :</label>
-                                <input type="text" id="user" class="form-control shadow-none" name="username" required>
-                            </div>
-
-                            <div class="col-md-12 mt-3">
-                                <label class="form-label fw-bold">Password :</label>
-                                <input type="password" id="pass" class="form-control shadow-none" name="password" required>
-                            </div>
-
-                            <div class="col-md-12 mt-3">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input shadow-none" id="checkbox" type="checkbox" role="switch" onclick="myPassword()">
-                                    <label class=" form-check-label">Show Password.</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Username :</label>
+                                    <input type="text" class="form-control shadow-none" name="user_change" required>
                                 </div>
-                            </div>
-
-                            <div class="col-md-12 mt-3">
-                                <button class="btn btn-success shadow-none" type="submit" name="masuk">
-                                    Masuk
-                                </button>
-
-                                <button class="btn btn-danger shadow-none" type="button">
-                                    <a href="./change-password.php" class="text-decoration-none shadow-none text-white">Ganti Password</a>
-                                </button>
-
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Password :</label>
+                                    <input type="password" id="pass" class="form-control shadow-none" name="password_change" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">Konfirmasi Password :</label>
+                                    <input type="password" id="confirm" class="form-control shadow-none" name="konfirmasi_change" required>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input shadow-none" id="checkbox" type="checkbox" role="switch" onclick="myPassword()">
+                                        <label class=" form-check-label">Show Password.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <button class="btn btn-warning shadow-none" type="submit" name="pass_change">
+                                        Ganti Password
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -77,7 +72,6 @@ session_start();
     </script>
     <!-- Boxicons -->
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
 </body>
 
 </html>
