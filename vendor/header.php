@@ -19,9 +19,6 @@
                     <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waitting List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="./about.php"><i class='bx bxs-note'></i> About </a>
                 </li>
                 <li class="nav-item dropdown">
@@ -29,12 +26,27 @@
                         <i class='bx bx-menu'></i> Menu
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="nav-items">
-                            <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
-                        </li>
-                        <li class="nav-items">
-                            <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
-                        </li>
+                        <?php
+                        if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+                        ?>
+                            <li class="nav-items">
+                                <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="nav-link" href="./log-out.php"><i class='bx bx-log-out-circle'></i> Logout</a>
+                            </li>
+                        <?php
+                        } else {
+                        ?>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
+                            </li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </li>
             </ul>

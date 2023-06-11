@@ -1,3 +1,12 @@
+<?php
+error_reporting(0);
+session_start();
+
+if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,39 +31,53 @@
     <?php include './vendor/header.php'; ?>
 
     <!-- Main Content Produk -->
-    <div class="container p-4">
-        <div class="table-responsive">
-            <table class="table table striped caption-top">
-                <caption>Daftar Antrian</caption>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Invoice</th>
-                        <th>Gambar</th>
-                        <th>Nama</th>
-                        <th>Subtotal</th>
-                        <th>Tanggal Pemesanan</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <img src="" alt="">
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button class="btn btn-success">Disetujui</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <?php
+    if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+    ?>
+        <div class="container p-4">
+            <div class="table-responsive">
+                <table class="table table striped caption-top">
+                    <caption>Daftar Antrian</caption>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Invoice</th>
+                            <th>Gambar</th>
+                            <th>Nama</th>
+                            <th>Subtotal</th>
+                            <th>Tanggal Pemesanan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <img src="" alt="">
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-success">Disetujui</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+    <?php
+    } else {
+    ?>
+        <main class="container p-5">
+            <div class="alert alert-danger" role="alert">
+                Login Terlebih Dahulu.
+            </div>
+        </main>
+    <?php
+    }
+    ?>
 
     <!-- Footer -->
     <?php include './vendor/footer.php'; ?>

@@ -1,16 +1,16 @@
 <?php
 
 // Login
+session_start();
+include "./conn.php";
 if (isset($_POST['masuk'])) {
-    session_start();
-    include "./conn.php";
 
     $username_login = htmlspecialchars(addslashes($_POST['username']));
     $password_login = htmlspecialchars(addslashes(md5($_POST['password'])));
 
     $view_login = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '{$username_login}' AND password = '{$password_login}' AND kondisi = 'ON' ");
     if (mysqli_num_rows($view_login) == 0) {
-        echo "<script>alert('Email & Password Anda Masukkan Salah!');document.location.href=''</script>";
+        echo "<script>alert('Email & Password Anda Masukkan Salah!');document.location.href='./log-in.php'</script>";
     } else {
         $data_login = mysqli_fetch_assoc($view_login);
 
@@ -18,7 +18,12 @@ if (isset($_POST['masuk'])) {
         $_SESSION['username'] = $data_login['username'];
         $_SESSION['password'] = $data_login['password'];
 
-        echo "<script>alert('Anda Berhasil Masuk.');document.location.href='./'</script>";
+        if ($data_login['username'] == $username_login && $data_login['password'] == $password_login) {
+            echo "<script>alert('Anda Berhasil Masuk.');document.location.href='./'</script>";
+        } else {
+            echo "<script>alert('Anda Tidak Berhasil Masuk.');document.location.href='./log-in.php'</script>";
+        }
+
     }
 } else {
     echo "<script>alert('Akun Anda Belum Terdaftar Atau Belum Aktif. Terimakasih!');document.location.href='./log-in.php'</script>";

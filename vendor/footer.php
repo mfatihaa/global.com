@@ -6,7 +6,8 @@
                     Global Techno
                 </h5>
                 <p>
-                    Global Techno adalah Wirausaha Mahasiswa dari Universitas Global Jakarta. Global Techno ini sendiri berdiri sejak bulan Maret 2022.
+                    Global Techno adalah Wirausaha Mahasiswa dari Universitas Global Jakarta. Global Techno ini sendiri
+                    berdiri sejak bulan Maret 2022.
                 </p>
             </div>
             <div class="col-lg-3 col-md-6 mb-4">
@@ -24,10 +25,7 @@
                         <a href="./cart.php" class="text-decoration-none text-dark">Cart</a>
                     </li>
                     <?php
-                    if (isset($_SESSION['id_pelanggan'])) {
-                        $id = $_SESSION['id_pelanggan'];
-                        $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
-                        $check = mysqli_fetch_assoc($view);
+                    if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                     ?>
                         <li class="mb-1">
                             <a href="./log-out.php" class="text-decoration-none text-dark">log-out</a>

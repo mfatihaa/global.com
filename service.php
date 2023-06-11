@@ -1,3 +1,12 @@
+<?php
+error_reporting(0);
+session_start();
+
+if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,68 +30,75 @@
     <?php include './vendor/header.php'; ?>
 
     <!-- Main Content Produk -->
-    <div class="container p-4">
-        <h1>List Jasa Service</h1>
-        <hr>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <h6 class="card-text"> Rp. </h6>
+    <?php
+    if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+    ?>
+        <div class="container p-4">
+            <h1>List Jasa Service</h1>
+            <hr>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <h6 class="card-text"> Rp. </h6>
 
-                    </div>
-                    <div class="card-header text-justify">
-                        <p class="text-danger fw-bold">Deskripsi :</p>
-                        <p class="text-muted"></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container p-4 mt-4">
-                <div class="row">
-                    <div class="alert alert-danger" role="alert">
-                        Stock Jasa Belum Tersedia!
+                        </div>
+                        <div class="card-header text-justify">
+                            <p class="text-danger fw-bold">Deskripsi :</p>
+                            <p class="text-muted"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container p-4">
-        <h1>List Produk</h1>
-        <hr>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <h6 class="card-text"> Rp. </h6>
-
-                    </div>
-                    <div class="card-header text-justify">
-                        <p class="text-danger fw-bold">Deskripsi :</p>
-                        <p class="text-muted"></p>
-                    </div>
-                </div>
+    <?php
+    } else {
+    ?>
+        <main class="container p-5">
+            <div class="alert alert-danger" role="alert">
+                Login Terlebih Dahulu.
             </div>
+        </main>
+    <?php
+    }
+    ?>
 
-            <div class="container p-4 mt-4">
-                <div class="row">
-                    <div class="alert alert-danger" role="alert">
-                        Stock Jasa Belum Tersedia!
+    <?php
+    if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+    ?>
+        <div class="container p-4">
+            <h1>List Produk</h1>
+            <hr>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <h6 class="card-text"> Rp. </h6>
+
+                        </div>
+                        <div class="card-header text-justify">
+                            <p class="text-danger fw-bold">Deskripsi :</p>
+                            <p class="text-muted"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container mt-4 mb-4">
-        <a class="btn btn-danger" href="./log-in.php">Masuk</a>
-    </div>
-
+    <?php
+    } else {
+    ?>
+        <main class="container p-5">
+            <div class="alert alert-danger" role="alert">
+                Login Terlebih Dahulu.
+            </div>
+        </main>
+    <?php
+    }
+    ?>
 
     <!-- Footer -->
     <?php include './vendor/footer.php'; ?>
