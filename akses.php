@@ -9,7 +9,7 @@ if (isset($_POST['pass_change'])) {
     $view_chg = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '$user_chg'");
     $row = mysqli_fetch_assoc($view_chg);
 
-    if ($view_chg) {
+    if (mysqli_num_rows($view_chg) == 0) {
         $user_change = $row['username'];
 
         $update_chg = mysqli_query($conn, "UPDATE pelanggan SET password = '$pass_chg' AND konfirmasi = '$confirm_chg' WHERE username = '$user_change' ");
