@@ -25,7 +25,7 @@
     <div class="container p-4">
         <div class="card">
             <div class="card-header">
-                Daftar Pelanggan
+                Ganti Kata Sandi
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">

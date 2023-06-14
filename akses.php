@@ -4,19 +4,21 @@ include "./conn.php";
 if (isset($_POST['pass_change'])) {
     $user_chg = htmlspecialchars(addslashes($_POST['user_change']));
     $pass_chg = htmlspecialchars(addslashes(md5($_POST['password_change'])));
-    $confirm_chg = htmlspecialchars(addslashes(md5($_POST['konfirmasi_change'])));
+    $konfir_chg = htmlspecialchars(addslashes(md5($_POST['konfirmasi_change'])));
 
     $view_chg = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '$user_chg'");
     $row = mysqli_fetch_assoc($view_chg);
 
-    if (mysqli_num_rows($view_chg) == 0) {
-        $user_change = $row['username'];
+    if (mysqli_num_rows($view_chg) === 1) {
 
-        $update_chg = mysqli_query($conn, "UPDATE pelanggan SET password = '$pass_chg' AND konfirmasi = '$confirm_chg' WHERE username = '$user_change' ");
-
+        $update_chg = mysqli_query($conn, "UPDATE pelanggan SET password = '$pass_chg', konfirmasi = '$konfir_chg' WHERE username = '{$row['username']}' ");
         if ($update_chg) {
             echo "<script>alert('Anda Berhasil Mengganti Kata Sandi.');document.location.href='./log-in.php'</script>";
+        } else {
+            echo "<script>alert('Anda Tidak Berhasil Mengganti Kata Sandi.');document.location.href='./log-in.php'</script>";
         }
+    } else {
+        echo "<script>alert('Akun Anda Tidak Ditemukan !');document.location.href='./change-password.php'</script>";
     }
 }
 
@@ -30,7 +32,7 @@ if (isset($_POST['daftar'])) {
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
 
-    $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+    $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'ON') ");
     if ($insert_cus) {
         echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
     } else {
@@ -66,7 +68,7 @@ if (isset($_POST['update'])) {
             echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./settings.php'</script>";
             exit;
         }
-        
+
         $img = rand() . "-" . $path;
         $folder = "./vendor/img-customer/" . $img;
 
