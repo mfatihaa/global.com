@@ -27,7 +27,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <?php
-                        include "../conn.php";
+                        include "./conn.php";
                         if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                             $id = $_SESSION['id_pelanggan'];
                             $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id' ");
@@ -36,6 +36,7 @@
                             <li class="nav-items">
                                 <a class="nav-link" href="./"><i class='bx bx-user'></i> <?= $data['nama']; ?></a>
                             </li>
+                            <hr class="border border-bottom">
                             <li class="nav-items">
                                 <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
                             </li>
