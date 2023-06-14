@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">Nama Lengkap :</label>
-                                    <input type="text" class="form-control shadow-none" name="nama" pattern="[a-zA-Z]" required>
+                                    <input type="text" class="form-control shadow-none" name="nama" pattern="[a-zA-Z]{5,}" required>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">Email :</label>
