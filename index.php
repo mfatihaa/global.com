@@ -111,6 +111,15 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
         </div>
     </div>
 
+    <!-- Whatsapp Chat -->
+    <div class="container p-4 d-absolute position-relative">
+        <button class="btn btn-primary shadow-none">
+            <a href="https://wa.me/6289677808322?text=Assalamualaikum" class="text-decoration-none">
+                <box-icon type='logo' name='whatsapp'></box-icon>
+            </a>
+        </button>
+    </div>
+
     <!-- Footer -->
     <?php include './vendor/footer.php'; ?>
     <!-- Js -->
