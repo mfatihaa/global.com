@@ -29,6 +29,14 @@
                         <?php
                         if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                         ?>
+                            <?php
+                            include "../conn.php";
+                            $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$_SESSION['id_pelanggan']}' ");
+                            $data = mysqli_fetch_assoc($view);
+                            ?>
+                            <li class="nav-items">
+                                <a class="nav-link" href="./"><i class='bx bx-user'></i> <?= $data['nama']; ?></a>
+                            </li>
                             <li class="nav-items">
                                 <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
                             </li>
