@@ -32,14 +32,14 @@ if (isset($_POST['daftar'])) {
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
 
-    $view_regis = mysqli_query($conn, "SELECT max(code_pelanggan) AS code FROM pelanggan WHERE email = '$email'");
+    $view_regis = mysqli_query($conn, "SELECT * FROM pelanggan ORDER BY code_pelanggan LIMIT 1");
+    $data_regis = mysqli_fetch_assoc($view_regis);
 
-    if (mysqli_num_rows($view_regis) <> 0) {
-        $data_regis = mysqli_fetch_assoc($view_regis);
-        // Jika Kode Pelanggan Telah Ada 1
-        $code_pelanggan = "CS-" + $data_regis['code'] + 1;
+    // Jika Kode Pelanggan Telah Ada 1
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_pelanggan','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+    if (mysqli_num_rows($view_regis) > 1) {
+        $code = "CS-" . $codes;
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
         } else {
@@ -47,9 +47,8 @@ if (isset($_POST['daftar'])) {
         }
     } else {
         // Jika Kode Pelanggan Tidak Ada 1
-        $code_pelanggan = "CS-" + 1;
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_pelanggan','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
         } else {
