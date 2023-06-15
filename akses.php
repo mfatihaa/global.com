@@ -32,11 +32,29 @@ if (isset($_POST['daftar'])) {
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
 
-    $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'ON') ");
-    if ($insert_cus) {
-        echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
+    $view_regis = mysqli_query($conn, "SELECT max(code_pelanggan) AS code FROM pelanggan WHERE email = '$email'");
+
+    if (mysqli_num_rows($view_regis) <> 0) {
+        $data_regis = mysqli_fetch_assoc($view_regis);
+        // Jika Kode Pelanggan Telah Ada 1
+        $code_pelanggan = "CS-" + $data_regis['code'] + 1;
+
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_pelanggan','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        if ($insert_cus) {
+            echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
+        } else {
+            echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./registration.php'</script>";
+        }
     } else {
-        echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./registration.php'</script>";
+        // Jika Kode Pelanggan Tidak Ada 1
+        $code_pelanggan = "CS-" + 1;
+
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_pelanggan','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        if ($insert_cus) {
+            echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
+        } else {
+            echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./registration.php'</script>";
+        }
     }
 }
 
@@ -51,10 +69,10 @@ if (isset($_POST['update'])) {
 
     $view_cus = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
     $data_cus = mysqli_fetch_assoc($view_cus);
-
+    
     // Cek Apakah Ada Input Image Baru
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-
+        
         // Cek Informasi Input Image Unggah
         $image = $_FILES['image'];
 
@@ -71,13 +89,7 @@ if (isset($_POST['update'])) {
 
         $img = rand() . "-" . $path;
         $folder = "./vendor/img-customer/" . $img;
-
-        // Menghapus Gambar Dari Folder Yang Telah Disediakan
-        $nameImage = $data_cus['image'];
-        if (file_exists($folder . $nameImage)) {
-            unlink($folder . $nameImage);
-        }
-
+        
         // Memindahkan Image Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
@@ -88,6 +100,7 @@ if (isset($_POST['update'])) {
                 echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./settings.php'</script>";
             }
         }
+
     } else {
         $update = mysqli_query($conn, "UPDATE pelanggan SET username = '$username_update', nama = '$nama_update', email = '$email_update', telepon = '$telepon_update' WHERE id_pelanggan = '{$data_cus['id_pelanggan']}' ");
         if ($update) {
@@ -106,20 +119,29 @@ if (isset($_POST['masuk'])) {
     $username_login = htmlspecialchars(addslashes($_POST['username']));
     $password_login = htmlspecialchars(addslashes(md5($_POST['password'])));
 
+    
     $view_login = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '{$username_login}' AND password = '{$password_login}' AND kondisi = 'ON' ");
     if (mysqli_num_rows($view_login) == 0) {
         echo "<script>alert('Email & Password Anda Masukkan Salah!');document.location.href='./log-in.php'</script>";
     } else {
         $data_login = mysqli_fetch_assoc($view_login);
-
+        
         $_SESSION['id_pelanggan'] = $data_login['id_pelanggan'];
         $_SESSION['username'] = $data_login['username'];
         $_SESSION['password'] = $data_login['password'];
-
+        
         if ($data_login['username'] == $username_login && $data_login['password'] == $password_login) {
-            echo "<script>alert('Anda Berhasil Masuk.');document.location.href='./'</script>";
+            // Update Time Login
+            $date = date('Y-m-d h:i:s');
+
+            $update_login = mysqli_query($conn, "UPDATE pelanggan SET time_login = '$date' WHERE username = '{$username_login}' ");
+            if ($update_login) {
+                echo "<script>alert('Anda Berhasil Masuk.');document.location.href='./'</script>";
+            } else {
+                echo "<script>alert('Anda Tidak Berhasil Masuk.');document.location.href='./log-in.php'</script>";
+            }
         } else {
-            echo "<script>alert('Anda Tidak Berhasil Masuk.');document.location.href='./log-in.php'</script>";
+            echo "<script>alert('Tidak Ada Akun Yang Cocok.');document.location.href='./log-in.php'</script>";
         }
     }
 }

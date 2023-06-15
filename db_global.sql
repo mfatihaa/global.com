@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jun 2023 pada 13.35
+-- Waktu pembuatan: 15 Jun 2023 pada 03.49
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -30,23 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `pelanggan` (
   `id_pelanggan` int(11) NOT NULL,
   `code_pelanggan` varchar(255) DEFAULT NULL,
-  `username` varchar(100) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
   `nama` varchar(255) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `telepon` varchar(50) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `konfirmasi` varchar(255) DEFAULT NULL,
+  `time_login` datetime DEFAULT NULL,
+  `time_logout` datetime DEFAULT NULL,
   `kondisi` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `pelanggan`
---
-
-INSERT INTO `pelanggan` (`id_pelanggan`, `code_pelanggan`, `username`, `nama`, `email`, `telepon`, `image`, `password`, `konfirmasi`, `kondisi`) VALUES
-(1, NULL, 'akbar', 'Akbar Naufal', 'akbar@gmail.com', '6289677808322', '1291398963-jpeg', '4297f44b13955235245b2497399d7a93', '4297f44b13955235245b2497399d7a93', 'ON'),
-(2, NULL, 'mfatiha', 'Muhammad Fatih Aulia', 'fatih@gmail.com', '62895331161955', NULL, 'f5bb0c8de146c67b44babbf4e6584cc0', 'f5bb0c8de146c67b44babbf4e6584cc0', 'ON');
 
 --
 -- Indexes for dumped tables
@@ -66,7 +60,7 @@ ALTER TABLE `pelanggan`
 -- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

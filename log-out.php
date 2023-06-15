@@ -1,14 +1,15 @@
 <?php
 include './conn.php';
-@session_start();
+session_start();
 
-if (isset($_SESSION['keranjang'])) {
-    unset($_SESSION['username']);
-    echo '<script>alert("Anda Berhasil Logout!");document.location.href="./log-in.php"</script>';
-} else {
-    echo '<script>alert("Anda Berhasil Logout!");document.location.href="./log-in.php"</script>';
+// Update Time Logout
+$date = date('Y-m-d h:i:s');
+$update = mysqli_query($conn, "UPDATE pelanggan SET time_logout = '$date' WHERE id_pelanggan = '{$_SESSION['id_pelanggan']}' ");
+
+if ($update) {
+    session_unset();
+    echo "<script>alert('Anda Berhasil Keluar.');document.location.href='./'</script>";
 }
 
-$user = $_SESSION['username'];
-
-session_unset();
+session_destroy();
+exit;
