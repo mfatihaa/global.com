@@ -81,6 +81,7 @@ if (isset($_POST['daftar'])) {
 }
 
 // Update Settings
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['update'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));

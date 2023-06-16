@@ -37,10 +37,10 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="./vendor/img/background.png" class="d-block w-100">
+                <img src="./vendor/img/background.png" class="d-block w-100" loading="lazy">
             </div>
             <div class="carousel-item">
-                <img src="./vendor/img/background-2.png" class="d-block w-100">
+                <img src="./vendor/img/background-2.png" class="d-block w-100" loading="lazy">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

@@ -23,7 +23,7 @@
                         <a class="nav-link" href="./cart.php"><i class='bx bx-cart'></i> Cart [0]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waitting List</a>
+                        <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waiting List</a>
                     </li>
                 <?php
                 } else {
@@ -46,9 +46,35 @@
                             $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id' ");
                             $data = mysqli_fetch_assoc($view);
                         ?>
-                            <li class="nav-items">
-                                <a class="nav-link" href="./"><i class='bx bx-user'></i> <?= $data['nama']; ?></a>
-                            </li>
+                            <?php
+                            if (isset($data['image'])) {
+                            ?>
+                                <li class="nav-items">
+                                    <div class="row align-items-center">
+                                        <div class="col-12 text-center mt-2">
+                                            <img src="./vendor/img-customer/<?= $data['image']; ?>" class="rounded-5" width="50" loading="lazy">
+                                        </div>
+                                        <div class="col-12 text-center mt-2">
+                                            <?= $data['nama']; ?></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php
+                            } else {
+                            ?>
+                                <li class="nav-items">
+                                    <div class="row align-items-center">
+                                        <div class="col-12 text-center mt-2">
+                                            <img src="./vendor/img-customer/profile.png" class="rounded-5" width="50" loading="lazy"></a>
+                                        </div>
+                                        <div class="col-12 text-center mt-2">
+                                            <?= $data['nama']; ?></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php
+                            }
+                            ?>
                             <hr class="border border-bottom">
                             <li class="nav-items">
                                 <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
