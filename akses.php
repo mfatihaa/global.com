@@ -112,7 +112,13 @@ if (isset($_POST['update'])) {
         $img = rand() . "-" . $path;
         $folder = "./vendor/img-customer/" . $img;
 
-        // Memindahkan Image Ke Dalam Folder Yang Telah Disediakan
+        // Hapus Gambar Yang Digunakan Dari Local Storage
+        $img_remove = $data_cus['image'];
+        if (file_exists("./vendor/img-customer/$img_remove")) {
+            unlink("./vendor/img-customer/$img_remove");
+        }
+
+        // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
             $update = mysqli_query($conn, "UPDATE pelanggan SET username = '$username_update', nama = '$nama_update', email = '$email_update', telepon = '$telepon_update', image = '$img' WHERE id_pelanggan = '{$data_cus['id_pelanggan']}' ");
