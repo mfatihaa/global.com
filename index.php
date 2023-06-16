@@ -54,68 +54,24 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     </div>
 
     <!-- Main Content Jasa -->
-    <div class="container p-4">
-        <h1>List Jasa Service</h1>
-        <hr>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="./vendor/img-product-service/Ganti Baterai.png" class="card-img-top" alt="" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <h6 class="card-text"> Rp. </h6>
 
-                    </div>
-                    <div class="card-header text-justify">
-                        <p class="text-danger fw-bold">Deskripsi :</p>
-                        <p class="text-muted"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="container p-4 mt-4">
-                <div class="row">
-                    <div class="alert alert-danger" role="alert">
-                        Stock Jasa Belum Tersedia!
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Main Content Produk -->
-    <div class="container p-4">
-        <h1>List Produk</h1>
-        <hr>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <div class="col-md-3">
-                <div class="card vw-50">
-                    <img src="../Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <h6 class="card-text"> Rp.</h6>
-                    </div>
-                    <div class="card-header text-justify">
-                        <p class="text-danger fw-bold">Deskripsi :</p>
-                        <p class="text-muted"></p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="container p-4 mt-4">
-                <div class="row">
-                    <div class="alert alert-danger" role="alert">
-                        Stock Produk Belum Tersedia!
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Whatsapp Chat -->
+<<<<<<< HEAD
     <div class="container-fluid p-4 d-flex sticky-bottom justify-content-end">
         <button class="btn btn-success shadow-none">
             <a href="https://wa.me/6289677808322?text=Assalamualaikum" class="d-flex align-items-center text-decoration-none text-white">
                 <img src="./vendor/img/whatsapp.png" alt="Whatsapp Logo" width="20"> &nbsp; Whatsapp Admin
+=======
+    <div class="container-fluid p-4 d-flex justify-content-end sticky-bottom">
+        <button class="btn btn-success shadow-none">
+            <a href="https://wa.me/6289677808322?text=Assalamualaikum" class="text-decoration-none text-white d-flex align-items-center">
+                <img src="./vendor/img/whatsapp.png" alt="Whatsapp Logo" width="20"> &nbsp;
+                Whatsapp Admin
+>>>>>>> 365c6afa2e906b1b52c10eb609628fef6f1f60dd
             </a>
         </button>
     </div>

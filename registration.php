@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">No. Telepon :</label>
-                                    <input type="tel" class="form-control shadow-none" name="telepon" pattern="[0-9]{12,13}" title="Hanya Diperbolehkan Menggunakan Angka dan Maksimal 13 Angka!" required>
+                                    <input type="tel" class="form-control shadow-none" name="telepon" pattern="[0-9]{12,14}" title="Hanya Diperbolehkan Menggunakan Angka dan Maksimal 14 Angka!" required>
                                 </div>
                                 <div class="col-md-6 mt-3">
                                     <label class="form-label fw-bold">Password :</label>

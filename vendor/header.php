@@ -12,15 +12,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./service.php"><i class='bx bx-package'></i> Service/Product</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./cart.php"><i class='bx bx-cart'></i> Cart [0]</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waitting List</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./about.php"><i class='bx bxs-note'></i> About </a>
-                </li>
+                <?php
+                include "./conn.php";
+                if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+                    $id = $_SESSION['id_pelanggan'];
+                    $view = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id' ");
+                    $data = mysqli_fetch_assoc($view);
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./cart.php"><i class='bx bx-cart'></i> Cart [0]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waitting List</a>
+                    </li>
+                <?php
+                } else {
+                ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.php"><i class='bx bxs-note'></i> About </a>
+                    </li>
+                <?php
+                }
+                ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class='bx bx-menu'></i> Menu
