@@ -46,9 +46,9 @@ if (isset($_POST['daftar'])) {
 
         $code_huruf = "GT-";
         $code_gabung = $code_huruf . sprintf(
-                "%05s",
-                $code_urutan
-            );
+            "%05s",
+            $code_urutan
+        );
 
         $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
         if ($insert_cus) {
@@ -65,15 +65,15 @@ if (isset($_POST['update'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
     $username_update = htmlspecialchars(addslashes($_POST['username']));
     $nama_update = htmlspecialchars(addslashes($_POST['nama']));
-    $email_update = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
+    $email_update = htmlspecialchars(addslashes($_POST['email'],));
     $telepon_update = htmlspecialchars(addslashes($_POST['telepon']));
 
     $view_cus = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
     $data_cus = mysqli_fetch_assoc($view_cus);
-    
+
     // Cek Apakah Ada Input Image Baru
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-        
+
         // Cek Informasi Input Image Unggah
         $image = $_FILES['image'];
 
@@ -90,7 +90,7 @@ if (isset($_POST['update'])) {
 
         $img = rand() . "-" . $path;
         $folder = "./vendor/img-customer/" . $img;
-        
+
         // Memindahkan Image Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
@@ -101,7 +101,6 @@ if (isset($_POST['update'])) {
                 echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./settings.php'</script>";
             }
         }
-
     } else {
         $update = mysqli_query($conn, "UPDATE pelanggan SET username = '$username_update', nama = '$nama_update', email = '$email_update', telepon = '$telepon_update' WHERE id_pelanggan = '{$data_cus['id_pelanggan']}' ");
         if ($update) {
@@ -119,17 +118,17 @@ if (isset($_POST['masuk'])) {
 
     $username_login = htmlspecialchars(addslashes($_POST['username']));
     $password_login = htmlspecialchars(addslashes(md5($_POST['password'])));
-    
+
     $view_login = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '{$username_login}' AND password = '{$password_login}' AND kondisi = 'ON' ");
     if (mysqli_num_rows($view_login) == 0) {
         echo "<script>alert('Email & Password Anda Masukkan Salah!');document.location.href='./log-in.php'</script>";
     } else {
         $data_login = mysqli_fetch_assoc($view_login);
-        
+
         $_SESSION['id_pelanggan'] = $data_login['id_pelanggan'];
         $_SESSION['username'] = $data_login['username'];
         $_SESSION['password'] = $data_login['password'];
-        
+
         if ($data_login['username'] == $username_login && $data_login['password'] == $password_login) {
             // Update Time Login
             $date = date('Y-m-d h:i:s');
