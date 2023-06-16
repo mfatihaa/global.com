@@ -35,7 +35,7 @@ if (isset($_POST['daftar'])) {
     $view_regis = mysqli_query($conn, "SELECT * FROM pelanggan ORDER BY code_pelanggan LIMIT 1");
     $data_regis = mysqli_fetch_assoc($view_regis);
 
-    if (mysqli_num_rows($view_regis) !== 0) {
+    if (mysqli_num_rows($view_regis) === 1) {
         // Jika Kode Pelanggan Telah Ada 1
         $view_code = mysqli_query($conn, "SELECT max(code_pelanggan) AS kode FROM pelanggan");
         $data_code = mysqli_fetch_assoc($view_code);
@@ -122,7 +122,7 @@ if (isset($_POST['masuk'])) {
     
     $view_login = mysqli_query($conn, "SELECT * FROM pelanggan WHERE username = '{$username_login}' AND password = '{$password_login}' AND kondisi = 'ON' ");
     if (mysqli_num_rows($view_login) == 0) {
-        echo "<script>alert('Email & Password Anda Masukkan Salah!');document.location.href='./log-in.php'</script>";
+        echo "<script>alert('Email & Password Anda Masukkan Salah! Atau Status Akun Anda OFF.');document.location.href='./log-in.php'</script>";
     } else {
         $data_login = mysqli_fetch_assoc($view_login);
         
