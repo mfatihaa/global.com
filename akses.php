@@ -35,7 +35,28 @@ if (isset($_POST['daftar'])) {
     $view_regis = mysqli_query($conn, "SELECT * FROM pelanggan ORDER BY code_pelanggan LIMIT 1");
     $data_regis = mysqli_fetch_assoc($view_regis);
 
-    if (mysqli_num_rows($view_regis) === 1) {
+    if (mysqli_num_rows($view_regis) == 0) {
+        // Jika Kode Pelanggan Belum Ada 1
+        $view_code = mysqli_query($conn, "SELECT max(code_pelanggan) AS kode FROM pelanggan");
+        $data_code = mysqli_fetch_assoc($view_code);
+
+        $code = $data_code['kode'];
+        $code_urutan = (int) substr($code, 3, 5);
+        $code_urutan++;
+
+        $code_huruf = "GT-";
+        $code_gabung = $code_huruf . sprintf(
+            "%05s",
+            $code_urutan
+        );
+
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        if ($insert_cus) {
+            echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in.php'</script>";
+        } else {
+            echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./registration.php'</script>";
+        }
+    } elseif (mysqli_num_rows($view_regis) === 1) {
         // Jika Kode Pelanggan Telah Ada 1
         $view_code = mysqli_query($conn, "SELECT max(code_pelanggan) AS kode FROM pelanggan");
         $data_code = mysqli_fetch_assoc($view_code);

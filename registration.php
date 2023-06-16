@@ -34,7 +34,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">Username :</label>
-                                    <input type="text" class="form-control shadow-none" name="username" pattern="[a-z]{5,}" title="Hanya Diperbolehkan Menggunakan Huruf Kecil!" required>
+                                    <input type="text" class="form-control shadow-none" name="username" pattern="[a-z]{5,}" title="Hanya Diperbolehkan Menggunakan Huruf Kecil Dan Minimal 5 Huruf!" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">Nama Lengkap :</label>
