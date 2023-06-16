@@ -112,10 +112,10 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     </div>
 
     <!-- Whatsapp Chat -->
-    <div class="container p-4 d-block position-absolute">
+    <div class="container-fluid p-4 d-flex sticky-bottom justify-content-end">
         <button class="btn btn-success shadow-none">
-            <a href="https://wa.me/6289677808322?text=Assalamualaikum" class="text-decoration-none text-white">
-                <img src="./vendor/img/whatsapp.png" alt="Whatsapp Logo"> Whatsapp Admin
+            <a href="https://wa.me/6289677808322?text=Assalamualaikum" class="d-flex align-items-center text-decoration-none text-white">
+                <img src="./vendor/img/whatsapp.png" alt="Whatsapp Logo" width="20"> &nbsp; Whatsapp Admin
             </a>
         </button>
     </div>
