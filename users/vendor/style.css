@@ -1,0 +1,14 @@
+:root {
+    --cream : #ddeb5a;
+    
+}
+.nav-item > a {
+    color: var(--cream);
+}
+
+.nav-items > a {
+    color :rgb(236, 234, 63);
+}
+.container > .navbar-brand {
+    color :rgb(218, 235, 65);
+}

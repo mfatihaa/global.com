@@ -10,7 +10,10 @@
                     <a class="nav-link active" aria-current="page" href="./"><i class='bx bx-home'></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./service.php"><i class='bx bx-package'></i> Service/Product</a>
+                    <a class="nav-link " href="./data_pelanggan.php"><i class='bx bxs-user-detail'></i> Data Pelanggan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./pembelian.php"><i class='bx bx-package'></i> Pesanan</a>
                 </li>
                 <?php
                 include "./conn.php";
@@ -26,14 +29,9 @@
                         <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waiting List</a>
                     </li>
                 <?php
-                } else {
-                ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.php"><i class='bx bxs-note'></i> About </a>
-                    </li>
-                <?php
                 }
                 ?>
+                    
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class='bx bx-menu'></i> Menu
