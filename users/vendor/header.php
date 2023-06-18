@@ -10,28 +10,16 @@
                     <a class="nav-link active" aria-current="page" href="./"><i class='bx bx-home'></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="./data_pelanggan.php"><i class='bx bxs-user-detail'></i> Data Pelanggan</a>
+                    <a class="nav-link " href="./data_pelanggan.php"><i class='bx bxs-user-detail'></i> Data
+                        Pelanggan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./service_produk.php"><i class='bx bx-briefcase'></i> Data
+                        Service/Produk</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./pembelian.php"><i class='bx bx-package'></i> Pesanan</a>
                 </li>
-                <?php
-                include "./conn.php";
-                if (isset($_SESSION['id_user']) && $_SESSION['username']) {
-                    $id = $_SESSION['id_user'];
-                    $view = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '$id' ");
-                    $data = mysqli_fetch_assoc($view);
-                ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./cart.php"><i class='bx bx-cart'></i> Cart [0]</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waiting List</a>
-                    </li>
-                <?php
-                }
-                ?>
-                    
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class='bx bx-menu'></i> Menu
@@ -85,9 +73,6 @@
                         ?>
                             <li class="nav-items">
                                 <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
-                            </li>
-                            <li class="nav-items">
-                                <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
                             </li>
                         <?php
                         }

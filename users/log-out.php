@@ -1,15 +1,21 @@
 <?php
-include './conn.php';
+error_reporting(0);
+include "./conn.php";
 session_start();
 
-// Update Time Logout
-$date = date('Y-m-d h:i:s');
-$update = mysqli_query($conn, "UPDATE pelanggan SET time_logout = '$date' WHERE id_pelanggan = '{$_SESSION['id_pelanggan']}' ");
+$id = $_SESSION['id_user'];
+$view = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '$id'");
+$row = mysqli_fetch_assoc($view);
+if ($view) {
+    $date = date('Y-m-d h:i:s');
+    $id_user = $row['id_user'];
+    $update = mysqli_query($conn, "UPDATE user SET time_logout = '$date' WHERE id_user = '$id_user'");
 
-if ($update) {
+    if ($update) {
+        echo "<script>alert('Terimakasih!');document.location.href='./'</script>";
+    }
     session_unset();
-    echo "<script>alert('Anda Berhasil Keluar.');document.location.href='./'</script>";
 }
 
 session_destroy();
-exit;
+exit();

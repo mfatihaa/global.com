@@ -2,7 +2,7 @@
 error_reporting(0);
 session_start();
 
-if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+if (!isset($_SESSION['id_user']) && $_SESSION['username']) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
     exit();
 }
@@ -30,8 +30,14 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <?php
     include "./vendor/header.php";
     ?>
-  <!-- Js -->
-  <script src="./vendor/style.js"></script>
+
+    <?php
+    $nama = $_SESSION['nama'];
+    ?>
+    <h1>Welcome <?= $nama; ?> </h1>
+
+    <!-- Js -->
+    <script src="./vendor/style.js"></script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
