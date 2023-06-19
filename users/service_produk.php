@@ -2,13 +2,9 @@
 error_reporting(0);
 session_start();
 
-<<<<<<< HEAD
-if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
-=======
+
 if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in.php'</script>";
->>>>>>> origin
     exit();
 }
 ?>
@@ -74,7 +70,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success shadow-none">Add</button>
+                                    <button type="submit" name="add_produk" class="btn btn-success shadow-none">Add</button>
                                 </div>
                             </form>
                         </div>
