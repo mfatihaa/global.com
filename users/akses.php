@@ -1,8 +1,5 @@
 <?php
-// menambahkan dan menghapus produk
-
-session_start();
-error_reporting(0);
+// Add Product
 include "./conn.php";
 if (isset($_POST['add_produk'])) {
     $nm_produk = htmlspecialchars(addslashes($_POST['nm_produk']));
@@ -26,7 +23,7 @@ if (isset($_POST['add_produk'])) {
         $format = array('jpg', 'jpeg', 'png', 'svg');
 
         if (!in_array($path, $format)) {
-            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./settings.php'</script>";
+            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./service_produk.php'</script>";
             exit;
         }
 
@@ -56,6 +53,42 @@ if (isset($_POST['add_produk'])) {
     }
 }
            
+// Add Service
+include "./conn.php";
+if (isset($_POST['add_service'])) {
+    $nama = htmlspecialchars(addslashes($_POST['nm_service']));
+    $jumlah = htmlspecialchars(addslashes($_POST['jml_service']));
+    $harga = htmlspecialchars(addslashes($_POST['hrg_service']));
+
+    $view_service = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service LIMIT 1");
+    $data_service = mysqli_fetch_assoc($view_service);
+
+    // Cek Apakah Ada Input Image Baru
+    if (isset($_FILES['img_service']) && $_FILES['img_service']['error'] === UPLOAD_ERR_OK) {
+
+        // Cek Informasi Input Image Unggah
+        $image = $_FILES['img_service'];
+        // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
+        if (move_uploaded_file($image['tmp_name'], $folder)) {
+            $status = "Ready";
+            $tgl_upload = date("Y-m-d h:i:s");
+
+            $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, jumlah_service, harga_service, image_service, status_service, tanggal_upload) VALUES ('$nama', '$jumlah', '$harga', '$img', '$status', '$tgl_upload') ");
+            if ($insert_service) {
+                echo "<script>alert('Anda Berhasil Mengupload List Service Dengan Image.');document.location.href='./service_produk.php'</script>";
+            } else {
+                echo "<script>alert('Data Tidak Berhasil Dibuat!');document.location.href='./service_produk.php'</script>";
+            }
+        }
+    } else {
+        $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, jumlah_service, harga_service, status_service, tanggal_upload) VALUES ('$nama', '$jumlah', '$harga', '$status', '$tgl_upload') ");
+        if ($insert_service) {
+            echo "<script>alert('Anda Berhasil Mengupload List Service Tanpa Image.');document.location.href='./service_produk.php'</script>";
+        } else {
+            echo "<script>alert('Data Tidak Berhasil Dibuat!');document.location.href='./service_produk.php'</script>";
+        }
+    }
+}
 
 // Password Change
 include "./conn.php";

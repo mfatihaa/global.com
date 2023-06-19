@@ -37,7 +37,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
         <div class="row">
             <div class="col-md-12">
                 <!-- Product -->
-                <button type="button" class="btn btn-primary shadow-none" data-bs-toggle="modal" data-bs-target="#add_product"><i class="bx bx-plus"></i> Add Product</button>
+                <button type="button" class="btn btn-warning shadow-none" data-bs-toggle="modal" data-bs-target="#add_product"><i class="bx bx-plus"></i> Add Product</button>
                 <!-- Modal Add Product -->
                 <div class="modal fade" id="add_product" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -77,7 +77,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                     </div>
                 </div>
                 <!-- Service -->
-                <button type="button" class="btn btn-primary shadow-none" data-bs-toggle="modal" data-bs-target="#add_service"><i class="bx bx-plus"></i> Add Service</button>
+                <button type="button" class="btn btn-warning shadow-none" data-bs-toggle="modal" data-bs-target="#add_service"><i class="bx bx-plus"></i> Add Service</button>
                 <!-- Modal Add Service -->
                 <div class="modal fade" id="add_service" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
@@ -110,7 +110,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success shadow-none">Add</button>
+                                    <button type="submit" name="add_service" class="btn btn-success shadow-none">Add</button>
                                 </div>
                             </form>
                         </div>
@@ -118,7 +118,90 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                 </div>
             </div>
             <div class="col-md-12 mt-5">
-                <table class="table table-striped">a</table>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="product-tab" data-bs-toggle="pill" data-bs-target="#product" type="button" role="tab" aria-controls="product" aria-selected="true">Product List</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="service-tab" data-bs-toggle="pill" data-bs-target="#service" type="button" role="tab" aria-controls="service" aria-selected="false">Service List</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab" tabindex="0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Tanggal Upload</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include "./conn.php";
+                                $product_view = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product");
+                                while ($product_row = mysqli_fetch_assoc($product_view)) {
+                                    $no = 1;
+                                ?>
+                                    <tr>
+                                        <td><?= $no++; ?></td>
+                                        <td><?= $product_row['nama_product']; ?></td>
+                                        <td><?= $product_row['jumlah_product']; ?></td>
+                                        <td>Rp. <?= number_format($product_row['harga_product']); ?></td>
+                                        <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
+                                        <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
+                                        <td><?= $product_row['status_product']; ?></td>
+                                        <td></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab" tabindex="0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Jumlah</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Tanggal Upload</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include "./conn.php";
+                                $service_view = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service");
+                                while ($service_row = mysqli_fetch_assoc($service_view)) {
+                                    $no = 1;
+                                ?>
+                                    <tr>
+                                        <td><?= $no++; ?></td>
+                                        <td><?= $service_row['nama_service']; ?></td>
+                                        <td><?= $service_row['jumlah_service']; ?></td>
+                                        <td>Rp. <?= number_format($service_row['harga_service']); ?></td>
+                                        <td><img src="./vendor/img/<?= $service_row['image_service']; ?>" width="50" class="rounded-5"></td>
+                                        <td><?= date("l, d F Y", strtotime($service_row['tanggal_upload'])); ?></td>
+                                        <td><?= $service_row['status_service']; ?></td>
+                                        <td></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
