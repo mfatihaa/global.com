@@ -1,11 +1,47 @@
 <?php
+// Change Status Pelanggan ON
+include "./conn.php";
+if (isset($_POST['save_on'])) {
+    $id = htmlspecialchars(addslashes($_POST['id']));
+    $view_change_on = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id'");
+    if ($view_change_on) {
+        $data_change_on = mysqli_fetch_assoc($view_change_on);
+        $id_pelanggan = $data_change_on['id_pelanggan'];
+
+        $update_change_on = mysqli_query($conn, "UPDATE pelanggan SET kondisi = 'ON' WHERE id_pelanggan = '$id_pelanggan'");
+        if ($update_change_on) {
+            echo "<script>alert('Kondisi Berhasil Menjadi On!');document.location.href='./data_pelanggan.php'</script>";
+        } else {
+            echo "<script>alert('Kondisi Tidak Berhasil Menjadi On!');document.location.href='./data_pelanggan.php'</script>";
+        }
+    }
+}
+
+// Change Status Pelanggan OFF
+include "./conn.php";
+if (isset($_POST['save_off'])) {
+    $id = htmlspecialchars(addslashes($_POST['id']));
+    $view_change_off = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id'");
+    if ($view_change_off) {
+        $data_change_off = mysqli_fetch_assoc($view_change_off);
+        $id_pelanggan = $data_change_off['id_pelanggan'];
+
+        $update_change_off = mysqli_query($conn, "UPDATE pelanggan SET kondisi = 'OFF' WHERE id_pelanggan = '$id_pelanggan'");
+        if ($update_change_off) {
+            echo "<script>alert('Kondisi Berhasil Menjadi Off!');document.location.href='./data_pelanggan.php'</script>";
+        } else {
+            echo "<script>alert('Kondisi Tidak Berhasil Menjadi Off!');document.location.href='./data_pelanggan.php'</script>";
+        }
+    }
+}
+
 // Add Product
 include "./conn.php";
 if (isset($_POST['add_produk'])) {
     $nm_produk = htmlspecialchars(addslashes($_POST['nm_produk']));
     $jml_produk = htmlspecialchars(addslashes($_POST['jml_produk']));
     $hrg_produk = htmlspecialchars(addslashes($_POST['hrg_produk']));
-   
+
     $view_produk = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product LIMIT 1 ");
     $data_produk = mysqli_fetch_assoc($view_produk);
 
@@ -34,7 +70,7 @@ if (isset($_POST['add_produk'])) {
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
-            $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date') ") ;
+            $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date') ");
             if ($insert_product) {
                 echo "<script>alert('Data Berhasil Di Tambah!');document.location.href='./service_produk.php'</script>";
             } else {
@@ -42,7 +78,7 @@ if (isset($_POST['add_produk'])) {
             }
         }
     } else {
-        $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date') ") ;
+        $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date') ");
         if ($insert_product) {
             echo "<script>alert('Data Berhasil Di Tambahkan Tanpa Gambar');document.location.href='./service_produk.php'</script>";
         } else {
@@ -50,7 +86,7 @@ if (isset($_POST['add_produk'])) {
         }
     }
 }
-           
+
 // Add Service
 include "./conn.php";
 if (isset($_POST['add_service'])) {
@@ -159,4 +195,3 @@ if (isset($_POST['masuk'])) {
         }
     }
 }
-?>
