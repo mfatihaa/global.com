@@ -66,6 +66,21 @@ if (isset($_POST['add_service'])) {
 
         // Cek Informasi Input Image Unggah
         $image = $_FILES['img_service'];
+
+        // Pengambilan Ekstensi Image
+        $path = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        // Format Ekstensi Yang Diperbolehkan
+        $format = array('jpg', 'jpeg', 'png', 'svg');
+
+        if (!in_array($path, $format)) {
+            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./service_produk.php'</script>";
+            exit;
+        }
+
+        $img = rand() . "-" . $path;
+        $folder = "./vendor/img/" . $img;
+
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
             $status = "Ready";
