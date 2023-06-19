@@ -6,7 +6,6 @@ if (isset($_POST['add_produk'])) {
     $jml_produk = htmlspecialchars(addslashes($_POST['jml_produk']));
     $hrg_produk = htmlspecialchars(addslashes($_POST['hrg_produk']));
    
-
     $view_produk = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product LIMIT 1 ");
     $data_produk = mysqli_fetch_assoc($view_produk);
 
@@ -31,21 +30,20 @@ if (isset($_POST['add_produk'])) {
         $folder = "./vendor/img/" . $img;
         $date = date('Y-m-d h:i:s');
         $status = "Ready";
-    
 
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
-            $insert = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date') ") ;
-            if ($insert) {
+            $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date') ") ;
+            if ($insert_product) {
                 echo "<script>alert('Data Berhasil Di Tambah!');document.location.href='./service_produk.php'</script>";
             } else {
                 echo "<script>alert('Data Tidak Dapat Di Tambah!');document.location.href='./service_produk.php'</script>";
             }
         }
     } else {
-        $insert = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date') ") ;
-        if ($insert) {
+        $insert_product = mysqli_query($conn, "INSERT INTO product (nama_product, jumlah_product, harga_product, status_product, tanggal_upload) VAlUES ('$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date') ") ;
+        if ($insert_product) {
             echo "<script>alert('Data Berhasil Di Tambahkan Tanpa Gambar');document.location.href='./service_produk.php'</script>";
         } else {
             echo "<script>alert('Data Tidak Berhasil Di Tambahkan!');document.location.href='./service_produk.php'</script>";
