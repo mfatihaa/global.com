@@ -14,8 +14,6 @@ if ($view) {
     if ($update) {
         echo "<script>alert('Terimakasih!');document.location.href='./'</script>";
     }
-    session_unset();
 }
-
 session_destroy();
 exit();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Jun 2023 pada 07.46
+-- Waktu pembuatan: 19 Jun 2023 pada 08.49
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -53,6 +53,7 @@ CREATE TABLE `product` (
   `nama_product` varchar(255) DEFAULT NULL,
   `jumlah_product` varchar(255) DEFAULT NULL,
   `harga_product` varchar(255) DEFAULT NULL,
+  `image_product` varchar(255) DEFAULT NULL,
   `status_product` varchar(50) DEFAULT NULL,
   `tanggal_upload` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,6 +69,7 @@ CREATE TABLE `service` (
   `nama_service` varchar(255) DEFAULT NULL,
   `jumlah_service` varchar(255) DEFAULT NULL,
   `harga_service` varchar(255) DEFAULT NULL,
+  `image_service` varchar(255) DEFAULT NULL,
   `status_service` varchar(50) DEFAULT NULL,
   `tanggal_upload` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
