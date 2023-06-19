@@ -2,13 +2,8 @@
 error_reporting(0);
 session_start();
 
-<<<<<<< HEAD
-if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
-=======
 if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in.php'</script>";
->>>>>>> origin
     exit();
 }
 ?>
