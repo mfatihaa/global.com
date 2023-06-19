@@ -38,7 +38,7 @@
                                 <li class="nav-items">
                                     <div class="row align-items-center">
                                         <div class="col-12 text-center mt-2">
-                                            <img src="./vendor/img-customer/<?= $data['image']; ?>" class="rounded-5" width="50" loading="lazy">
+                                            <img src="./vendor/img/<?= $data['image']; ?>" class="rounded-5 mt-2" width="50" loading="lazy">
                                         </div>
                                         <div class="col-12 text-center mt-2">
                                             <?= $data['nama']; ?></a>
@@ -51,7 +51,7 @@
                                 <li class="nav-items">
                                     <div class="row align-items-center">
                                         <div class="col-12 text-center mt-2">
-                                            <img src="./vendor/img-customer/profile.png" class="rounded-5" width="50" loading="lazy"></a>
+                                            <img src="./vendor/img/profile.png" class="rounded-5 mt-2" width="50" loading="lazy"></a>
                                         </div>
                                         <div class="col-12 text-center mt-2">
                                             <?= $data['nama']; ?></a>
