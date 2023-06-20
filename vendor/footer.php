@@ -19,7 +19,7 @@
                         <a href="./service" class="text-decoration-none text-dark">Service/Produk</a>
                     </li>
                     <li class="mb-1">
-                        <a href="tentang" class="text-decoration-none text-dark">About</a>
+                        <a href="./about" class="text-decoration-none text-dark">About</a>
                     </li>
                     <li class="mb-1">
                         <a href="./cart" class="text-decoration-none text-dark">Cart</a>

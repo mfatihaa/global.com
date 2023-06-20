@@ -29,7 +29,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <!-- Header -->
     <?php include './vendor/header.php'; ?>
 
-    <!-- Main Content Produk -->
+    <!-- Main Content Service -->
     <?php
     if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     ?>
@@ -48,13 +48,12 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                             <div class="card-body">
                                 <h5 class="card-title"><?= $data_service['nama_service']; ?></h5>
                                 <h6 class="card-text"> Rp. <?= number_format($data_service['harga_service']); ?> </h6>
-
                             </div>
                             <div class="card-header text-justify">
                                 <p class="text-danger fw-bold">Deskripsi : <?= $data_service['status_service']; ?></p>
-                                <p class="text-muted">
-                                    Tersedia : <?= $data_service['jumlah_service']; ?>
-                                </p>
+                                <div class="modal-footer">
+                                    <a href="./cart.php?id=<?php echo $data_service['id_service']; ?>" class="btn btn-warning shadow-none">keranjang</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,6 +74,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     }
     ?>
 
+    <!-- Main content Produk -->
     <?php
     if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     ?>
@@ -100,6 +100,9 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                 <p class="text-muted">
                                     Tersedia : <?= $data_product['jumlah_product']; ?>
                                 </p>
+                                <div class="modal-footer">
+                                    <a href="./cart.php?id=<?php echo $data_product['id_product']; ?>" class="btn btn-warning shadow-none">keranjang</a>
+                                </div>
                             </div>
                         </div>
                     </div>
