@@ -49,23 +49,35 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Rp. </td>
-                            <td></td>
-                            <td>Rp. </td>
-                            <td>
-                                <button class="btn btn-success" type="button">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-                                <button class="btn btn-danger" type="button">
-                                    <i class='bx bx-trash-alt'></i>
-                                </button>
-                            </td>
-                        </tr>
+                        <?php
+                        include "./conn.php";
+                        $id_pel = $_SESSION['id_pelanggan'];
+                        $view_pel = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pel'");
+                        while ($data_pel = mysqli_fetch_assoc($view_pel)) {
+                            $no = 1;
+                        ?>
+                            <tr>
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $data_pel['code_pelanggan']; ?></td>
+                                <td><?php echo $data_pel['nama']; ?></td>
+                                <td>Rp. <?php echo number_format($data_pel['harga']); ?></td>
+                                <td><?php echo $_SESSION['cart']; ?></td>
+                                <td>Rp. <?php ?></td>
+                                <td>
+                                    <button class="btn btn-success" type="button">
+                                        <i class='bx bx-list-check'></i>
+                                    </button>
+                                    <button class="btn btn-warning" type="button">
+                                        <i class='bx bx-edit'></i>
+                                    </button>
+                                    <button class="btn btn-danger" type="button">
+                                        <i class='bx bx-trash-alt'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>

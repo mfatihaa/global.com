@@ -64,7 +64,6 @@ include "./conn.php";
 if (isset($_POST['edit_service'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
     $nm_service = htmlspecialchars(addslashes($_POST['nm_service']));
-    $jml_service = htmlspecialchars(addslashes($_POST['jml_service']));
     $hrg_service = htmlspecialchars(addslashes($_POST['hrg_service'],));
 
     $view_edit_service = mysqli_query($conn, "SELECT * FROM service WHERE id_service = '{$id}'");
@@ -100,7 +99,7 @@ if (isset($_POST['edit_service'])) {
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
-            $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', jumlah_service = '$jml_service', harga_service = '$hrg_service', image_service = '$img', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
+            $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', harga_service = '$hrg_service', image_service = '$img', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
             if ($update_service_list) {
                 echo "<script>alert('Data Berhasil Diubah Dengan Gambar');document.location.href='./service_produk'</script>";
             } else {
@@ -108,7 +107,7 @@ if (isset($_POST['edit_service'])) {
             }
         }
     } else {
-        $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', jumlah_service = '$jml_service', harga_service = '$hrg_service', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
+        $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', harga_service = '$hrg_service', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
         if ($update_service_list) {
             echo "<script>alert('Data Berhasil Diubah Tanpa Gambar');document.location.href='./service_produk'</script>";
         } else {
@@ -209,7 +208,6 @@ if (isset($_POST['add_produk'])) {
 include "./conn.php";
 if (isset($_POST['add_service'])) {
     $nama = htmlspecialchars(addslashes($_POST['nm_service']));
-    $jumlah = htmlspecialchars(addslashes($_POST['jml_service']));
     $harga = htmlspecialchars(addslashes($_POST['hrg_service']));
 
     $view_service = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service LIMIT 1");
@@ -240,7 +238,7 @@ if (isset($_POST['add_service'])) {
             $status = "Ready";
             $tgl_upload = date("Y-m-d h:i:s");
 
-            $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, jumlah_service, harga_service, image_service, status_service, tanggal_upload) VALUES ('$nama', '$jumlah', '$harga', '$img', '$status', '$tgl_upload') ");
+            $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, harga_service, image_service, status_service, tanggal_upload) VALUES ('$nama', '$harga', '$img', '$status', '$tgl_upload') ");
             if ($insert_service) {
                 echo "<script>alert('Anda Berhasil Mengupload List Service Dengan Image.');document.location.href='./service_produk.php'</script>";
             } else {
@@ -248,7 +246,7 @@ if (isset($_POST['add_service'])) {
             }
         }
     } else {
-        $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, jumlah_service, harga_service, status_service, tanggal_upload) VALUES ('$nama', '$jumlah', '$harga', '$status', '$tgl_upload') ");
+        $insert_service = mysqli_query($conn, "INSERT INTO service (nama_service, harga_service, status_service, tanggal_upload) VALUES ('$nama', '$harga', '$status', '$tgl_upload') ");
         if ($insert_service) {
             echo "<script>alert('Anda Berhasil Mengupload List Service Tanpa Image.');document.location.href='./service_produk.php'</script>";
         } else {

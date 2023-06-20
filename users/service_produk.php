@@ -93,10 +93,6 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                 <input type="text" name="nm_service" class="form-control shadow-none">
                                             </div>
                                             <div class="col-md-12 mt-2">
-                                                <label class="form-label fw-bold">Jumlah Service</label>
-                                                <input type="number" name="jml_service" class="form-control shadow-none">
-                                            </div>
-                                            <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Harga Service</label>
                                                 <input type="text" name="hrg_service" class="form-control shadow-none">
                                             </div>
@@ -224,7 +220,6 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nama</th>
-                                    <th scope="col">Jumlah</th>
                                     <th scope="col">Harga</th>
                                     <th scope="col">Image</th>
                                     <th scope="col">Tanggal Upload</th>
@@ -242,7 +237,6 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                     <tr>
                                         <td><?= $no++; ?></td>
                                         <td><?= $service_row['nama_service']; ?></td>
-                                        <td><?= $service_row['jumlah_service']; ?></td>
                                         <td>Rp. <?= number_format($service_row['harga_service']); ?></td>
                                         <?php
                                         if (isset($service_row['image_service'])) {
@@ -275,11 +269,6 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                                             <label class="form-label fw-bold">Nama
                                                                                 Service</label>
                                                                             <input type="text" name="nm_service" class="form-control shadow-none" value="<?= $service_row['nama_service']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Jumlah
-                                                                                Service</label>
-                                                                            <input type="number" name="jml_service" class="form-control shadow-none" value="<?= $service_row['jumlah_service']; ?>">
                                                                         </div>
                                                                         <div class="col-md-12 mt-2">
                                                                             <label class="form-label fw-bold">Harga

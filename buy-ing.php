@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+error_reporting(0);
+session_start();
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Techno | Buy</title>
-</head>
+// Mendapatkan ID_Produk
+$id_product = $_GET['id'];
 
-<body>
-
-</body>
-
-</html>
+// Jika sudah ada di keranjang, mk produk jumlahnya 1
+if (isset($_SESSION['cart'][$id_product])) {
+    $_SESSION['cart'][$id_product] += 1;
+}
+//Jika blm ada di keranjang , mk produk di anggap dibeli 1 
+else {
+    $_SESSION['cart'][$id_product] = 1;
+}
+echo "<pre>";
+print_r($_SESSION['cart']);
+echo "</pre>";
+echo "<script>alert('Produk/Service telah masuk ke keranjang');</script>";
