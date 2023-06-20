@@ -37,20 +37,30 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
             <h1>List Jasa Service</h1>
             <hr>
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <h6 class="card-text"> Rp. </h6>
+                <?php
+                include "./conn.php";
+                $view_service = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service");
+                while ($data_service = mysqli_fetch_assoc($view_service)) {
+                ?>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="./users/vendor/img/<?= $data_service['image_service']; ?>" class="card-img-top" alt="" width="100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $data_service['nama_service']; ?></h5>
+                                <h6 class="card-text"> Rp. <?= number_format($data_service['harga_service']); ?> </h6>
 
-                        </div>
-                        <div class="card-header text-justify">
-                            <p class="text-danger fw-bold">Deskripsi :</p>
-                            <p class="text-muted"></p>
+                            </div>
+                            <div class="card-header text-justify">
+                                <p class="text-danger fw-bold">Deskripsi : <?= $data_service['status_service']; ?></p>
+                                <p class="text-muted">
+                                    Tersedia : <?= $data_service['jumlah_service']; ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     <?php
@@ -72,20 +82,30 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
             <h1>List Produk</h1>
             <hr>
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="./Admin/Assets/Img-Product/" class="card-img-top" alt="" width="100">
-                        <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <h6 class="card-text"> Rp. </h6>
+                <?php
+                include "./conn.php";
+                $view_product = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product");
+                while ($data_product = mysqli_fetch_assoc($view_product)) {
+                ?>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="./users/vendor/img/<?= $data_product['image_product']; ?>" class="card-img-top" alt="" width="100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $data_product['nama_product']; ?></h5>
+                                <h6 class="card-text"> Rp. <?= number_format($data_product['harga_product']); ?> </h6>
 
-                        </div>
-                        <div class="card-header text-justify">
-                            <p class="text-danger fw-bold">Deskripsi :</p>
-                            <p class="text-muted"></p>
+                            </div>
+                            <div class="card-header text-justify">
+                                <p class="text-danger fw-bold">Deskripsi : <?= $data_product['status_product']; ?></p>
+                                <p class="text-muted">
+                                    Tersedia : <?= $data_product['jumlah_product']; ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     <?php

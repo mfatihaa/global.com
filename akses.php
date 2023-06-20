@@ -110,7 +110,7 @@ if (isset($_POST['update'])) {
             exit;
         }
 
-        $img = rand() . "-" . $path;
+        $img = md5_file($nama_update) . "-" . $path;
         $folder = "./vendor/img-customer/" . $img;
 
         // Hapus Gambar Yang Digunakan Dari Local Storage

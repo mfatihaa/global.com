@@ -1,4 +1,122 @@
 <?php
+// Change Product List
+error_reporting(0);
+include "./conn.php";
+if (isset($_POST['edit_product'])) {
+    $id = htmlspecialchars(addslashes($_POST['id']));
+    $nm_product = htmlspecialchars(addslashes($_POST['nm_product']));
+    $jml_product = htmlspecialchars(addslashes($_POST['jml_product']));
+    $hrg_product = htmlspecialchars(addslashes($_POST['hrg_product'],));
+
+    $view_edit_product = mysqli_query($conn, "SELECT * FROM product WHERE id_product = '{$id}'");
+    $data_edit_product = mysqli_fetch_assoc($view_edit_product);
+
+    // Cek Apakah Ada Input Image Baru
+    if (isset($_FILES['img_product']) && $_FILES['img_product']['error'] === UPLOAD_ERR_OK) {
+
+        // Cek Informasi Input Image Unggah
+        $image = $_FILES['img_product'];
+
+        // Pengambilan Ekstensi Image
+        $path = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        // Format Ekstensi Yang Diperbolehkan
+        $format = array('jpg', 'jpeg', 'png', 'svg');
+
+        if (!in_array($path, $format)) {
+            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./service_produk'</script>";
+            exit;
+        }
+
+        $img = "Product" . "-" . rand() . "-" . $path;
+        $folder = "./vendor/img/" . $img;
+        $date = date('Y-m-d h:i:s');
+
+        // Hapus Gambar Yang Digunakan Dari Local Storage
+        $img_remove = $data_edit_product['image_product'];
+        if (file_exists("./vendor/img/$img_remove")) {
+            unlink("./vendor/img/$img_remove");
+        }
+
+        // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
+        if (move_uploaded_file($image['tmp_name'], $folder)) {
+
+            $update_product_list = mysqli_query($conn, "UPDATE product SET nama_product = '$nm_product', jumlah_product = '$jml_product', harga_product = '$hrg_product', image_product = '$img', tanggal_upload = '$date' WHERE id_product = '{$data_edit_product['id_product']}' ");
+            if ($update_product_list) {
+                echo "<script>alert('Data Berhasil Diubah Dengan Gambar');document.location.href='./service_produk'</script>";
+            } else {
+                echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./service_produk'</script>";
+            }
+        }
+    } else {
+        $update_product_list = mysqli_query($conn, "UPDATE product SET nama_product = '$nm_product', jumlah_product = '$jml_product', harga_product = '$hrg_product', tanggal_upload = '$date' WHERE id_product = '{$data_edit_product['id_product']}' ");
+        if ($update_product_list) {
+            echo "<script>alert('Data Berhasil Diubah Tanpa Gambar');document.location.href='./service_produk'</script>";
+        } else {
+            echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./service_produk'</script>";
+        }
+    }
+}
+
+// Change Service List
+error_reporting(0);
+include "./conn.php";
+if (isset($_POST['edit_service'])) {
+    $id = htmlspecialchars(addslashes($_POST['id']));
+    $nm_service = htmlspecialchars(addslashes($_POST['nm_service']));
+    $jml_service = htmlspecialchars(addslashes($_POST['jml_service']));
+    $hrg_service = htmlspecialchars(addslashes($_POST['hrg_service'],));
+
+    $view_edit_service = mysqli_query($conn, "SELECT * FROM service WHERE id_service = '{$id}'");
+    $data_edit_service = mysqli_fetch_assoc($view_edit_service);
+
+    // Cek Apakah Ada Input Image Baru
+    if (isset($_FILES['img_service']) && $_FILES['img_service']['error'] === UPLOAD_ERR_OK) {
+
+        // Cek Informasi Input Image Unggah
+        $image = $_FILES['img_service'];
+
+        // Pengambilan Ekstensi Image
+        $path = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        // Format Ekstensi Yang Diperbolehkan
+        $format = array('jpg', 'jpeg', 'png', 'svg');
+
+        if (!in_array($path, $format)) {
+            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./service_produk'</script>";
+            exit;
+        }
+
+        $img = "Service" . "-" . rand() . "-" . $path;
+        $folder = "./vendor/img/" . $img;
+        $date = date('Y-m-d h:i:s');
+
+        // Hapus Gambar Yang Digunakan Dari Local Storage
+        $img_remove = $data_edit_service['image_service'];
+        if (file_exists("./vendor/img/$img_remove")) {
+            unlink("./vendor/img/$img_remove");
+        }
+
+        // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
+        if (move_uploaded_file($image['tmp_name'], $folder)) {
+
+            $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', jumlah_service = '$jml_service', harga_service = '$hrg_service', image_service = '$img', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
+            if ($update_service_list) {
+                echo "<script>alert('Data Berhasil Diubah Dengan Gambar');document.location.href='./service_produk'</script>";
+            } else {
+                echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./service_produk'</script>";
+            }
+        }
+    } else {
+        $update_service_list = mysqli_query($conn, "UPDATE service SET nama_service = '$nm_service', jumlah_service = '$jml_service', harga_service = '$hrg_service', tanggal_upload = '$date' WHERE id_service = '{$data_edit_service['id_service']}' ");
+        if ($update_service_list) {
+            echo "<script>alert('Data Berhasil Diubah Tanpa Gambar');document.location.href='./service_produk'</script>";
+        } else {
+            echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./service_produk'</script>";
+        }
+    }
+}
+
 // Change Status Pelanggan ON
 include "./conn.php";
 if (isset($_POST['save_on'])) {

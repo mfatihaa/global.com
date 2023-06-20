@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="./"><i class='bx bx-home'></i> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./service.php"><i class='bx bx-package'></i> Service/Product</a>
+                    <a class="nav-link" href="./service"><i class='bx bx-package'></i> Service/Product</a>
                 </li>
                 <?php
                 include "./conn.php";
@@ -20,16 +20,16 @@
                     $data = mysqli_fetch_assoc($view);
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="./cart.php"><i class='bx bx-cart'></i> Cart [0]</a>
+                        <a class="nav-link" href="./cart"><i class='bx bx-cart'></i> Cart [0]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./stand-in-line.php"><i class='bx bx-list-check'></i> Waiting List</a>
+                        <a class="nav-link" href="./stand-in-line"><i class='bx bx-list-check'></i> Waiting List</a>
                     </li>
                 <?php
                 } else {
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about.php"><i class='bx bxs-note'></i> About </a>
+                        <a class="nav-link" href="./about"><i class='bx bxs-note'></i> About </a>
                     </li>
                 <?php
                 }
@@ -65,7 +65,7 @@
                                 <li class="nav-items">
                                     <div class="row align-items-center">
                                         <div class="col-12 text-center mt-2">
-                                            <img src="./vendor/img-customer/profile.png" class="rounded-5" width="50" loading="lazy"></a>
+                                            <img src="./vendor/img-customer/profile.svg" class="rounded-5" width="50" loading="lazy"></a>
                                         </div>
                                         <div class="col-12 text-center mt-2">
                                             <?= $data['nama']; ?></a>
@@ -77,19 +77,19 @@
                             ?>
                             <hr class="border border-bottom">
                             <li class="nav-items">
-                                <a class="nav-link" href="./settings.php"><i class='bx bx-cog'></i> Settings</a>
+                                <a class="nav-link" href="./settings"><i class='bx bx-cog'></i> Settings</a>
                             </li>
                             <li class="nav-items">
-                                <a class="nav-link" href="./log-out.php"><i class='bx bx-log-out-circle'></i> Logout</a>
+                                <a class="nav-link" href="./log-out"><i class='bx bx-log-out-circle'></i> Logout</a>
                             </li>
                         <?php
                         } else {
                         ?>
                             <li class="nav-items">
-                                <a class="dropdown-item" href="./log-in.php">Sign In <i class='bx bx-log-in-circle'></i></a>
+                                <a class="dropdown-item" href="./log-in">Sign In <i class='bx bx-log-in-circle'></i></a>
                             </li>
                             <li class="nav-items">
-                                <a class="dropdown-item" href="./registration.php">Registration <i class='bx bx-registered'></i></a>
+                                <a class="dropdown-item" href="./registration">Registration <i class='bx bx-registered'></i></a>
                             </li>
                         <?php
                         }

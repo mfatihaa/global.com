@@ -16,28 +16,28 @@
                 </h5>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-1">
-                        <a href="./service.php" class="text-decoration-none text-dark">Service/Produk</a>
+                        <a href="./service" class="text-decoration-none text-dark">Service/Produk</a>
                     </li>
                     <li class="mb-1">
                         <a href="tentang" class="text-decoration-none text-dark">About</a>
                     </li>
                     <li class="mb-1">
-                        <a href="./cart.php" class="text-decoration-none text-dark">Cart</a>
+                        <a href="./cart" class="text-decoration-none text-dark">Cart</a>
                     </li>
                     <?php
                     if (isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                     ?>
                         <li class="mb-1">
-                            <a href="./log-out.php" class="text-decoration-none text-dark">log-out</a>
+                            <a href="./log-out" class="text-decoration-none text-dark">log-out</a>
                         </li>
                     <?php
                     } else {
                     ?>
                         <li class="mb-1">
-                            <a href="./log-in.php" class="text-decoration-none text-dark">Sign-in</a>
+                            <a href="./log-in" class="text-decoration-none text-dark">Sign-in</a>
                         </li>
                         <li class="mb-1">
-                            <a href="./registration.php" class="text-decoration-none text-dark">Registration</a>
+                            <a href="./registration" class="text-decoration-none text-dark">Registration</a>
                         </li>
                     <?php
                     }
@@ -64,6 +64,9 @@
         </div>
     </div>
     <div class="text-center p-3 bg-dark text-warning fw-bold">
-        Powered By Akbar Naufal © 2022
+        <?php
+        $date = date("Y");
+        ?>
+        Powered By Akbar Naufal © <?php echo $date; ?>
     </div>
 </footer>
