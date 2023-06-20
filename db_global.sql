@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jun 2023 pada 08.49
+-- Waktu pembuatan: 20 Jun 2023 pada 10.27
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -67,7 +67,6 @@ CREATE TABLE `product` (
 CREATE TABLE `service` (
   `id_service` int(11) NOT NULL,
   `nama_service` varchar(255) DEFAULT NULL,
-  `jumlah_service` varchar(255) DEFAULT NULL,
   `harga_service` varchar(255) DEFAULT NULL,
   `image_service` varchar(255) DEFAULT NULL,
   `status_service` varchar(50) DEFAULT NULL,
