@@ -6,6 +6,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,32 +50,49 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                         </tr>
                     </thead>
                     <tbody>
+
                         <?php
-                        include "./conn.php";
-                        $id_pel = $_SESSION['id_pelanggan'];
-                        $view_pel = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '$id_pel'");
-                        while ($data_pel = mysqli_fetch_assoc($view_pel)) {
-                            $no = 1;
+                        if (isset($_SESSION['cart'])) {
                         ?>
-                            <tr>
-                                <td><?php echo $no++; ?></td>
-                                <td><?php echo $data_pel['code_pelanggan']; ?></td>
-                                <td><?php echo $data_pel['nama']; ?></td>
-                                <td>Rp. <?php echo number_format($data_pel['harga']); ?></td>
-                                <td><?php echo $_SESSION['cart']; ?></td>
-                                <td>Rp. <?php ?></td>
-                                <td>
-                                    <button class="btn btn-success" type="button">
-                                        <i class='bx bx-list-check'></i>
-                                    </button>
-                                    <button class="btn btn-warning" type="button">
-                                        <i class='bx bx-edit'></i>
-                                    </button>
-                                    <button class="btn btn-danger" type="button">
-                                        <i class='bx bx-trash-alt'></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <?php
+                            foreach ($_SESSION['cart'] as $code => $qty) :
+                            ?>
+                                <?php
+                                include "./conn.php";
+                                $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
+                                while ($data_product = mysqli_fetch_assoc($view_product)) {
+                                    $no = 1;
+                                ?>
+                                    <tr>
+                                        <td><?php echo $no++; ?></td>
+                                        <td><?php echo $data_product['code_product']; ?></td>
+                                        <td><?php echo $data_product['nama_product']; ?></td>
+                                        <td>Rp. <?php echo number_format($data_product['harga_product']); ?></td>
+                                        <td><?php echo $qty; ?></td>
+                                        <td>
+                                            Rp. <?php
+                                                $sum = $data_product['harga_product'] * $qty;
+                                                echo number_format($sum);
+                                                ?>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" type="button">
+                                                <i class='bx bx-list-check'></i>
+                                            </button>
+                                            <button class="btn btn-warning" type="button">
+                                                <i class='bx bx-edit'></i>
+                                            </button>
+                                            <button class="btn btn-danger" type="button">
+                                                <i class='bx bx-trash-alt'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            <?php
+                            endforeach
+                            ?>
                         <?php
                         }
                         ?>

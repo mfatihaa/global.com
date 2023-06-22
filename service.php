@@ -101,7 +101,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                     Tersedia : <?= $data_product['jumlah_product']; ?>
                                 </p>
                                 <div class="modal-footer">
-                                    <a href="./cart.php?id=<?php echo $data_product['id_product']; ?>" class="btn btn-warning shadow-none">keranjang</a>
+                                    <a href="./buy-ing?id=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">Keranjang</a>
                                 </div>
                             </div>
                         </div>
