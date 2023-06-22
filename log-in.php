@@ -55,7 +55,6 @@ session_start();
                                 <button class="btn btn-success shadow-none" type="submit" name="masuk">
                                     Masuk
                                 </button>
-
                                 <button class="btn btn-danger shadow-none" type="button">
                                     <a href="./change-password.php" class="text-decoration-none shadow-none text-white">Ganti Password</a>
                                 </button>

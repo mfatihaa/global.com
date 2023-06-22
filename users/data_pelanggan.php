@@ -4,7 +4,7 @@ session_start();
 
 
 if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in.php'</script>";
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in'</script>";
 
     exit();
 }
@@ -79,7 +79,8 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="save_on" class="btn btn-primary shadow-none">Save changes</button>
+                                                <button type="submit" name="save_on" class="btn btn-primary shadow-none">Save
+                                                    changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -104,7 +105,8 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary shadow-none" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" name="save_off" class="btn btn-primary shadow-none">Save changes</button>
+                                                <button type="submit" name="save_off" class="btn btn-primary shadow-none">Save
+                                                    changes</button>
                                             </div>
                                         </form>
                                     </div>

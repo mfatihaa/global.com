@@ -3,7 +3,7 @@ error_reporting(0);
 session_start();
 
 if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in.php'</script>";
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
     exit();
 }
 ?>
@@ -45,13 +45,13 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                 ?>
                         <div class="col-md-3">
                             <div class="card">
-                                <img src="./users/vendor/img/<?= $data_product['image_product']; ?>" class="card-img-top" alt="" width="100">
+                                <img src="./users/vendor/img/product_service/<?= $data_product['image_product']; ?>" class="card-img-top" alt="" width="100">
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $data_product['nama_product']; ?></h5>
                                     <h6 class="card-text"> Rp. <?= number_format($data_product['harga_product']); ?> </h6>
                                 </div>
                                 <div class="card-header text-justify">
-                                    <p class="text-danger fw-bold">Deskripsi : <?= $data_product['status_product']; ?></p>
+                                    <p class="text-danger fw-bold">Deskripsi : <?= $data_product['desk_product']; ?></p>
                                     <div class="modal-footer">
                                         <a href="./buy-ing.php?id=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">keranjang</a>
                                     </div>
@@ -92,14 +92,13 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                 ?>
                         <div class="col-md-3">
                             <div class="card">
-                                <img src="./users/vendor/img/<?= $data_product['image_product']; ?>" class="card-img-top" alt="" width="100">
+                                <img src="./users/vendor/img/product_service/<?= $data_product['image_product']; ?>" class="card-img-top" alt="" width="100">
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $data_product['nama_product']; ?></h5>
                                     <h6 class="card-text"> Rp. <?= number_format($data_product['harga_product']); ?> </h6>
-
                                 </div>
                                 <div class="card-header text-justify">
-                                    <p class="text-danger fw-bold">Deskripsi : <?= $data_product['status_product']; ?></p>
+                                    <p class="text-danger fw-bold">Deskripsi : <?= $data_product['desk_product']; ?></p>
                                     <p class="text-muted">
                                         Tersedia : <?= $data_product['jumlah_product']; ?>
                                     </p>

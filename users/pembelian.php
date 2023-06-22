@@ -3,7 +3,7 @@ error_reporting(0);
 session_start();
 
 if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in.php'</script>";
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in'</script>";
     exit();
 }
 ?>

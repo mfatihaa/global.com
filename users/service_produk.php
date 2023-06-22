@@ -3,7 +3,7 @@ error_reporting(0);
 session_start();
 
 if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in.php'</script>";
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in'</script>";
     exit();
 }
 ?>
@@ -61,6 +61,10 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                 <input type="text" name="hrg_produk" class="form-control shadow-none">
                                             </div>
                                             <div class="col-md-12 mt-2">
+                                                <label class="form-label fw-bold">Deskripsi Product</label>
+                                                <textarea name="desk_produk" class="form-control shadow-none"></textarea>
+                                            </div>
+                                            <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Image Product</label>
                                                 <input type="file" name="img_produk" class="form-control shadow-none">
                                             </div>
@@ -90,15 +94,19 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
                                                 <label class="form-label fw-bold">Nama Service</label>
-                                                <input type="text" name="nm_produk" class="form-control shadow-none">
+                                                <input type="text" name="nm_service" class="form-control shadow-none">
                                             </div>
                                             <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Harga Service</label>
-                                                <input type="text" name="hrg_produk" class="form-control shadow-none">
+                                                <input type="text" name="hrg_service" class="form-control shadow-none">
+                                            </div>
+                                            <div class="col-md-12 mt-2">
+                                                <label class="form-label fw-bold">Deskripsi Service</label>
+                                                <textarea name="desk_service" class="form-control shadow-none"></textarea>
                                             </div>
                                             <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Image Service</label>
-                                                <input type="file" name="img_produk" class="form-control shadow-none">
+                                                <input type="file" name="img_service" class="form-control shadow-none">
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +160,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             <?php
                                             if (isset($product_row['image_product'])) {
                                             ?>
-                                                <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
+                                                <td><img src="./vendor/img/product_service/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
                                             <?php
                                             } else {
                                             ?>
@@ -163,7 +171,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
                                             <td><?= $product_row['status_product']; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
+                                                <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
                                                 <!-- Modal Edit Product -->
                                                 <div class="modal fade" id="edit_product<?= $product_row['id_product']; ?>" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
@@ -192,6 +200,11 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                                                 <input type="text" name="hrg_product" class="form-control shadow-none" value="<?= $product_row['harga_product']; ?>">
                                                                             </div>
                                                                             <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Deskripsi
+                                                                                    Product</label>
+                                                                                <textarea name="desk_product" class="form-control shadow-none"><?= $product_row['desk_product']; ?></textarea>
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
                                                                                 <label class="form-label fw-bold">Image
                                                                                     Product</label>
                                                                                 <input type="file" name="img_product" class="form-control shadow-none">
@@ -202,6 +215,31 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" name="edit_product" class="btn btn-success shadow-none">Edit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#delete_product<?= $product_row['id_product']; ?>"><i class="bx bx-trash"></i></button>
+                                                <!-- Modal Delete Product -->
+                                                <div class="modal fade" id="delete_product<?= $product_row['id_product']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Delete Data Product</h5>
+                                                            </div>
+                                                            <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                        <div class="row justify-content-center">
+                                                                            <input type="text" name="id" value="<?= $product_row['id_product']; ?>" hidden>
+                                                                            Apakah Kamu Yakin Menghapus Data Produk Ini?
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">No</button>
+                                                                    <button type="submit" name="delete_product" class="btn btn-success shadow-none">Yes</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -244,7 +282,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             <?php
                                             if (isset($product_row['image_product'])) {
                                             ?>
-                                                <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
+                                                <td><img src="./vendor/img/product_service/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
                                             <?php
                                             } else {
                                             ?>
@@ -255,9 +293,9 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                             <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
                                             <td><?= $product_row['status_product']; ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
-                                                <!-- Modal Edit product -->
-                                                <div class="modal fade" id="edit_product<?= $product_row['id_product']; ?>" tabindex="-1">
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_service<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
+                                                <!-- Modal Edit Service -->
+                                                <div class="modal fade" id="edit_service<?= $product_row['id_product']; ?>" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -271,24 +309,54 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                                             <div class="col-md-12">
                                                                                 <label class="form-label fw-bold">Nama
                                                                                     Service</label>
-                                                                                <input type="text" name="nm_product" class="form-control shadow-none" value="<?= $product_row['nama_product']; ?>">
+                                                                                <input type="text" name="nm_service" class="form-control shadow-none" value="<?= $product_row['nama_product']; ?>">
                                                                             </div>
                                                                             <div class="col-md-12 mt-2">
                                                                                 <label class="form-label fw-bold">Harga
                                                                                     Service</label>
-                                                                                <input type="text" name="hrg_product" class="form-control shadow-none" value="<?= $service_row['harga_product']; ?>">
+                                                                                <input type="text" name="hrg_service" class="form-control shadow-none" value="<?= $product_row['harga_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Deskripsi
+                                                                                    Service</label>
+                                                                                <textarea name="desk_service" class="form-control shadow-none"><?= $product_row['desk_product']; ?></textarea>
                                                                             </div>
                                                                             <div class="col-md-12 mt-2">
                                                                                 <label class="form-label fw-bold">Image
                                                                                     Service</label>
-                                                                                <input type="file" name="img_product" class="form-control shadow-none">
+                                                                                <input type="file" name="img_service" class="form-control shadow-none">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="edit_product" class="btn btn-success shadow-none">Edit</button>
+                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit" name="edit_service" class="btn btn-success shadow-none">Edit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#delete_service<?= $product_row['id_product']; ?>"><i class="bx bx-trash"></i></button>
+                                                <!-- Modal Delete Product -->
+                                                <div class="modal fade" id="delete_service<?= $product_row['id_product']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Delete Data Service</h5>
+                                                            </div>
+                                                            <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                        <div class="row justify-content-center">
+                                                                            <input type="text" name="id" value="<?= $product_row['id_product']; ?>" hidden>
+                                                                            Apakah Kamu Yakin Menghapus Data Service Ini?
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">No</button>
+                                                                    <button type="submit" name="delete_service" class="btn btn-success shadow-none">Yes</button>
                                                                 </div>
                                                             </form>
                                                         </div>
