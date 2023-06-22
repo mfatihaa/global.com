@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Jun 2023 pada 13.05
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Generation Time: Jun 22, 2023 at 11:53 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggan`
+-- Table structure for table `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -40,12 +40,12 @@ CREATE TABLE `pelanggan` (
   `time_login` datetime DEFAULT NULL,
   `time_logout` datetime DEFAULT NULL,
   `kondisi` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -56,29 +56,14 @@ CREATE TABLE `product` (
   `harga_product` varchar(255) DEFAULT NULL,
   `image_product` varchar(255) DEFAULT NULL,
   `status_product` varchar(50) DEFAULT NULL,
-  `tanggal_upload` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `tanggal_upload` datetime DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `service`
---
-
-CREATE TABLE `service` (
-  `id_service` int(11) NOT NULL,
-  `code_service` varchar(255) DEFAULT NULL,
-  `nama_service` varchar(255) DEFAULT NULL,
-  `harga_service` varchar(255) DEFAULT NULL,
-  `image_service` varchar(255) DEFAULT NULL,
-  `status_service` varchar(50) DEFAULT NULL,
-  `tanggal_upload` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -93,60 +78,48 @@ CREATE TABLE `user` (
   `time_login` datetime DEFAULT NULL,
   `time_logout` datetime DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `pelanggan`
+-- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
--- Indeks untuk tabel `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id_product`);
 
 --
--- Indeks untuk tabel `service`
---
-ALTER TABLE `service`
-  ADD PRIMARY KEY (`id_service`);
-
---
--- Indeks untuk tabel `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `pelanggan`
+-- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
   MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `service`
---
-ALTER TABLE `service`
-  MODIFY `id_service` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT;

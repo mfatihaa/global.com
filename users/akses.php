@@ -199,8 +199,8 @@ if (isset($_POST['add_produk'])) {
 
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
-
-            $insert_product = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload) VAlUES ('$code_gabung','$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date') ");
+            $role = "Product";
+            $insert_product = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, jumlah_product, harga_product, image_product, status_product, tanggal_upload, status) VAlUES ('$code_gabung','$nm_produk', '$jml_produk', '$hrg_produk', '$img', '$status', '$date', '$role') ");
             if ($insert_product) {
                 echo "<script>alert('Data Berhasil Di Tambah!');document.location.href='./service_produk.php'</script>";
             } else {
@@ -208,7 +208,8 @@ if (isset($_POST['add_produk'])) {
             }
         }
     } else {
-        $insert_product = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, jumlah_product, harga_product, status_product, tanggal_upload) VAlUES ('$code_gabung','$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date') ");
+        $role = "Product";
+        $insert_product = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, jumlah_product, harga_product, status_product, tanggal_upload, status) VAlUES ('$code_gabung','$nm_produk', '$jml_produk', '$hrg_produk', '$status', '$date', '$role') ");
         if ($insert_product) {
             echo "<script>alert('Data Berhasil Di Tambahkan Tanpa Gambar');document.location.href='./service_produk.php'</script>";
         } else {
@@ -220,16 +221,15 @@ if (isset($_POST['add_produk'])) {
 // Add Service
 include "./conn.php";
 if (isset($_POST['add_service'])) {
-    $nama = htmlspecialchars(addslashes($_POST['nm_service']));
-    $harga = htmlspecialchars(addslashes($_POST['hrg_service']));
-
-    $view_service = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service LIMIT 1");
-    $data_service = mysqli_fetch_assoc($view_service);
+    $nama = htmlspecialchars(addslashes($_POST['nm_produk']));
+    $harga = htmlspecialchars(addslashes($_POST['hrg_produk']));
+    $view_product = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product LIMIT 1");
+    $data_product = mysqli_fetch_assoc($view_product);
 
     // Cek Apakah Ada Input Image Baru
-    if (isset($_FILES['img_service']) && $_FILES['img_service']['error'] === UPLOAD_ERR_OK) {
-        // Jika Kode Service Belum Ada 1
-        $view_code = mysqli_query($conn, "SELECT max(code_service) AS kode FROM service");
+    if (isset($_FILES['img_produk']) && $_FILES['img_produk']['error'] === UPLOAD_ERR_OK) {
+        // Jika Kode service Belum Ada 1
+        $view_code = mysqli_query($conn, "SELECT max(code_product) AS kode FROM product");
         $data_code = mysqli_fetch_assoc($view_code);
 
         $code = $data_code['kode'];
@@ -237,13 +237,13 @@ if (isset($_POST['add_service'])) {
         $code_urutan++;
 
         $code_huruf = "KS-";
-        $code_gabung = $code_huruf . sprintf(
+        $code_service = $code_huruf . sprintf(
             "%05s",
             $code_urutan
         );
 
         // Cek Informasi Input Image Unggah
-        $image = $_FILES['img_service'];
+        $image = $_FILES['img_produk'];
 
         // Pengambilan Ekstensi Image
         $path = pathinfo($image['name'], PATHINFO_EXTENSION);
@@ -263,7 +263,8 @@ if (isset($_POST['add_service'])) {
         if (move_uploaded_file($image['tmp_name'], $folder)) {
             $status = "Ready";
             $tgl_upload = date("Y-m-d h:i:s");
-            $insert_service = mysqli_query($conn, "INSERT INTO service (code_service, nama_service, jumlah_service, harga_service, image_service, status_service, tanggal_upload) VALUES ('$code_gabung','$nama', '$jumlah', '$harga', '$img', '$status', '$tgl_upload') ");
+            $role = "Service";
+            $insert_service = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, harga_product, image_product, status_product, tanggal_upload, status) VALUES ('$code_service','$nama', '$harga', '$img', '$status', '$tgl_upload', '$role') ");
             if ($insert_service) {
                 echo "<script>alert('Anda Berhasil Mengupload List Service Dengan Image.');document.location.href='./service_produk.php'</script>";
             } else {
@@ -271,7 +272,8 @@ if (isset($_POST['add_service'])) {
             }
         }
     } else {
-        $insert_service = mysqli_query($conn, "INSERT INTO service (code_service, nama_service, jumlah_service, harga_service, status_service, tanggal_upload) VALUES ('$code_gabung','$nama', '$jumlah', '$harga', '$status', '$tgl_upload') ");
+        $role = "Service";
+        $insert_product = mysqli_query($conn, "INSERT INTO product (code_product, nama_product, harga_product, status_product, tanggal_upload, status) VALUES ('$code_service','$nama', '$harga', '$status', '$tgl_upload', '$role') ");
         if ($insert_service) {
             echo "<script>alert('Anda Berhasil Mengupload List Service Tanpa Image.');document.location.href='./service_produk.php'</script>";
         } else {

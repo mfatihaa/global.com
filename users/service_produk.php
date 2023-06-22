@@ -90,15 +90,15 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                         <div class="row justify-content-center">
                                             <div class="col-md-12">
                                                 <label class="form-label fw-bold">Nama Service</label>
-                                                <input type="text" name="nm_service" class="form-control shadow-none">
+                                                <input type="text" name="nm_produk" class="form-control shadow-none">
                                             </div>
                                             <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Harga Service</label>
-                                                <input type="text" name="hrg_service" class="form-control shadow-none">
+                                                <input type="text" name="hrg_produk" class="form-control shadow-none">
                                             </div>
                                             <div class="col-md-12 mt-2">
                                                 <label class="form-label fw-bold">Image Service</label>
-                                                <input type="file" name="img_service" class="form-control shadow-none">
+                                                <input type="file" name="img_produk" class="form-control shadow-none">
                                             </div>
                                         </div>
                                     </div>
@@ -140,75 +140,77 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                 <?php
                                 include "./conn.php";
                                 $product_view = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product");
+                                $no = 1;
                                 while ($product_row = mysqli_fetch_assoc($product_view)) {
-                                    $no = 1;
+                                    if ($product_row['status'] == "Product") {
                                 ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $product_row['nama_product']; ?></td>
-                                        <td><?= $product_row['jumlah_product']; ?></td>
-                                        <td>Rp. <?= number_format($product_row['harga_product']); ?></td>
-                                        <?php
-                                        if (isset($product_row['image_product'])) {
-                                        ?>
-                                            <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <td><img src="./vendor/img/barang.svg" width="25"></td>
-                                        <?php
-                                        }
-                                        ?>
-                                        <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
-                                        <td><?= $product_row['status_product']; ?></td>
-                                        <td>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
-                                            <!-- Modal Edit Product -->
-                                            <div class="modal fade" id="edit_product<?= $product_row['id_product']; ?>" tabindex="-1">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit Data Product</h5>
-                                                        </div>
-                                                        <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
-                                                            <div class="modal-body">
-                                                                <div class="container">
-                                                                    <div class="row justify-content-center">
-                                                                        <input type="text" name="id" value="<?= $product_row['id_product']; ?>" hidden>
-                                                                        <div class="col-md-12">
-                                                                            <label class="form-label fw-bold">Nama
-                                                                                Product</label>
-                                                                            <input type="text" name="nm_product" class="form-control shadow-none" value="<?= $product_row['nama_product']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Jumlah
-                                                                                Product</label>
-                                                                            <input type="number" name="jml_product" class="form-control shadow-none" value="<?= $product_row['jumlah_product']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Harga
-                                                                                Product</label>
-                                                                            <input type="text" name="hrg_product" class="form-control shadow-none" value="<?= $product_row['harga_product']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Image
-                                                                                Product</label>
-                                                                            <input type="file" name="img_product" class="form-control shadow-none">
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $product_row['nama_product']; ?></td>
+                                            <td><?= $product_row['jumlah_product']; ?></td>
+                                            <td>Rp. <?= number_format($product_row['harga_product']); ?></td>
+                                            <?php
+                                            if (isset($product_row['image_product'])) {
+                                            ?>
+                                                <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <td><img src="./vendor/img/barang.svg" width="25"></td>
+                                            <?php
+                                            }
+                                            ?>
+                                            <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
+                                            <td><?= $product_row['status_product']; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
+                                                <!-- Modal Edit Product -->
+                                                <div class="modal fade" id="edit_product<?= $product_row['id_product']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Data Product</h5>
+                                                            </div>
+                                                            <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                        <div class="row justify-content-center">
+                                                                            <input type="text" name="id" value="<?= $product_row['id_product']; ?>" hidden>
+                                                                            <div class="col-md-12">
+                                                                                <label class="form-label fw-bold">Nama
+                                                                                    Product</label>
+                                                                                <input type="text" name="nm_product" class="form-control shadow-none" value="<?= $product_row['nama_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Jumlah
+                                                                                    Product</label>
+                                                                                <input type="number" name="jml_product" class="form-control shadow-none" value="<?= $product_row['jumlah_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Harga
+                                                                                    Product</label>
+                                                                                <input type="text" name="hrg_product" class="form-control shadow-none" value="<?= $product_row['harga_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Image
+                                                                                    Product</label>
+                                                                                <input type="file" name="img_product" class="form-control shadow-none">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" name="edit_product" class="btn btn-success shadow-none">Edit</button>
-                                                            </div>
-                                                        </form>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" name="edit_product" class="btn btn-success shadow-none">Edit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                 <?php
+                                    }
                                 }
                                 ?>
                             </tbody>
@@ -230,70 +232,72 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                             <tbody>
                                 <?php
                                 include "./conn.php";
-                                $service_view = mysqli_query($conn, "SELECT * FROM service ORDER BY id_service");
-                                while ($service_row = mysqli_fetch_assoc($service_view)) {
-                                    $no = 1;
+                                $product_view = mysqli_query($conn, "SELECT * FROM product ORDER BY id_product");
+                                $no = 1;
+                                while ($product_row = mysqli_fetch_assoc($product_view)) {
+                                    if ($product_row['status'] == "Service") {
                                 ?>
-                                    <tr>
-                                        <td><?= $no++; ?></td>
-                                        <td><?= $service_row['nama_service']; ?></td>
-                                        <td>Rp. <?= number_format($service_row['harga_service']); ?></td>
-                                        <?php
-                                        if (isset($service_row['image_service'])) {
-                                        ?>
-                                            <td><img src="./vendor/img/<?= $service_row['image_service']; ?>" width="50" class="rounded-5"></td>
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <td><img src="./vendor/img/barang.svg" width="25"></td>
-                                        <?php
-                                        }
-                                        ?>
-                                        <td><?= date("l, d F Y", strtotime($service_row['tanggal_upload'])); ?></td>
-                                        <td><?= $service_row['status_service']; ?></td>
-                                        <td>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_service<?= $service_row['id_service']; ?>"><i class="bx bx-edit"></i></button>
-                                            <!-- Modal Edit Service -->
-                                            <div class="modal fade" id="edit_service<?= $service_row['id_service']; ?>" tabindex="-1">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit Data Service</h5>
-                                                        </div>
-                                                        <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
-                                                            <div class="modal-body">
-                                                                <div class="container">
-                                                                    <div class="row justify-content-center">
-                                                                        <input type="text" name="id" value="<?= $service_row['id_service']; ?>" hidden>
-                                                                        <div class="col-md-12">
-                                                                            <label class="form-label fw-bold">Nama
-                                                                                Service</label>
-                                                                            <input type="text" name="nm_service" class="form-control shadow-none" value="<?= $service_row['nama_service']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Harga
-                                                                                Service</label>
-                                                                            <input type="text" name="hrg_service" class="form-control shadow-none" value="<?= $service_row['harga_service']; ?>">
-                                                                        </div>
-                                                                        <div class="col-md-12 mt-2">
-                                                                            <label class="form-label fw-bold">Image
-                                                                                Service</label>
-                                                                            <input type="file" name="img_service" class="form-control shadow-none">
+                                        <tr>
+                                            <td><?= $no++; ?></td>
+                                            <td><?= $product_row['nama_product']; ?></td>
+                                            <td>Rp. <?= number_format($product_row['harga_product']); ?></td>
+                                            <?php
+                                            if (isset($product_row['image_product'])) {
+                                            ?>
+                                                <td><img src="./vendor/img/<?= $product_row['image_product']; ?>" width="50" class="rounded-5"></td>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <td><img src="./vendor/img/barang.svg" width="25"></td>
+                                            <?php
+                                            }
+                                            ?>
+                                            <td><?= date("l, d F Y", strtotime($product_row['tanggal_upload'])); ?></td>
+                                            <td><?= $product_row['status_product']; ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#edit_product<?= $product_row['id_product']; ?>"><i class="bx bx-edit"></i></button>
+                                                <!-- Modal Edit product -->
+                                                <div class="modal fade" id="edit_product<?= $product_row['id_product']; ?>" tabindex="-1">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit Data Service</h5>
+                                                            </div>
+                                                            <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                        <div class="row justify-content-center">
+                                                                            <input type="text" name="id" value="<?= $product_row['id_product']; ?>" hidden>
+                                                                            <div class="col-md-12">
+                                                                                <label class="form-label fw-bold">Nama
+                                                                                    Service</label>
+                                                                                <input type="text" name="nm_product" class="form-control shadow-none" value="<?= $product_row['nama_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Harga
+                                                                                    Service</label>
+                                                                                <input type="text" name="hrg_product" class="form-control shadow-none" value="<?= $service_row['harga_product']; ?>">
+                                                                            </div>
+                                                                            <div class="col-md-12 mt-2">
+                                                                                <label class="form-label fw-bold">Image
+                                                                                    Service</label>
+                                                                                <input type="file" name="img_product" class="form-control shadow-none">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" name="edit_service" class="btn btn-success shadow-none">Edit</button>
-                                                            </div>
-                                                        </form>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger shadow-none" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" name="edit_product" class="btn btn-success shadow-none">Edit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
                                 <?php
+                                    }
                                 }
                                 ?>
                             </tbody>

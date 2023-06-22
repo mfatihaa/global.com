@@ -53,6 +53,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
 
                         <?php
                         if (isset($_SESSION['cart'])) {
+                            $no = 1;
                         ?>
                             <?php
                             foreach ($_SESSION['cart'] as $code => $qty) :
@@ -61,7 +62,6 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                 include "./conn.php";
                                 $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
                                 while ($data_product = mysqli_fetch_assoc($view_product)) {
-                                    $no = 1;
                                 ?>
                                     <tr>
                                         <td><?php echo $no++; ?></td>
