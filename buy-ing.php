@@ -13,7 +13,6 @@ if (isset($_SESSION['cart'][$id_product])) {
 else {
     $_SESSION['cart'][$id_product] = 1;
 }
-echo "<pre>";
-print_r($_SESSION['cart']);
-echo "</pre>";
-echo "<script>alert('Produk/Service telah masuk ke keranjang');</script>";
+
+
+echo "<script>alert('Produk Berhasil Ditambahkan.');window.location='./cart'</script>";
