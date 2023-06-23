@@ -1,4 +1,13 @@
 <?php
+// Delete Keranjang List
+if (isset($_GET['code'])) {
+    session_start();
+    $code_product = $_GET['code'];
+    unset($_SESSION['cart'][$code_product]);
+    echo "<script>alert('Product Atau Service Berhasil Dihapus.')</script>";
+    echo "<script>location='./cart'</script>";
+}
+
 // Password Change
 include "./conn.php";
 if (isset($_POST['pass_change'])) {
@@ -44,21 +53,6 @@ if (isset($_POST['daftar_admin'])) {
         }
     } else {
         echo "<script>alert('Akun Sudah Tersedia.');document.location.href='./register-admin'</script>";
-    }
-} else {
-    $check_user = "root";
-    $check_pass = "skripsi2023";
-
-    $user = htmlspecialchars(addslashes($_POST['username']));
-    $pass = htmlspecialchars(addslashes($_POST['password']));
-
-    if ($user == $check_user && $pass = $check_pass) {
-        session_start();
-
-        $_SESSION['username'] = $check_user;
-        $_SESSION['password'] = $check_pass;
-
-        header('Location: ./register-admin');
     }
 }
 
@@ -211,5 +205,20 @@ if (isset($_POST['masuk'])) {
         } else {
             echo "<script>alert('Tidak Ada Akun Yang Cocok.');document.location.href='./log-in'</script>";
         }
+    }
+} else {
+    $check_user = "root";
+    $check_pass = "skripsi2023";
+
+    $user = htmlspecialchars(addslashes($_POST['username']));
+    $pass = htmlspecialchars(addslashes($_POST['password']));
+
+    if ($user == $check_user && $pass = $check_pass) {
+        session_start();
+
+        $_SESSION['username'] = $check_user;
+        $_SESSION['password'] = $check_pass;
+
+        header('Location: ./register-admin');
     }
 }

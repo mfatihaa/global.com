@@ -338,7 +338,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                                                     </div>
                                                 </div>
                                                 <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#delete_service<?= $product_row['id_product']; ?>"><i class="bx bx-trash"></i></button>
-                                                <!-- Modal Delete Product -->
+                                                <!-- Modal Delete Service -->
                                                 <div class="modal fade" id="delete_service<?= $product_row['id_product']; ?>" tabindex="-1">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
