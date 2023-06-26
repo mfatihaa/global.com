@@ -2,9 +2,11 @@
 error_reporting(0);
 session_start();
 
-if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
     exit();
+} elseif (empty($_SESSION['cart'])) {
+    echo "<script>alert('Keranjang Anda Kosong.');document.location.href='./'</script>";
 }
 
 ?>
@@ -76,15 +78,8 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                                 ?>
                                         </td>
                                         <td>
-                                            <button class="btn btn-success" type="button">
-                                                <i class='bx bx-list-check'></i>
-                                            </button>
-                                            <button class="btn btn-warning" type="button">
-                                                <i class='bx bx-edit'></i>
-                                            </button>
-                                            <button class="btn btn-danger" type="button">
-                                                <i class='bx bx-trash-alt'></i>
-                                            </button>
+                                            <a href="akses.php?code=<?php echo $code ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
+                                            <a href="akses.php?code=<?php echo $code ?>" class="btn btn-danger"><i class='bx bx-trash'></i></a>
                                         </td>
                                     </tr>
                                 <?php
@@ -98,6 +93,8 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                         ?>
                     </tbody>
                 </table>
+                <a href="service.php?code=<?php echo $code ?>" class="btn btn-secondary shadow-none"><i class='bx bxs-shopping-bags'> Lanjutkan memilih</i></a>
+                <a href="stand-in-line.php?code=<?php echo $code ?>" class="btn btn-primary shadow-none"><i class='bx bx-list-check'> checkout</i></a>
             </div>
         </div>
     <?php

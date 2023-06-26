@@ -37,32 +37,56 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
         <div class="container p-4">
             <div class="table-responsive">
                 <table class="table table striped caption-top">
-                    <caption>Daftar Antrian</caption>
+                    <caption>Daftar Pesanan</caption>
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Invoice</th>
-                            <th>Gambar</th>
+                            <th>Kode</th>
                             <th>Nama</th>
+                            <th>Harga</th>
+                            <th>Qty</th>
                             <th>Subtotal</th>
-                            <th>Tanggal Pemesanan</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <img src="" alt="">
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-success">Disetujui</button>
-                            </td>
-                        </tr>
+
+                        <?php
+                        if (isset($_SESSION['cart'])) {
+                            $no = 1;
+                        ?>
+                            <?php
+                            foreach ($_SESSION['cart'] as $code => $qty) :
+                            ?>
+                                <?php
+                                include "./conn.php";
+                                $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
+                                while ($data_product = mysqli_fetch_assoc($view_product)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $no++; ?></td>
+                                        <td><?php echo $data_product['code_product']; ?></td>
+                                        <td><?php echo $data_product['nama_product']; ?></td>
+                                        <td>Rp. <?php echo number_format($data_product['harga_product']); ?></td>
+                                        <td><?php echo $qty; ?></td>
+                                        <td>
+                                            Rp. <?php
+                                                $sum = $data_product['harga_product'] * $qty;
+                                                echo number_format($sum);
+                                                ?>
+                                        </td>
+                                        <td>
+
+                                            <button class="btn btn-success">Disetujui</button>
+                                        <?php
+                                    }
+                                        ?>
+                                    <?php
+                                endforeach
+                                    ?>
+                                <?php
+                            }
+                                ?>
                     </tbody>
                 </table>
             </div>

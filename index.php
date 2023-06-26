@@ -30,11 +30,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <?php include './vendor/header.php'; ?>
 
     <!-- Sliding Picture -->
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        </div>
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="./vendor/img/background.png" class="d-block w-100" loading="lazy">
@@ -43,15 +39,14 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                 <img src="./vendor/img/background-2.png" class="d-block w-100" loading="lazy">
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
-
     </div>
 
     <!-- Main Content Service -->
@@ -78,7 +73,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                 <div class="card-header text-justify">
                                     <p class="text-danger fw-bold">Deskripsi : <?= $data_product['desk_product']; ?></p>
                                     <div class="modal-footer">
-                                        <a href="./buy-ing?id=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">keranjang</a>
+                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">keranjang</a>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +140,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                     <p class="text-danger fw-bold">Deskripsi : <?= $data_product['desk_product']; ?></p>
                                     <p class="text-muted"> Tersedia : <?= $data_product['jumlah_product']; ?></p>
                                     <div class="modal-footer">
-                                        <a href="./buy-ing?id=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">Keranjang</a>
+                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">Keranjang</a>
                                     </div>
                                 </div>
                             </div>
