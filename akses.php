@@ -38,7 +38,7 @@ include "./conn.php";
 if (isset($_POST['daftar_admin'])) {
     $username_register = htmlspecialchars(addslashes($_POST['username']));
     $nama = htmlspecialchars(addslashes($_POST['nama']));
-    $email = htmlspecialchars(addslashes($_POST['email']));
+    $email = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
     $telepon = htmlspecialchars(addslashes($_POST['telepon']));
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
@@ -64,7 +64,7 @@ include "./conn.php";
 if (isset($_POST['daftar'])) {
     $username_register = htmlspecialchars(addslashes($_POST['username']));
     $nama = htmlspecialchars(addslashes($_POST['nama']));
-    $email = htmlspecialchars(addslashes($_POST['email']));
+    $email = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
     $telepon = htmlspecialchars(addslashes($_POST['telepon']));
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
@@ -124,7 +124,7 @@ if (isset($_POST['update'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
     $username_update = htmlspecialchars(addslashes($_POST['username']));
     $nama_update = htmlspecialchars(addslashes($_POST['nama']));
-    $email_update = htmlspecialchars(addslashes($_POST['email'],));
+    $email_update = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
     $telepon_update = htmlspecialchars(addslashes($_POST['telepon']));
 
     $view_cus = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
