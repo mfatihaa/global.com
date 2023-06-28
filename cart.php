@@ -56,6 +56,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                         <?php
                         if (isset($_SESSION['cart'])) {
                             $no = 1;
+                            $totalbelanja = 0;
                         ?>
                             <?php
                             foreach ($_SESSION['cart'] as $code => $qty) :
@@ -78,12 +79,14 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                                                 ?>
                                         </td>
                                         <td>
-                                            <a href="akses.php?code=<?php echo $code ?>" class="btn btn-warning"><i class='bx bx-edit'></i></a>
                                             <a href="akses.php?code=<?php echo $code ?>" class="btn btn-danger"><i class='bx bx-trash'></i></a>
                                         </td>
                                     </tr>
                                 <?php
                                 }
+                                ?>
+                                <?php
+                                $totalbelanja += $sum;
                                 ?>
                             <?php
                             endforeach
@@ -92,6 +95,12 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                         }
                         ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5">Total Harga</th>
+                            <th>Rp. <?php echo number_format($totalbelanja) ?></th>
+                        </tr>
+                    </tfoot>
                 </table>
                 <a href="service.php?code=<?php echo $code ?>" class="btn btn-secondary shadow-none"><i class='bx bxs-shopping-bags'> Lanjutkan memilih</i></a>
                 <a href="stand-in-line.php?code=<?php echo $code ?>" class="btn btn-primary shadow-none"><i class='bx bx-list-check'> checkout</i></a>

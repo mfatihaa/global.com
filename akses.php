@@ -1,4 +1,6 @@
 <?php
+// Edit Keranjang List
+
 // Delete Keranjang List
 if (isset($_GET['code'])) {
     session_start();
@@ -49,10 +51,10 @@ if (isset($_POST['daftar_admin'])) {
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./users/log-in'</script>";
         } else {
-            echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./register-admin'</script>";
+            echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./admin'</script>";
         }
     } else {
-        echo "<script>alert('Akun Sudah Tersedia.');document.location.href='./register-admin'</script>";
+        echo "<script>alert('Akun Sudah Tersedia.');document.location.href='./admin'</script>";
     }
 }
 
@@ -219,6 +221,6 @@ if (isset($_POST['masuk'])) {
         $_SESSION['username'] = $check_user;
         $_SESSION['password'] = $check_pass;
 
-        header('Location: ./register-admin');
+        header('Location: ./admin');
     }
 }

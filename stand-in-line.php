@@ -54,6 +54,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                         <?php
                         if (isset($_SESSION['cart'])) {
                             $no = 1;
+                            $totalbelanja = 0;
                         ?>
                             <?php
                             foreach ($_SESSION['cart'] as $code => $qty) :
@@ -81,6 +82,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                         <?php
                                     }
                                         ?>
+                                        <?php $totalbelanja += $sum; ?>
                                     <?php
                                 endforeach
                                     ?>
@@ -88,6 +90,12 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                             }
                                 ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5"> Total Bayar </th>
+                            <th>Rp. <?php echo number_format($totalbelanja) ?> </th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

@@ -1,4 +1,64 @@
 <?php
+// Update Settings
+error_reporting(0);
+include "./conn.php";
+if (isset($_POST['update'])) {
+    $id = htmlspecialchars(addslashes($_POST['id']));
+    $username_update = htmlspecialchars(addslashes($_POST['username']));
+    $nama_update = htmlspecialchars(addslashes($_POST['nama']));
+    $email_update = htmlspecialchars(addslashes($_POST['email'],));
+    $telepon_update = htmlspecialchars(addslashes($_POST['telepon']));
+
+    $view_user = mysqli_query($conn, "SELECT * FROM user WHERE id_user = '{$id}'");
+    $data_user = mysqli_fetch_assoc($view_user);
+
+    // Cek Apakah Ada Input Image Baru
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+
+        // Cek Informasi Input Image Unggah
+        $image = $_FILES['image'];
+
+        // Pengambilan Ekstensi Image
+        $path = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        // Format Ekstensi Yang Diperbolehkan
+        $format = array('jpg', 'jpeg', 'png', 'svg');
+
+        if (!in_array($path, $format)) {
+            echo "<script>alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');document.location.href='./setting.php'</script>";
+            exit;
+        }
+
+        $img = md5_file($nama_update) . "-" . $path;
+        $folder = "./vendor/img/" . $img;
+
+        // Hapus Gambar Yang Digunakan Dari Local Storage
+        $img_remove = $data_user['image'];
+        if (file_exists("./vendor/img/$img_remove")) {
+            unlink("./vendor/img/$img_remove");
+        }
+
+        // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
+        if (move_uploaded_file($image['tmp_name'], $folder)) {
+
+            $update = mysqli_query($conn, "UPDATE user SET username = '$username_update', nama = '$nama_update', email = '$email_update', telepon = '$telepon_update', image = '$img' WHERE id_user = '{$data_user['id_user']}' ");
+            if ($update) {
+                echo "<script>alert('Data Berhasil Diubah Dengan Gambar');document.location.href='./setting.php'</script>";
+            } else {
+                echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./setting.php'</script>";
+            }
+        }
+    } else {
+        $update = mysqli_query($conn, "UPDATE user SET username = '$username_update', nama = '$nama_update', email = '$email_update', telepon = '$telepon_update' WHERE id_user = '{$data_user['id_user']}' ");
+        if ($update) {
+            echo "<script>alert('Data Berhasil Diubah Tanpa Gambar');document.location.href='./setting.php'</script>";
+        } else {
+            echo "<script>alert('Data Tidak Berhasil Diubah!');document.location.href='./setting.php'</script>";
+        }
+    }
+}
+
+
 // Delete Product List
 error_reporting(0);
 include "./conn.php";
@@ -83,13 +143,13 @@ if (isset($_POST['edit_product'])) {
 
         $img = "Service" . "-" . rand() . "-" . $path;
         $folder = "./vendor/img/product_service/" . $img;
-        
+
         // Hapus Gambar Yang Digunakan Dari Local Storage
         $img_remove = $data_edit_product['image_product'];
         if (file_exists("./vendor/img/product_service/$img_remove")) {
             unlink("./vendor/img/product_service/$img_remove");
         }
-        
+
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
             $date = date('Y-m-d h:i:s');
@@ -132,7 +192,7 @@ if (isset($_POST['edit_service'])) {
         // Pengambilan Ekstensi Image
         $path = pathinfo($image['name'], PATHINFO_EXTENSION);
 
-        // Format Ekstensi Yang Diperbolehkan
+        // Format Ekstensi Yang Diperbolehkan untuk foto
         $format = array('jpg', 'jpeg', 'png', 'svg');
 
         if (!in_array($path, $format)) {
@@ -142,13 +202,13 @@ if (isset($_POST['edit_service'])) {
 
         $img = "Service" . "-" . rand() . "-" . $path;
         $folder = "./vendor/img/product_service/" . $img;
-        
+
         // Hapus Gambar Yang Digunakan Dari Local Storage
         $img_remove = $data_edit_service['image_service'];
         if (file_exists("./vendor/img/product_service/$img_remove")) {
             unlink("./vendor/img/product_service/$img_remove");
         }
-        
+
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan
         if (move_uploaded_file($image['tmp_name'], $folder)) {
             $date = date('Y-m-d h:i:s');
@@ -305,7 +365,7 @@ if (isset($_POST['add_service'])) {
         // Pengambilan Ekstensi Image
         $path = pathinfo($image['name'], PATHINFO_EXTENSION);
 
-        // Format Ekstensi Yang Diperbolehkan
+        // Format Ekstensi Yang Diperbolehkan untuk foto
         $format = array('jpg', 'jpeg', 'png', 'svg');
 
         if (!in_array($path, $format)) {
