@@ -1,4 +1,4 @@
-<footer class="bg-light w-100">
+<footer class="bg-light w-100 fixed-bottom">
     <div class="text-center p-3 bg-dark text-warning fw-bold">
         <?php
         $date = date("Y");

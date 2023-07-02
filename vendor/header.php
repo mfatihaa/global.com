@@ -20,7 +20,9 @@
                     $data = mysqli_fetch_assoc($view);
                 ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="./cart"><i class='bx bx-cart'></i> Cart [0]</a>
+                        <a class="nav-link" href="./cart">
+                            <i class='bx bx-cart'></i> Cart
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./stand-in-line"><i class='bx bx-list-check'></i> Waiting List</a>
@@ -90,6 +92,9 @@
                             </li>
                             <li class="nav-items">
                                 <a class="dropdown-item" href="./registration">Registration <i class='bx bx-registered'></i></a>
+                            </li>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="./users/log-in">Admin <i class='bx bx-log-in-circle'></i></a>
                             </li>
                         <?php
                         }

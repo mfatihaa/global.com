@@ -53,7 +53,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                 <div class="card-header text-justify">
                                     <p class="text-danger fw-bold">Deskripsi : <?= $data_product['desk_product']; ?></p>
                                     <div class="modal-footer">
-                                        <a href="./buy-ing.php?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">Keranjang</a>
+                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none w-100">Beli</a>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                         Tersedia : <?= $data_product['jumlah_product']; ?>
                                     </p>
                                     <div class="modal-footer">
-                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none">Keranjang</a>
+                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none w-100">Beli</a>
                                     </div>
                                 </div>
                             </div>

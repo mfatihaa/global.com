@@ -74,6 +74,9 @@
                             <li class="nav-items">
                                 <a class="dropdown-item" href="./log-in">Sign In <i class='bx bx-log-in-circle'></i></a>
                             </li>
+                            <li class="nav-items">
+                                <a class="dropdown-item" href="../">Pelanggan <i class='bx bx-user'></i></a>
+                            </li>
                         <?php
                         }
                         ?>

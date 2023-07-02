@@ -13,5 +13,4 @@ if (isset($_SESSION['cart'][$code_product])) {
 else {
     $_SESSION['cart'][$code_product] = 1;
 }
-echo "<script>alert('Produk/Service telah masuk ke keranjang');</script>";
 header("Location: ./cart");

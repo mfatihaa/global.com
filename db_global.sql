@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2023 pada 18.45
+-- Waktu pembuatan: 02 Jul 2023 pada 13.07
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -40,6 +40,35 @@ CREATE TABLE `pelanggan` (
   `time_login` datetime DEFAULT NULL,
   `time_logout` datetime DEFAULT NULL,
   `kondisi` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pembelian`
+--
+
+CREATE TABLE `pembelian` (
+  `id_pembelian` int(11) NOT NULL,
+  `code_pelanggan` varchar(255) DEFAULT NULL,
+  `tgl_pembelian` date DEFAULT NULL,
+  `total_pembelian` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pembelian_product`
+--
+
+CREATE TABLE `pembelian_product` (
+  `id_pembelian_product` int(11) NOT NULL,
+  `id_pembelian` int(11) DEFAULT NULL,
+  `code_pelanggan` varchar(255) DEFAULT NULL,
+  `code_product` varchar(255) DEFAULT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tgl_kehadiran` date DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -92,6 +121,18 @@ ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
+-- Indeks untuk tabel `pembelian`
+--
+ALTER TABLE `pembelian`
+  ADD PRIMARY KEY (`id_pembelian`);
+
+--
+-- Indeks untuk tabel `pembelian_product`
+--
+ALTER TABLE `pembelian_product`
+  ADD PRIMARY KEY (`id_pembelian_product`);
+
+--
 -- Indeks untuk tabel `product`
 --
 ALTER TABLE `product`
@@ -112,6 +153,18 @@ ALTER TABLE `user`
 --
 ALTER TABLE `pelanggan`
   MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembelian`
+--
+ALTER TABLE `pembelian`
+  MODIFY `id_pembelian` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `pembelian_product`
+--
+ALTER TABLE `pembelian_product`
+  MODIFY `id_pembelian_product` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `product`

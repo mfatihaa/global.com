@@ -32,8 +32,11 @@ if (isset($_POST['pass_change'])) {
 }
 
 // Register Admin
+error_reporting(0);
+session_start();
 include "./conn.php";
 if (isset($_POST['daftar_admin'])) {
+    
     $username_register = htmlspecialchars(addslashes($_POST['username']));
     $nama = htmlspecialchars(addslashes($_POST['nama']));
     $email = htmlspecialchars(addslashes($_POST['email']));
@@ -45,15 +48,20 @@ if (isset($_POST['daftar_admin'])) {
     $data_regis = mysqli_fetch_assoc($view_regis);
 
     if (mysqli_num_rows($view_regis) == 0) {
+        session_start();
         $insert_cus = mysqli_query($conn, "INSERT INTO user (username, nama, email, telepon, password, konfirmasi, status) VALUES ('$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'ON') ");
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./users/log-in'</script>";
+            unset($_SESSION['create']);
+            session_destroy();
         } else {
             echo "<script>alert('Pendaftaran Anda Tidak Berhasil.');document.location.href='./register-admin'</script>";
         }
     } else {
         echo "<script>alert('Akun Sudah Tersedia.');document.location.href='./register-admin'</script>";
     }
+    unset($_SESSION['create']);
+    session_destroy();
 }
 
 // Register
@@ -85,7 +93,7 @@ if (isset($_POST['daftar'])) {
             $code_urutan
         );
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'ON') ");
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in'</script>";
         } else {
@@ -106,7 +114,7 @@ if (isset($_POST['daftar'])) {
             $code_urutan
         );
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'OFF') ");
+        $insert_cus = mysqli_query($conn, "INSERT INTO pelanggan (code_pelanggan, username, nama, email, telepon, password, konfirmasi, kondisi) VALUES ('$code_gabung','$username_register', '$nama', '$email', '$telepon', '$password_register', '$confirm_register', 'ON') ");
         if ($insert_cus) {
             echo "<script>alert('Pendaftaran Anda Telah Berhasil.');document.location.href='./log-in'</script>";
         } else {
@@ -174,6 +182,28 @@ if (isset($_POST['update'])) {
     }
 }
 
+// Login Account Create Admin
+error_reporting(0);
+session_start();
+include "./conn.php";
+if (isset($_POST['buat'])) {
+    $check_user = "root";
+    $check_pass = "skripsi2023";
+
+    $user = htmlspecialchars(addslashes($_POST['username']));
+    $pass = htmlspecialchars(addslashes($_POST['password']));
+
+    if ($user == $check_user && $pass = $check_pass) {
+        session_start();
+        $_SESSION['create'] = array(
+            $_SESSION['username'] = $check_user,
+            $_SESSION['password'] = $check_pass,
+        );
+        
+        header('Location: ./register-admin');
+    }
+}
+
 // Login
 session_start();
 include "./conn.php";
@@ -187,7 +217,7 @@ if (isset($_POST['masuk'])) {
         echo "<script>alert('Email & Password Anda Masukkan Salah! Atau Status Akun Anda OFF.');document.location.href='./log-in'</script>";
     } else {
         $data_login = mysqli_fetch_assoc($view_login);
-
+        $_SESSION['pelanggan'] = $data_login;
         $_SESSION['id_pelanggan'] = $data_login['id_pelanggan'];
         $_SESSION['username'] = $data_login['username'];
         $_SESSION['password'] = $data_login['password'];
@@ -205,20 +235,5 @@ if (isset($_POST['masuk'])) {
         } else {
             echo "<script>alert('Tidak Ada Akun Yang Cocok.');document.location.href='./log-in'</script>";
         }
-    }
-} else {
-    $check_user = "root";
-    $check_pass = "skripsi2023";
-
-    $user = htmlspecialchars(addslashes($_POST['username']));
-    $pass = htmlspecialchars(addslashes($_POST['password']));
-
-    if ($user == $check_user && $pass = $check_pass) {
-        session_start();
-
-        $_SESSION['username'] = $check_user;
-        $_SESSION['password'] = $check_pass;
-
-        header('Location: ./register-admin');
     }
 }

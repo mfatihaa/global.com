@@ -2,7 +2,7 @@
 error_reporting(0);
 session_start();
 
-if (empty($_SESSION['username']) == 'admin' && empty($_SESSION['password']) == "admin") {
+if (empty($_SESSION['username']) == 'root' && empty($_SESSION['password']) == "skripsi2023") {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
     exit();
 }

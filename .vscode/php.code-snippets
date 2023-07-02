@@ -1,0 +1,21 @@
+{
+	"PHP" : {
+		"prefix": "php",
+		"body": "<?php $1; ?>"
+	},
+
+	"ECHO" : {
+		"prefix": "echo",
+		"body": "<?php echo $1; ?>"
+	},
+
+	"PHP ECHO" : {
+		"prefix": "echo2",
+		"body": "<?= $1; ?>"
+	},
+
+	"INCLUDE" : {
+		"prefix": "include",
+		"body": "<?php include '$1'; ?>"
+	}
+}

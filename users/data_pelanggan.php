@@ -64,7 +64,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                         if ($data_pelanggan['kondisi'] == "OFF") {
                         ?>
                             <td>
-                                <button type="button" class="btn btn-success shadow-none" data-bs-toggle="modal" data-bs-target="#ON<?php echo $data_pelanggan['id_pelanggan']; ?>"><i class="bx bx-edit"></i></button>
+                                <button type="button" class="btn btn-success shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#ON<?php echo $data_pelanggan['id_pelanggan']; ?>"><i class="bx bx-edit"></i></button>
                             </td>
                             <div class="modal fade" id="ON<?php echo $data_pelanggan['id_pelanggan']; ?>" tabindex="-1">
                                 <div class="modal-dialog">
@@ -90,7 +90,7 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                         } else {
                         ?>
                             <td>
-                                <button type="button" class="btn btn-danger shadow-none" data-bs-toggle="modal" data-bs-target="#OFF<?php echo $data_pelanggan['id_pelanggan']; ?>"><i class="bx bx-edit"></i></button>
+                                <button type="button" class="btn btn-danger shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#OFF<?php echo $data_pelanggan['id_pelanggan']; ?>"><i class="bx bx-edit"></i></button>
                             </td>
                             <div class="modal fade" id="OFF<?php echo $data_pelanggan['id_pelanggan']; ?>" tabindex="-1">
                                 <div class="modal-dialog">

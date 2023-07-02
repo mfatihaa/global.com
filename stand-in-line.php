@@ -2,10 +2,11 @@
 error_reporting(0);
 session_start();
 
-if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
+if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +15,7 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiting List</title>
-
+    <title>Global Techno | Waiting List</title>
     <!-- Icon -->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- CSS -->
@@ -46,49 +46,53 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                             <th>Harga</th>
                             <th>Qty</th>
                             <th>Subtotal</th>
+                            <?php
+                            include "./conn.php";
+                            $code = $_SESSION['pelanggan']['code_pelanggan'];
+                            $view = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code'");
+                            $row_code = mysqli_fetch_assoc($view);
+
+                            if ($row_code['tgl_kehadiran'] == true && $row_code['status'] == "Finish") {
+                            ?>
+                                <th>Tanggal Kedatangan</th>
+                            <?php
+                            }
+                            ?>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         <?php
-                        if (isset($_SESSION['cart'])) {
-                            $no = 1;
+                        $code = $_SESSION['pelanggan']['code_pelanggan'];
+                        $no = 1;
+                        $view = mysqli_query($conn, "SELECT * FROM pembelian_product JOIN product ON pembelian_product.code_product=product.code_product WHERE pembelian_product.code_pelanggan = '$code'");
+                        while ($row = mysqli_fetch_assoc($view)) {
                         ?>
-                            <?php
-                            foreach ($_SESSION['cart'] as $code => $qty) :
-                            ?>
-                                <?php
-                                include "./conn.php";
-                                $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
-                                while ($data_product = mysqli_fetch_assoc($view_product)) {
-                                ?>
-                                    <tr>
-                                        <td><?php echo $no++; ?></td>
-                                        <td><?php echo $data_product['code_product']; ?></td>
-                                        <td><?php echo $data_product['nama_product']; ?></td>
-                                        <td>Rp. <?php echo number_format($data_product['harga_product']); ?></td>
-                                        <td><?php echo $qty; ?></td>
-                                        <td>
-                                            Rp. <?php
-                                                $sum = $data_product['harga_product'] * $qty;
-                                                echo number_format($sum);
-                                                ?>
-                                        </td>
-                                        <td>
-
-                                            <button class="btn btn-success">Disetujui</button>
-                                        <?php
-                                    }
-                                        ?>
-                                    <?php
-                                endforeach
-                                    ?>
-                                <?php
-                            }
-                                ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $row['code_product']; ?></td>
+                                <td><?= $row['nama_product']; ?></td>
+                                <td>Rp. <?= number_format($row['harga_product']); ?></td>
+                                <td><?= $row['jumlah']; ?></td>
+                                <td>Rp. <?= number_format($row['harga_product'] * $row['jumlah']); ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
+                <tfoot>
+                    <?php
+                    if ($row_code['status'] == "Delivered") {
+                    ?>
+                        <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
+                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong>Approved</strong> dan akan diberikan
+                            <strong>Tanggal Kehadiran</strong> Untuk Anda Datang Ke Store. Terimakasih!
+                        </button>
+                    <?php
+                    }
+                    ?>
+                </tfoot>
             </div>
         </div>
     <?php
@@ -105,7 +109,8 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
 
     <!-- Footer -->
     <?php include './vendor/footer.php'; ?>
-
+    <!-- Js -->
+    <script src="./vendor/style.js"></script>
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
