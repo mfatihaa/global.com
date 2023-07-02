@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="./">Global Techno</a>
+        <a class="navbar-brand" href="../admin">Global Techno</a>
         <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -63,7 +63,7 @@
                             ?>
                             <hr class="border border-bottom">
                             <li class="nav-items">
-                                <a class="nav-link" href="./settings"><i class='bx bx-cog'></i> Settings</a>
+                                <a class="nav-link" href="./setting"><i class='bx bx-cog'></i> Settings</a>
                             </li>
                             <li class="nav-items">
                                 <a class="nav-link" href="./log-out"><i class='bx bx-log-out-circle'></i> Logout</a>

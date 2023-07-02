@@ -12,7 +12,7 @@ if ($view) {
     $update = mysqli_query($conn, "UPDATE user SET time_logout = '$date' WHERE id_user = '$id_user'");
 
     if ($update) {
-        echo "<script>alert('Terimakasih!');document.location.href='./log-in'</script>";
+        echo "<script>alert('Terimakasih!');document.location.href='../admin'</script>";
     }
 }
 session_destroy();

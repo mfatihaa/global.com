@@ -1,11 +1,17 @@
 <?php
 error_reporting(0);
 session_start();
+<<<<<<< HEAD:register-admin.php
 
 if (empty($_SESSION['username']) == 'root' && empty($_SESSION['password']) == "skripsi2023") {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
+=======
+if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in'</script>";
+>>>>>>> e41a2cd1e46ec3b0f972cb651987a182f38408a2:admin.php
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,11 +77,14 @@ if (empty($_SESSION['username']) == 'root' && empty($_SESSION['password']) == "s
                                         <label class=" form-check-label">Show Password.</label>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mt-3">
-                                    <button class="btn btn-warning shadow-none" type="submit" name="daftar_admin">
-                                        Daftar
-                                    </button>
-                                </div>
+                                <button class="btn btn-warning shadow-none" type="submit" name="daftar_admin" title="Buat Akun!">
+                                    Daftar
+                                </button>
+
+                                <a href="./users/log-in.php" class="btn btn-primary shadow-none mt-1" title="sudah punya akun?">
+                                    log-in
+                                </a>
+
                             </div>
                         </div>
                     </form>
