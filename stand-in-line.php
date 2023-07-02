@@ -52,7 +52,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                             $view = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code'");
                             $row_code = mysqli_fetch_assoc($view);
 
-                            if ($row_code['tgl_kehadiran'] == true && $row_code['action'] == "Finish") {
+                            if ($row_code['tgl_kehadiran'] == true) {
                             ?>
                                 <th>Tanggal Kedatangan</th>
                             <?php
@@ -76,9 +76,10 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                                 <td><?= $row['jumlah']; ?></td>
                                 <td>Rp. <?= number_format($row['harga_product'] * $row['jumlah']); ?></td>
                                 <?php
-                                if ($row['tgl_kehadiran'] == true && $row['action'] == "Finish") {
+                                if ($row['tgl_kehadiran'] == true) {
+                                    include "./date.php";
                                 ?>
-                                    <td><?= $row['tgl_kehadiran']; ?></td>
+                                    <td><?= date("l, d F Y", strtotime($row['tgl_kehadiran'])); ?></td>
                                 <?php
                                 }
                                 ?>
@@ -92,14 +93,34 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     </tbody>
                 </table>
                 <tfoot>
-                    <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
-                        Mohon Siapkan Uang Cash <strong>Rp. <?= number_format($total); ?></strong>
-                    </button>
+                    <?php
+                    include "./conn.php";
+                    $code = $_SESSION['pelanggan']['code_pelanggan'];
+                    $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian JOIN pelanggan ON pembelian.code_pelanggan=pelanggan.code_pelanggan WHERE pembelian.code_pelanggan = '$code'");
+                    while ($row_pembelian = mysqli_fetch_assoc($view_pembelian)) {
+                        $total += $row_pembelian['total_pembelian'];
+                    }
+                    ?>
+                    <?php
+                    if ($row_pembelian['total_pembelian'] == true) {
+                    ?>
+                        <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
+                            Total Product Yang Tersimpan Di Keranjang Ada <strong class="text-danger"><?= $total; ?></strong>
+                        </button>
+                    <?php
+                    } else {
+                    ?>
+                        <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
+                            Mohon Siapkan Uang Cash <strong class="text-danger">Rp. <?= number_format($total); ?></strong>
+                        </button>
+                    <?php
+                    }
+                    ?>
                     <?php
                     if ($row_code['action'] == "In Progress") {
                     ?>
                         <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
-                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong>Approved</strong> Untuk Anda Datang Ke
+                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong> Approved </strong> Untuk Anda Datang Ke
                             Store. Terimakasih!
                         </button>
                     <?php

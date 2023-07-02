@@ -21,7 +21,22 @@
                 ?>
                     <li class="nav-item">
                         <a class="nav-link" href="./cart">
-                            <i class='bx bx-cart'></i> Cart [0]
+                            <?php
+                            if (empty($_SESSION['cart'])) {
+                            ?>
+                                <i class='bx bx-cart'></i> Cart [0]
+                            <?php
+                            } else {
+                                include "./conn.php";
+                                $code = $_SESSION['pelanggan']['code_pelanggan'];
+                                foreach ($_SESSION['cart'] as $code => $qty) {
+                                    $total += $qty;
+                                }
+                            ?>
+                                <i class='bx bx-cart'></i> Cart [<?= $total; ?>]
+                            <?php
+                            }
+                            ?>
                         </a>
                     </li>
                     <li class="nav-item">

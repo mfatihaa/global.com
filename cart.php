@@ -6,7 +6,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
     echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='./log-in'</script>";
     exit();
 } elseif (empty($_SESSION['cart'])) {
-    echo "<script>alert('Keranjang Anda Kosong.');document.location.href='./'</script>";
+    header('location: ./');
 }
 
 ?>
@@ -111,6 +111,9 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     <div class="col-md-4">
                         <input type="text" class="form-control shadow-none" value="<?= $_SESSION['pelanggan']['telepon']; ?>" disabled>
                     </div>
+                    <div class="col-md-12 mt-3">
+                        <input type="date" class="form-control shadow-none" name="date">
+                    </div>
                 </div>
                 <a href="./service" class="btn btn-warning btn-sm shadow-none mt-4">Continue Shopping</a>
                 <button type="submit" class="btn btn-danger btn-sm shadow-none mt-4" name="create_order">Create
@@ -144,7 +147,16 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
 
         // Pengulangan Data Keranjang
         foreach ($_SESSION['cart'] as $code => $qty) {
-            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, action) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','In Progress')");
+            // Mendapatkan Nama Dan Harga Product
+            $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
+            $row_product = mysqli_fetch_assoc($view_product);
+            // Menginialisasi Data Product
+            $nama = $row_product['nama_product'];
+            $harga = $row_product['harga_product'];
+            // Mendapatkan Date
+            $date = $_POST['date'];
+
+            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, tgl_kehadiran, nama, harga, action) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','$date','$nama','$harga','In Progress')");
         }
 
         // Menghapus Isi Keranjang Jika Sudah Diinput Kedalam Database
