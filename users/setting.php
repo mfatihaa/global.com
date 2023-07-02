@@ -2,8 +2,8 @@
 error_reporting(0);
 session_start();
 
-if (!isset($_SESSION['id_user']) && !$_SESSION['nama']) {
-    echo "<script>alert('Mohon Login Terlebih Dahulu!');document.location.href='../admin'</script>";
+if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
+    echo "<script>alert('Mohon Login Terlebih Dahulu!');window.location='./log-in'</script>";
     exit();
 }
 ?>

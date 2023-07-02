@@ -52,7 +52,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                             $view = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code'");
                             $row_code = mysqli_fetch_assoc($view);
 
-                            if ($row_code['tgl_kehadiran'] == true && $row_code['status'] == "Finish") {
+                            if ($row_code['tgl_kehadiran'] == true && $row_code['action'] == "Finish") {
                             ?>
                                 <th>Tanggal Kedatangan</th>
                             <?php
@@ -75,6 +75,16 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                                 <td>Rp. <?= number_format($row['harga_product']); ?></td>
                                 <td><?= $row['jumlah']; ?></td>
                                 <td>Rp. <?= number_format($row['harga_product'] * $row['jumlah']); ?></td>
+                                <?php
+                                if ($row['tgl_kehadiran'] == true && $row['action'] == "Finish") {
+                                ?>
+                                    <td><?= $row['tgl_kehadiran']; ?></td>
+                                <?php
+                                }
+                                ?>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" disabled><?= $row['action']; ?></button>
+                                </td>
                             </tr>
                         <?php
                         }
@@ -82,12 +92,15 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     </tbody>
                 </table>
                 <tfoot>
+                    <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
+                        Mohon Siapkan Uang Cash <strong>Rp. <?= number_format($total); ?></strong>
+                    </button>
                     <?php
-                    if ($row_code['status'] == "Delivered") {
+                    if ($row_code['action'] == "In Progress") {
                     ?>
                         <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
-                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong>Approved</strong> dan akan diberikan
-                            <strong>Tanggal Kehadiran</strong> Untuk Anda Datang Ke Store. Terimakasih!
+                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong>Approved</strong> Untuk Anda Datang Ke
+                            Store. Terimakasih!
                         </button>
                     <?php
                     }

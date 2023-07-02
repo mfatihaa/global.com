@@ -59,9 +59,6 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                             $totalbelanja = 0;
                         ?>
                             <?php
-                            $totalbarang = 0;
-                            ?>
-                            <?php
                             foreach ($_SESSION['cart'] as $code => $qty) :
                             ?>
                                 <?php
@@ -69,7 +66,6 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                                 $view_product = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$code'");
                                 $data_product = mysqli_fetch_assoc($view_product);
                                 ?>
-<<<<<<< HEAD
                                 <tr>
                                     <td><?php echo $no++; ?></td>
                                     <td><?php echo $data_product['code_product']; ?></td>
@@ -86,27 +82,6 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                                         <a href="./akses.php?code=<?= $code; ?>" class="btn btn-danger btn-sm shadow-none"><i class='bx bx-trash'></i></a>
                                     </td>
                                 </tr>
-=======
-                                    <tr>
-                                        <td><?php echo $no++; ?></td>
-                                        <td><?php echo $data_product['code_product']; ?></td>
-                                        <td><?php echo $data_product['nama_product']; ?></td>
-                                        <td>Rp. <?php echo number_format($data_product['harga_product']); ?></td>
-                                        <td><?php echo $qty; ?></td>
-                                        <td>
-                                            Rp. <?php
-                                                $sum = $data_product['harga_product'] * $qty;
-                                                echo number_format($sum);
-                                                ?>
-                                        </td>
-                                        <td>
-                                            <a href="akses.php?code=<?php echo $code ?>" class="btn btn-danger"><i class='bx bx-trash'></i></a>
-                                        </td>
-                                    </tr>
->>>>>>> e41a2cd1e46ec3b0f972cb651987a182f38408a2
-                                <?php
-                                $totalbarang += $sum;
-                                ?>
                                 <?php
                                 $totalbelanja += $sum;
                                 ?>
@@ -119,13 +94,8 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     </tbody>
                     <tfoot>
                         <tr>
-<<<<<<< HEAD
                             <th colspan="5">Total Keseluruhan</th>
-                            <th colspan="2">Rp. <?php echo number_format($totalbarang); ?></th>
-=======
-                            <th colspan="5">Total Harga</th>
-                            <th>Rp. <?php echo number_format($totalbelanja) ?></th>
->>>>>>> e41a2cd1e46ec3b0f972cb651987a182f38408a2
+                            <th colspan="2">Rp. <?php echo number_format($totalbelanja); ?></th>
                         </tr>
                     </tfoot>
                 </table>
@@ -165,7 +135,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
     if (isset($_POST['create_order'])) {
         $code_pelanggan = $_SESSION['pelanggan']['code_pelanggan'];
         $tgl_pembelian = date("Y-m-d");
-        $total_pembelian = $totalbarang;
+        $total_pembelian = $totalbelanja;
 
         $insert_order = mysqli_query($conn, "INSERT INTO pembelian (code_pelanggan, tgl_pembelian, total_pembelian) VALUES ('$code_pelanggan','$tgl_pembelian','$total_pembelian')");
 
@@ -174,7 +144,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
 
         // Pengulangan Data Keranjang
         foreach ($_SESSION['cart'] as $code => $qty) {
-            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, status) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','Delivered')");
+            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, action) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','In Progress')");
         }
 
         // Menghapus Isi Keranjang Jika Sudah Diinput Kedalam Database

@@ -21,7 +21,7 @@
                 ?>
                     <li class="nav-item">
                         <a class="nav-link" href="./cart">
-                            <i class='bx bx-cart'></i> Cart
+                            <i class='bx bx-cart'></i> Cart [0]
                         </a>
                     </li>
                     <li class="nav-item">

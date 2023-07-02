@@ -1,6 +1,4 @@
 <?php
-// Edit Keranjang List
-
 // Delete Keranjang List
 if (isset($_GET['code'])) {
     session_start();
@@ -41,7 +39,7 @@ if (isset($_POST['daftar_admin'])) {
     
     $username_register = htmlspecialchars(addslashes($_POST['username']));
     $nama = htmlspecialchars(addslashes($_POST['nama']));
-    $email = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
+    $email = htmlspecialchars(addslashes(trim($_POST['email'], FILTER_VALIDATE_EMAIL)));
     $telepon = htmlspecialchars(addslashes($_POST['telepon']));
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
@@ -72,7 +70,7 @@ include "./conn.php";
 if (isset($_POST['daftar'])) {
     $username_register = htmlspecialchars(addslashes($_POST['username']));
     $nama = htmlspecialchars(addslashes($_POST['nama']));
-    $email = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
+    $email = htmlspecialchars(addslashes(trim($_POST['email'], FILTER_VALIDATE_EMAIL)));
     $telepon = htmlspecialchars(addslashes($_POST['telepon']));
     $password_register = htmlspecialchars(addslashes(md5($_POST['pass'])));
     $confirm_register = htmlspecialchars(addslashes(md5($_POST['confirm'])));
@@ -132,7 +130,7 @@ if (isset($_POST['update'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
     $username_update = htmlspecialchars(addslashes($_POST['username']));
     $nama_update = htmlspecialchars(addslashes($_POST['nama']));
-    $email_update = htmlspecialchars(addslashes($_POST['email'], FILTER_VALIDATE_EMAIL));
+    $email_update = htmlspecialchars(addslashes(trim($_POST['email'], FILTER_VALIDATE_EMAIL)));
     $telepon_update = htmlspecialchars(addslashes($_POST['telepon']));
 
     $view_cus = mysqli_query($conn, "SELECT * FROM pelanggan WHERE id_pelanggan = '{$id}'");
@@ -201,8 +199,8 @@ if (isset($_POST['buat'])) {
             $_SESSION['username'] = $check_user,
             $_SESSION['password'] = $check_pass,
         );
-        
-        header('Location: ./register-admin');
+
+        header('Location: ./admin');
     }
 }
 
@@ -238,23 +236,4 @@ if (isset($_POST['masuk'])) {
             echo "<script>alert('Tidak Ada Akun Yang Cocok.');document.location.href='./log-in'</script>";
         }
     }
-<<<<<<< HEAD
 }
-=======
-} else {
-    $check_user = "root";
-    $check_pass = "skripsi2023";
-
-    $user = htmlspecialchars(addslashes($_POST['username']));
-    $pass = htmlspecialchars(addslashes($_POST['password']));
-
-    if ($user == $check_user && $pass = $check_pass) {
-        session_start();
-
-        $_SESSION['username'] = $check_user;
-        $_SESSION['password'] = $check_pass;
-
-        header('Location: ./admin');
-    }
-}
->>>>>>> e41a2cd1e46ec3b0f972cb651987a182f38408a2
