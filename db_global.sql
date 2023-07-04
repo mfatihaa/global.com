@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jul 2023 pada 20.49
+-- Waktu pembuatan: 04 Jul 2023 pada 18.04
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -52,7 +52,8 @@ CREATE TABLE `pembelian` (
   `id_pembelian` int(11) NOT NULL,
   `code_pelanggan` varchar(255) DEFAULT NULL,
   `tgl_pembelian` date DEFAULT NULL,
-  `total_pembelian` varchar(255) DEFAULT NULL
+  `total_pembelian` varchar(255) DEFAULT NULL,
+  `action` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

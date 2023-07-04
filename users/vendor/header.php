@@ -18,7 +18,7 @@
                         Service/Produk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./pembelian"><i class='bx bx-package'></i> Pesanan</a>
+                    <a class="nav-link" href="./stand-in-line"><i class='bx bx-package'></i> Pesanan</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

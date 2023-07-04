@@ -30,6 +30,59 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
     <?php
     include "./vendor/header.php";
     ?>
+
+    <div class="container p-3 mt-5">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name Customer</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telepon</th>
+                    <th scope="col">Tombol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include "./conn.php";
+                $view_pelanggan = mysqli_query($conn, "SELECT * FROM pelanggan ORDER BY id_pelanggan");
+                $no = 1;
+                while ($data_pelanggan = mysqli_fetch_assoc($view_pelanggan)) {
+                ?>
+                    <tr>
+                        <td><?php echo $no++; ?></td>
+                        <td><?php echo $data_pelanggan['nama']; ?></td>
+                        <td><?php echo $data_pelanggan['email']; ?></td>
+                        <td><?php echo $data_pelanggan['telepon']; ?></td>
+                        <td>
+                            <a href="pembelian?id=<?= $data_pelanggan['code_pelanggan']; ?>" class="btn btn-warning btn-sm shadow-none"><i class='bx bx-cart-alt'></i></a>
+                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#check<?= $data_pelanggan['code_pelanggan']; ?>"><i class='bx bx-check-circle'></i></button>
+                        </td>
+                        <div class="modal fade" id="check<?= $data_pelanggan['code_pelanggan']; ?>" tabindex="-1">
+                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Status Selesai</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Modal body text goes here.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-sm shadow-none" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary btn-sm shadow-none">Save
+                                            changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
     <!-- Js -->
     <script src="./vendor/style.js"></script>
     <!-- Bootstrap -->

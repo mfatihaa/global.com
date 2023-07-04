@@ -69,23 +69,41 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                         while ($row = mysqli_fetch_assoc($view)) {
                         ?>
                             <tr>
-                                <td><?= $no++; ?></td>
-                                <td><?= $row['code_product']; ?></td>
-                                <td><?= $row['nama_product']; ?></td>
-                                <td>Rp. <?= number_format($row['harga_product']); ?></td>
-                                <td><?= $row['jumlah']; ?></td>
-                                <td>Rp. <?= number_format($row['harga_product'] * $row['jumlah']); ?></td>
                                 <?php
-                                if ($row['tgl_kehadiran'] == true) {
-                                    include "./date.php";
+                                if ($row['action'] == "In Progress" || $row['action'] == "Approved") {
                                 ?>
-                                    <td><?= date("l, d F Y", strtotime($row['tgl_kehadiran'])); ?></td>
+                                    <td><?= $no++; ?></td>
+                                    <td><?= $row['code_product']; ?></td>
+                                    <td><?= $row['nama_product']; ?></td>
+                                    <td>Rp. <?= number_format($row['harga']); ?></td>
+                                    <td><?= $row['jumlah']; ?></td>
+                                    <td>Rp. <?= number_format($row['harga'] * $row['jumlah']); ?></td>
+
+                                    <?php
+                                    if ($row['tgl_kehadiran'] == true) {
+                                    ?>
+                                        <td><?= date("l, d F Y", strtotime($row['tgl_kehadiran'])); ?></td>
+                                    <?php
+                                    }
+                                    ?>
+                                    <?php
+                                    if ($row['action'] == "In Progress") {
+                                    ?>
+                                        <td>
+                                            <button type="button" class="btn btn-warning btn-sm" disabled><?= $row['action']; ?></button>
+                                        </td>
+                                    <?php
+                                    } elseif ($row['action'] == "Approved") {
+                                    ?>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-sm" disabled><?= $row['action']; ?></button>
+                                        </td>
+                                    <?php
+                                    }
+                                    ?>
                                 <?php
                                 }
                                 ?>
-                                <td>
-                                    <button type="button" class="btn btn-warning btn-sm" disabled><?= $row['action']; ?></button>
-                                </td>
                             </tr>
                         <?php
                         }
@@ -96,33 +114,66 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     <?php
                     include "./conn.php";
                     $code = $_SESSION['pelanggan']['code_pelanggan'];
-                    $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian JOIN pelanggan ON pembelian.code_pelanggan=pelanggan.code_pelanggan WHERE pembelian.code_pelanggan = '$code'");
+                    $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian_product JOIN pelanggan ON pembelian_product.code_pelanggan=pelanggan.code_pelanggan WHERE pembelian_product.code_pelanggan = '$code'");
                     while ($row_pembelian = mysqli_fetch_assoc($view_pembelian)) {
-                        $total += $row_pembelian['total_pembelian'];
+                        $total += $row_pembelian['harga'];
                     }
                     ?>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <?php
+                        if (isset($row_code['code_pelanggan']) === null) {
+                        ?>
+                            <button type="button" class="btn btn-white shadow-none btn-sm mt-2" disabled>
+                                Total Product Yang Tersimpan Di Keranjang Ada <strong class="text-danger"><?= $total; ?></strong>
+                            </button>
+                        <?php
+                        } else {
+                        ?>
+                            <?php
+                            include "./conn.php";
+                            $code = $_SESSION['pelanggan']['code_pelanggan'];
+                            $view_product = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'Finish'");
+                            while ($row_product = mysqli_fetch_assoc($view_product)) {
+                                $minus += $row_product['harga'];
+                            }
+                            ?>
+                            <button type="button" class="btn btn-white shadow-none btn-sm mt-2" disabled>
+                                Mohon Siapkan Uang Cash <strong class="text-danger">Rp.
+                                    <?= number_format($total - $minus); ?></strong>
+                            </button>
+                        <?php
+                        }
+                        ?>
+                    </div>
                     <?php
-                    if ($row_pembelian['total_pembelian'] == true) {
+                    include "./conn.php";
+                    $code = $_SESSION['pelanggan']['code_pelanggan'];
+                    $view_action_1 = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'In Progress'");
+                    $row_action_1 = mysqli_fetch_assoc($view_action_1);
+                    if ($row_action_1) {
                     ?>
-                        <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
-                            Total Product Yang Tersimpan Di Keranjang Ada <strong class="text-danger"><?= $total; ?></strong>
-                        </button>
-                    <?php
-                    } else {
-                    ?>
-                        <button type="button" class="btn btn-white shadow-none btn-sm" disabled>
-                            Mohon Siapkan Uang Cash <strong class="text-danger">Rp. <?= number_format($total); ?></strong>
-                        </button>
+                        <div class="d-flex justify-content-center align-items-center mt-3">
+                            <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
+                                Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong> Approved </strong> Untuk Anda
+                                Datang
+                                Ke
+                                Store. Terimakasih!
+                            </button>
+                        </div>
                     <?php
                     }
                     ?>
+
                     <?php
-                    if ($row_code['action'] == "In Progress") {
+                    include "./conn.php";
+                    $code = $_SESSION['pelanggan']['code_pelanggan'];
+                    $view_action_2 = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'Approved'");
+                    $row_action_2 = mysqli_fetch_assoc($view_action_2);
+                    if ($row_action_2) {
                     ?>
-                        <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
-                            Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong> Approved </strong> Untuk Anda Datang Ke
-                            Store. Terimakasih!
-                        </button>
+                        <div class="d-flex justify-content-center align-items-center mt-3">
+                            <a href="#" class="btn btn-primary btn-sm shadow-none">Download Nota</a>
+                        </div>
                     <?php
                     }
                     ?>

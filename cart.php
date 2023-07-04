@@ -112,7 +112,8 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                         <input type="text" class="form-control shadow-none" value="<?= $_SESSION['pelanggan']['telepon']; ?>" disabled>
                     </div>
                     <div class="col-md-12 mt-3">
-                        <input type="date" class="form-control shadow-none" name="date">
+                        <label class="form-label">Pilih Tanggal Kehadiran</label>
+                        <input type="date" class="form-control shadow-none mt-2" name="date">
                     </div>
                 </div>
                 <a href="./service" class="btn btn-warning btn-sm shadow-none mt-4">Continue Shopping</a>
@@ -140,7 +141,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
         $tgl_pembelian = date("Y-m-d");
         $total_pembelian = $totalbelanja;
 
-        $insert_order = mysqli_query($conn, "INSERT INTO pembelian (code_pelanggan, tgl_pembelian, total_pembelian) VALUES ('$code_pelanggan','$tgl_pembelian','$total_pembelian')");
+        $insert_order = mysqli_query($conn, "INSERT INTO pembelian (code_pelanggan, tgl_pembelian, total_pembelian, action) VALUES ('$code_pelanggan','$tgl_pembelian','$total_pembelian','In Progress')");
 
         // Pengambilan Data Yang Baru Saja Terjadi
         $id_pembelian =  $conn->insert_id;
