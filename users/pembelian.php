@@ -59,45 +59,78 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                         <td><?php echo $data_pelanggan['jumlah']; ?></td>
                         <td>Rp. <?php echo number_format($data_pelanggan['harga'] * $data_pelanggan['jumlah']); ?></td>
                         <td><?php echo date("d F Y", strtotime($data_pelanggan['tgl_kehadiran'])); ?></td>
-                        <td>
-                            <button type="button" class="btn btn-warning btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#messange<?= $data_pelanggan['id_pembelian']; ?>"><i class='bx bx-message-alt-dots'></i></button>
-                            <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#check<?= $data_pelanggan['id_pembelian']; ?>"><i class='bx bx-check-circle'></i></button>
-                        </td>
-                        <div class="modal fade" id="messange<?= $data_pelanggan['id_pembelian']; ?>" tabindex="1">
+                        <?php
+                        $id = $data_pelanggan['id_pembelian_product'];
+                        $v = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE id_pembelian_product = '$id'");
+                        $r = mysqli_fetch_assoc($v);
+                        if ($r['action'] == "Approved") {
+                        ?>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#finish<?= $data_pelanggan['id_pembelian_product']; ?>">Finish</button>
+                            </td>
+                        <?php
+                        } elseif ($r['action'] == "Finish") {
+                        ?>
+                            <td>
+                                <button type="button" class="btn btn-dark btn-sm shadow-none" disabled>Finish</button>
+                            </td>
+                        <?php
+                        } else {
+                        ?>
+                            <td>
+                                <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#check<?= $data_pelanggan['id_pembelian_product']; ?>"><i class='bx bx-check-circle'></i></button>
+                            </td>
+                        <?php
+                        }
+                        ?>
+                        <!-- Change Finish -->
+                        <div class="modal fade" id="finish<?= $data_pelanggan['id_pembelian_product']; ?>" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Ubah Tanggal Kehadiran</h5>
+                                        <h5 class="modal-title">Status Selesai Proses</h5>
                                     </div>
                                     <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                                         <div class="modal-body">
-                                            <div class="floating-input">
-                                                <label class="form-label">Pilih Tanggal</label>
-                                                <input type="date" class="form-control shadow-none">
-                                            </div>
+                                            <input type="text" value="<?= $code; ?>" name="code" hidden>
+                                            <input type="text" value="<?= $data_pelanggan['id_pembelian_product']; ?>" name="id_pembelian_product" hidden>
+                                            <p class="text-center">
+                                                Pemesanan Telah Selesai. Mengubah Status Menjadi Finish!
+                                            </p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger btn-sm shadow-none" data-bs-dismiss="modal">Tutup</button>
-                                            <button type="submit" class="btn btn-success btn-sm shadow-none" name="">Ubah</button>
+                                            <button type="submit" class="btn btn-success btn-sm shadow-none" name="ubahFinish">Ubah
+                                                Finish</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="check<?= $data_pelanggan['id_pembelian']; ?>" tabindex="-1">
+                        <!-- Change Approved -->
+                        <div class="modal fade" id="check<?= $data_pelanggan['id_pembelian_product']; ?>" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Status Selesai</h5>
+                                        <h5 class="modal-title">Status Disetujui</h5>
                                     </div>
-                                    <div class="modal-body">
-                                        <p>Modal body text goes here.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-sm shadow-none" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary btn-sm shadow-none">Save
-                                            changes</button>
-                                    </div>
+                                    <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                        <div class="modal-body">
+                                            <input type="text" value="<?= $code; ?>" name="code" hidden>
+                                            <input type="text" value="<?= $data_pelanggan['id_pembelian_product']; ?>" name="id_pembelian_product" hidden>
+                                            <p class="text-center">
+                                                Mengubah Status Pemesanan Pelanggan Menjadi <strong>Approved</strong> Dan
+                                                Merubah Tanggal
+                                                Kehadiran Pelanggan Jika Diperlukan
+                                            </p>
+                                            <input type="date" class="form-control shadow-none mt-3" name="date" value="<?= $data_pelanggan['tgl_kehadiran']; ?>">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-sm shadow-none" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-success btn-sm shadow-none" name="ubahApproved">Ubah
+                                                Approved</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -111,22 +144,13 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
             <?php
             include "./conn.php";
             $code = $_GET['id'];
-            $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian JOIN pelanggan ON pembelian.code_pelanggan=pelanggan.code_pelanggan WHERE pembelian.code_pelanggan = '$code'");
+            $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'Approved' ORDER BY id_pembelian_product");
             while ($row_pembelian = mysqli_fetch_assoc($view_pembelian)) {
-                $total += $row_pembelian['total_pembelian'];
+                $total += $row_pembelian['subtotal'];
             }
             ?>
-
-            <?php
-            include "./conn.php";
-            $code = $_GET['id'];
-            $view_pembelian = mysqli_query($conn, "SELECT * FROM pembelian WHERE code_pelanggan = '$code' AND action = 'Finish'");
-            while ($row_pembelian = mysqli_fetch_assoc($view_pembelian)) {
-                $minus += $row_pembelian['total_pembelian'];
-            }
-            ?>
-            Total Pembayaran <strong class="text-danger">Rp.
-                <?= number_format($total - $minus); ?></strong>
+            Total Sisa Pembayaran <strong class="text-danger">Rp.
+                <?= number_format($total); ?></strong>
         </tfoot>
     </div>
 

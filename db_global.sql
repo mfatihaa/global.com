@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jul 2023 pada 18.04
+-- Waktu pembuatan: 06 Jul 2023 pada 13.15
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_global`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `nota_antrian`
+--
+
+CREATE TABLE `nota_antrian` (
+  `id_nota_antrian` int(11) NOT NULL,
+  `code_pelanggan` varchar(255) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `nomor_antrian` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -71,6 +84,7 @@ CREATE TABLE `pembelian_product` (
   `tgl_kehadiran` date DEFAULT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
+  `subtotal` int(11) DEFAULT NULL,
   `action` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -118,6 +132,12 @@ CREATE TABLE `user` (
 --
 
 --
+-- Indeks untuk tabel `nota_antrian`
+--
+ALTER TABLE `nota_antrian`
+  ADD PRIMARY KEY (`id_nota_antrian`);
+
+--
 -- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
@@ -150,6 +170,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `nota_antrian`
+--
+ALTER TABLE `nota_antrian`
+  MODIFY `id_nota_antrian` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `pelanggan`

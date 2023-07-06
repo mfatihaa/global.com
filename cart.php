@@ -113,7 +113,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     </div>
                     <div class="col-md-12 mt-3">
                         <label class="form-label">Pilih Tanggal Kehadiran</label>
-                        <input type="date" class="form-control shadow-none mt-2" name="date">
+                        <input type="date" class="form-control shadow-none mt-2" name="date" required>
                     </div>
                 </div>
                 <a href="./service" class="btn btn-warning btn-sm shadow-none mt-4">Continue Shopping</a>
@@ -154,10 +154,15 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
             // Menginialisasi Data Product
             $nama = $row_product['nama_product'];
             $harga = $row_product['harga_product'];
+            $sum2 = $qty * $harga;
+            $jumlah = $row_product['jumlah_product'];
             // Mendapatkan Date
             $date = $_POST['date'];
 
-            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, tgl_kehadiran, nama, harga, action) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','$date','$nama','$harga','In Progress')");
+            $insert_product = mysqli_query($conn, "INSERT INTO pembelian_product (id_pembelian, code_pelanggan, code_product, jumlah, tgl_kehadiran, nama, harga, subtotal, action) VALUES ('$id_pembelian','$code_pelanggan','$code','$qty','$date','$nama','$harga','$sum2','In Progress')");
+
+            $sum = $jumlah - $qty;
+            $update_product = mysqli_query($conn, "UPDATE product SET jumlah_product = '$sum' WHERE code_product = '$code'");
         }
 
         // Menghapus Isi Keranjang Jika Sudah Diinput Kedalam Database

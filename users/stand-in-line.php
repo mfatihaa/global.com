@@ -59,19 +59,29 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                             <button type="button" class="btn btn-success btn-sm shadow-none" data-bs-toggle="modal" data-bs-target="#check<?= $data_pelanggan['code_pelanggan']; ?>"><i class='bx bx-check-circle'></i></button>
                         </td>
                         <div class="modal fade" id="check<?= $data_pelanggan['code_pelanggan']; ?>" tabindex="-1">
-                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Status Selesai</h5>
+                                        <h5 class="modal-title">Status Prosess</h5>
                                     </div>
-                                    <div class="modal-body">
-                                        <p>Modal body text goes here.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-sm shadow-none" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary btn-sm shadow-none">Save
-                                            changes</button>
-                                    </div>
+                                    <form action="./akses.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+                                        <div class="modal-body">
+                                            <?php
+                                            $code = $data_pelanggan['code_pelanggan'];
+                                            $view_dist = mysqli_query($conn, "SELECT DISTINCT tgl_kehadiran FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'Approved'");
+                                            while ($row_dist = mysqli_fetch_assoc($view_dist)) {
+                                                print_r($row_dist);
+                                            }
+                                            ?>
+                                            <input type="text" value="<?= $code; ?>" name="code" hidden>
+                                            <input type="text" value="<?= $row_dist['tgl_kehadiran']; ?>" name="tgl" hidden>
+                                            <p>Memberikan Nomor Antrian Kehadiran Pelanggan.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger btn-sm shadow-none" data-bs-dismiss="modal">Tutup</button>
+                                            <button type="submit" class="btn btn-success btn-sm shadow-none" name="process">Prosess</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

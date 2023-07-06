@@ -102,9 +102,42 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                                     <p class="text-muted">
                                         Tersedia : <?= $data_product['jumlah_product']; ?>
                                     </p>
-                                    <div class="modal-footer">
-                                        <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-warning shadow-none w-100">Beli</a>
-                                    </div>
+                                    <?php
+                                    if ($data_product['jumlah_product'] == 0) {
+                                    ?>
+                                        <div class="modal-footer">
+                                            <a href="./buy-ing?code=<?php echo $data_product['code_product']; ?>" class="btn btn-danger shadow-none w-100 disabled">Not Available</a>
+                                        </div>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <?php
+                                        $cp = $data_product['code_product'];
+                                        $jp = $data_product['jumlah_product'];
+
+                                        $v = mysqli_query($conn, "SELECT * FROM product WHERE code_product = '$cp' AND jumlah_product = '$jp'");
+                                        while ($r = mysqli_fetch_assoc($v)) {
+                                            $c = $r['code_product'];
+                                            $j = $r['jumlah_product'];
+                                            $sc = $_SESSION['cart'][$c];
+                                            if ($sc == $j) {
+                                        ?>
+                                                <div class="modal-footer">
+                                                    <a href="./buy-ing?code=<?php echo $r['code_product']; ?>" class="btn btn-warning shadow-none w-100 disabled">Waitting Create Order</a>
+                                                </div>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <div class="modal-footer">
+                                                    <a href="./buy-ing?code=<?php echo $r['code_product']; ?>" class="btn btn-warning shadow-none w-100">Buy</a>
+                                                </div>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
