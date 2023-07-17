@@ -184,7 +184,7 @@ if (isset($_POST['update'])) {
 
 // Login Account Create Admin
 error_reporting(0);
-session_start();
+@session_start();
 include "./conn.php";
 if (isset($_POST['buat'])) {
     $check_user = "root";
@@ -205,7 +205,8 @@ if (isset($_POST['buat'])) {
 }
 
 // Login
-session_start();
+error_reporting(0);
+@session_start();
 include "./conn.php";
 if (isset($_POST['masuk'])) {
 

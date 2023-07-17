@@ -158,7 +158,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     ?>
                 <div class="d-flex justify-content-center align-items-center mt-3">
                     <button type="button" class="btn btn-warning shadow-none btn-sm" disabled>
-                        Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong> Approved </strong> Untuk Anda
+                        Mohon Menunggu 1x24 untuk Status Berubah Menjadi <strong> Approved </strong> Dan Anda
                         Datang
                         Ke
                         Store. Terimakasih!
@@ -171,16 +171,19 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                 <?php
                     include "./conn.php";
                     $code = $_SESSION['pelanggan']['code_pelanggan'];
-                    $view_action_2 = mysqli_query($conn, "SELECT * FROM pembelian_product WHERE code_pelanggan = '$code' AND action = 'Approved'");
+                    $view_action_2 = mysqli_query($conn, "SELECT * FROM pembelian_product JOIN pelanggan ON pembelian_product.code_pelanggan=pelanggan.code_pelanggan WHERE pembelian_product.code_pelanggan = '$code' AND pembelian_product.action = 'Approved'");
                     $row_action_2 = mysqli_fetch_assoc($view_action_2);
                     if ($row_action_2) {
+                        include "./link_nota.php";
                     ?>
                 <div class="d-flex justify-content-center align-items-center mt-3">
-                    <a href="./nota?id=<?= $code;?>" class="btn btn-primary btn-sm shadow-none">Lihat Nota</a>
+                    <a href="./nota<?= $link?>" class="btn btn-primary btn-sm shadow-none" target="_blank">Lihat
+                        Nota
+                    </a>
                 </div>
                 <?php
                     }
-                    ?>
+                ?>
             </tfoot>
         </div>
     </div>

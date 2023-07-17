@@ -59,6 +59,28 @@ if (!isset($_SESSION['id_pelanggan']) && $_SESSION['username']) {
                 </blockquote>
             </div>
         </div>
+        <div class="card mt-3">
+            <div class="card-header">
+                Team
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <span class="fs-6">Dosen Pembina :</span>
+                    <ol class="fs-6">
+                        <li>Untung Suprihadi, S.Kom., M.Pd.</li>
+                        <li>Onki Alexander, BCM., M.IT.</li>
+                    </ol>
+                    <span class="fs-6">Mahasiswa :</span>
+                    <ol class="fs-6">
+                        <li>Arizki Rahman</li>
+                        <li>Centika Diana Putri</li>
+                        <li>Akbar Naufal</li>
+                        <li>Muhammad Fatih Aulia</li>
+                        <li>Fihkri Mustafa Ramzy</li>
+                    </ol>
+                </blockquote>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Jul 2023 pada 13.15
+-- Waktu pembuatan: 09 Jul 2023 pada 19.56
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -31,7 +31,8 @@ CREATE TABLE `nota_antrian` (
   `id_nota_antrian` int(11) NOT NULL,
   `code_pelanggan` varchar(255) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
-  `nomor_antrian` varchar(255) DEFAULT NULL
+  `nomor_antrian` varchar(255) DEFAULT NULL,
+  `qrcode` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -82,7 +83,7 @@ CREATE TABLE `pembelian_product` (
   `code_product` varchar(255) DEFAULT NULL,
   `jumlah` int(11) NOT NULL,
   `tgl_kehadiran` date DEFAULT NULL,
-  `nama` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   `subtotal` int(11) DEFAULT NULL,
   `action` varchar(255) DEFAULT NULL

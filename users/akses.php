@@ -1,61 +1,80 @@
 <?php
+// Prosess Pembelian Pelanggan
+error_reporting(0);
+include "./conn.php";
+if (isset($_POST['process_pembelian'])) {
+    $code = $_POST['code'];
+    $update_pem = mysqli_query($conn, "UPDATE pembelian SET action = 'Finish' WHERE code_pelanggan = '$code'");
+    if ($update_pem) {
+        header('location: ./stand-in-line');
+    }
+}
+
 // Prosess Number Antrian
-// error_reporting(0);
+error_reporting(0);
+include "./vendor/phpqrcode/qrlib.php";
 include "./conn.php";
 if (isset($_POST['process'])) {
     $code = $_POST['code'];
-    $tgl = $_POST['tgl'];
+    $tgl = date($_POST['tgl']);
 
-    $view_regis = mysqli_query($conn, "SELECT * FROM nota_antrian ORDER BY tanggal LIMIT 1");
-    $data_regis = mysqli_fetch_assoc($view_regis);
+    $view_regis = mysqli_query($conn, "SELECT tanggal,max(nomor_antrian) AS antrian FROM nota_antrian WHERE code_pelanggan = '$code' AND tanggal = '$tgl' LIMIT 1");
+    if (mysqli_num_rows($view_regis) > 0) {
 
-    if (mysqli_num_rows($view_regis) == 0) {
-        // Jika Kode Pelanggan Belum Ada 1
-        $view_code = mysqli_query($conn, "SELECT max(nomor_antrian) AS na FROM nota_antrian");
-        $data_code = mysqli_fetch_assoc($view_code);
+        $row = mysqli_fetch_assoc($view_regis);
+        $antrian = $row['antrian'];
 
-        $na = $data_code['na'];
-        $code_urutan = (int) substr($na, 3, 2);
+        $code_urutan = (int) substr($antrian, 3, 5);
         $code_urutan++;
 
         $code_huruf = "TA-";
-        $code_gabung = $code_huruf . sprintf(
-            "%02s",
+        $nomor_antrian = $code_huruf . sprintf(
+            "%05s",
             $code_urutan
         );
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO nota_antrian (code_pelanggan, tanggal, nomor_antrian) VALUES ('$code','$tgl','$code_gabung')");
-        if ($insert_cus) {
-            echo "<script>alert('Nomor Antrian Berhasil Dibuat.');document.location.href='./stand-in-line'</script>";
-        } else {
-            echo "<script>alert('Nomor Antrian Tidak Berhasil Dibuat.');document.location.href='./stand-in-line'</script>";
+        // Generate QRCode
+        $tempDir = "./vendor/qrcode/";
+        $codeContents = rand() . ".png";
+        $fileName = $codeContents;
+        $pngAbsoluteFilePath = $tempDir . $fileName;
+        $urlRelativeFilePath = $tempDir . $fileName;
+
+        if (!file_exists($pngAbsoluteFilePath)) {
+            QRcode::png($codeContents, $pngAbsoluteFilePath, QR_ECLEVEL_H, 4, 3);
+            $insert = mysqli_query($conn, "INSERT INTO nota_antrian (code_pelanggan,tanggal,nomor_antrian,qrcode) VALUES ('$code','$tgl','$nomor_antrian','$fileName')");
+            header('location: ./stand-in-line');
         }
-    } elseif (mysqli_num_rows($view_regis) === 1) {
-        // Jika Kode Pelanggan Belum Ada 1
-        $view_code = mysqli_query($conn, "SELECT max(nomor_antrian) AS na FROM nota_antrian");
-        $data_code = mysqli_fetch_assoc($view_code);
+    } else {
+        $row = mysqli_fetch_assoc($view_regis);
+        $antrian = $row['nomor_antrian'];
 
-        $na = $data_code['na'];
-        $code_urutan = (int) substr($na, 3, 2);
+        $code_urutan = (int) substr($antrian, 3, 5);
         $code_urutan++;
 
         $code_huruf = "TA-";
-        $code_gabung = $code_huruf . sprintf(
-            "%02s",
+        $nomor_antrian = $code_huruf . sprintf(
+            "%05s",
             $code_urutan
         );
 
-        $insert_cus = mysqli_query($conn, "INSERT INTO nota_antrian (code_pelanggan, tanggal, nomor_antrian) VALUES ('$code','$tgl','$code_gabung')");
-        if ($insert_cus) {
-            echo "<script>alert('Nomor Antrian Berhasil Dibuat.');document.location.href='./stand-in-line'</script>";
-        } else {
-            echo "<script>alert('Nomor Antrian Tidak Berhasil Dibuat.');document.location.href='./stand-in-line'</script>";
+        // Generate QRCode
+        $tempDir = "./vendor/qrcode/";
+        $codeContents = rand() . ".png";
+        $fileName = $codeContents;
+        $pngAbsoluteFilePath = $tempDir . $fileName;
+        $urlRelativeFilePath = $tempDir . $fileName;
+
+        if (!file_exists($pngAbsoluteFilePath)) {
+            QRcode::png($codeContents, $pngAbsoluteFilePath, QR_ECLEVEL_H, 4, 3);
+            $insert = mysqli_query($conn, "INSERT INTO nota_antrian (code_pelanggan,tanggal,nomor_antrian,qrcode) VALUES ('$code','$tgl','$nomor_antrian','$fileName')");
+            header('location: ./stand-in-line');
         }
     }
 }
 
 // Change Finish
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['ubahFinish'])) {
     $code = $_POST['code'];
@@ -67,7 +86,7 @@ if (isset($_POST['ubahFinish'])) {
 }
 
 // Change Approved Customer
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['ubahApproved'])) {
     $code = $_POST['code'];
@@ -80,7 +99,7 @@ if (isset($_POST['ubahApproved'])) {
 }
 
 // Update Settings
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['update'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
@@ -157,7 +176,7 @@ document.location.href = './setting.php'
 
 
 // Delete Product List
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['delete_product'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
@@ -189,7 +208,7 @@ document.location.href = './service_produk'
 }
 
 // Delete Service List
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['delete_service'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
@@ -221,7 +240,7 @@ document.location.href = './service_produk'
 }
 
 // Change Product List
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['edit_product'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
@@ -300,7 +319,7 @@ document.location.href = './service_produk'
 }
 
 // Change Service List
-// error_reporting(0);
+error_reporting(0);
 include "./conn.php";
 if (isset($_POST['edit_service'])) {
     $id = htmlspecialchars(addslashes($_POST['id']));
