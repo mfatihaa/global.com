@@ -53,7 +53,8 @@ if (empty($_SESSION['id_user']) && empty($_SESSION['username'])) {
                         <td><?php echo $no++; ?></td>
                         <td><?php echo $data_pelanggan['nama']; ?></td>
                         <td><?php echo $data_pelanggan['email']; ?></td>
-                        <td><?php echo $data_pelanggan['telepon']; ?></td>
+                        <td><a href="https://wa.me/<?php echo $data_pelanggan['telepon']; ?>" class="link-dark link-offset-3 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-100-hover"><?php echo $data_pelanggan['telepon']; ?></a>
+                        </td>
                         <td>
                             <a href="pembelian?id=<?= $data_pelanggan['code_pelanggan']; ?>" class="btn btn-warning btn-sm shadow-none"><i class='bx bx-cart-alt'></i>
                             </a>

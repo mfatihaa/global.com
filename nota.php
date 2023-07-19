@@ -30,7 +30,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
     <div class="container py-5">
         <div class="d-flex justify-content-center align-items-center mt-3">
             <div class="card">
-                <div class="card-body" id="printOut">
+                <div class="card-body mt-3" id="printOut">
                     <div class="card-title fw-bold text-center h2">
                         NOTA PEMESANAN
                     </div>
@@ -41,9 +41,24 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                         $code = substr($code_, 0, 8);
                         $no = 1;
                         $view = mysqli_query($conn, "SELECT * FROM pembelian_product JOIN nota_antrian ON pembelian_product.code_pelanggan = nota_antrian.code_pelanggan WHERE pembelian_product.code_pelanggan = '$code'");
-                        $row_view = mysqli_fetch_assoc($view);
+                        while ($row_view = mysqli_fetch_assoc($view)) {
+                            $num = $row_view['nomor_antrian'];
+                            $qr = $row_view['qrcode'];
+                            $tanggal = $row['tanggal'];
+                            $tgl = $row['tgl_kehadiran'];
+                        }
                         ?>
-                        Nomor Antrian <span class="text-danger"><?= $row_view['nomor_antrian']; ?></span>
+                        <?php
+                        if ($tgl == $tanggal) {
+                        ?>
+                            Nomor Antrian <span class="text-danger"><?= $num; ?></span>
+                        <?php
+                        } else {
+                        ?>
+                            <span class="text-muted">Nomor Antrian Belum Tersedia.</span>
+                        <?php
+                        }
+                        ?>
                     </p>
                     <hr class="border-5">
                     <table class="table">
@@ -64,6 +79,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                             $view = mysqli_query($conn, "SELECT * FROM pembelian_product JOIN pelanggan ON pembelian_product.code_pelanggan = pelanggan.code_pelanggan WHERE pembelian_product.code_pelanggan = '$code' AND pembelian_product.action = 'Approved'");
                             while ($row = mysqli_fetch_assoc($view)) {
                                 $subtotal += $row['subtotal'];
+                                $name = $row['nama'];
                             ?>
                                 <tr>
                                     <td><?= $no++; ?></td>
@@ -82,18 +98,35 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                             </tr>
                         </tfoot>
                     </table>
+                    <?php
+                    if ($gl == $tanggal) {
+                        echo "<div class='d-flex justify-content-center align-items-center'>
+                        <img src='./users/vendor/qrcode/$qr'>
+                        </div>";
+                    } else {
+                    ?>
+                        <div class="d-flex justify-content-center align-items-center text-muted">
+                            QRCode Belum Tersedia.
+                        </div>
+                    <?php
+                    }
+                    ?>
                     <div class="d-flex justify-content-center align-items-center">
-                        <img src="./users/vendor/qrcode/<?= $row_view['qrcode']; ?>">
+                        <span class="fw-bold"><?= $name; ?></span>
                     </div>
                 </div>
             </div>
         </div>
         <?php
-
-        mysqli_query($conn, "SELECT * FROM nota_antrian WHERE code_pelanggan = ''");
-        if ($row_view['nomor_antrian'] > 1) {
+        $code_ = $_GET['page'];
+        $code = substr($code_, 0, 8);
+        $view_nota = mysqli_query($conn, "SELECT * FROM nota_antrian WHERE code_pelanggan = '$code'");
+        $sum_nota = mysqli_num_rows($view_nota);
+        if ($sum_nota > 0) {
+            $row_nota = mysqli_fetch_assoc($view_nota);
         ?>
-            <div class="d-flex justify-content-center mt-2">
+            <div class="d-flex justify-content-center align-items-center mt-2">
+                <div id="tanggal" hidden><?= $row_nota['nomor_antrian']; ?></div>
                 <button type="button" class="btn btn-success shadow-none" onclick="generatePDF()">Download</button>
             </div>
         <?php
@@ -106,6 +139,7 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
         <?php
         }
         ?>
+
     </div>
 
     <!-- Jquery -->
@@ -119,11 +153,12 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
         function generatePDF() {
             // Choose the element id which you want to export.
             var element = document.getElementById('printOut');
+            var tanggal = document.getElementById('tanggal').innerHTML;
             element.style.width = 'auto';
             element.style.height = 'auto';
             var opt = {
                 margin: 0.3,
-                filename: 'my-nota.pdf',
+                filename: tanggal + '.pdf',
                 image: {
                     type: 'png',
                     quality: 5

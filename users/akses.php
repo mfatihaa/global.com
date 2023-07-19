@@ -18,16 +18,16 @@ if (isset($_POST['process'])) {
     $code = $_POST['code'];
     $tgl = date($_POST['tgl']);
 
-    $view_regis = mysqli_query($conn, "SELECT tanggal,max(nomor_antrian) AS antrian FROM nota_antrian WHERE code_pelanggan = '$code' AND tanggal = '$tgl' LIMIT 1");
+    $view_regis = mysqli_query($conn, "SELECT max(nomor_antrian) AS antrian, tanggal FROM nota_antrian WHERE tanggal = '$tgl' LIMIT 1");
     if (mysqli_num_rows($view_regis) > 0) {
 
         $row = mysqli_fetch_assoc($view_regis);
         $antrian = $row['antrian'];
 
-        $code_urutan = (int) substr($antrian, 3, 5);
+        $code_urutan = (int) substr($antrian, 14, 5);
         $code_urutan++;
 
-        $code_huruf = "TA-";
+        $code_huruf = "TA-" . $tgl . "-";
         $nomor_antrian = $code_huruf . sprintf(
             "%05s",
             $code_urutan
@@ -35,7 +35,7 @@ if (isset($_POST['process'])) {
 
         // Generate QRCode
         $tempDir = "./vendor/qrcode/";
-        $codeContents = rand() . ".png";
+        $codeContents = rand(100, 99999) . ".png";
         $fileName = $codeContents;
         $pngAbsoluteFilePath = $tempDir . $fileName;
         $urlRelativeFilePath = $tempDir . $fileName;
@@ -49,10 +49,10 @@ if (isset($_POST['process'])) {
         $row = mysqli_fetch_assoc($view_regis);
         $antrian = $row['nomor_antrian'];
 
-        $code_urutan = (int) substr($antrian, 3, 5);
+        $code_urutan = (int) substr($antrian, 14, 5);
         $code_urutan++;
 
-        $code_huruf = "TA-";
+        $code_huruf = "TA-" . $tgl . "-";
         $nomor_antrian = $code_huruf . sprintf(
             "%05s",
             $code_urutan
@@ -60,7 +60,7 @@ if (isset($_POST['process'])) {
 
         // Generate QRCode
         $tempDir = "./vendor/qrcode/";
-        $codeContents = rand() . ".png";
+        $codeContents = rand(100, 99999) . ".png";
         $fileName = $codeContents;
         $pngAbsoluteFilePath = $tempDir . $fileName;
         $urlRelativeFilePath = $tempDir . $fileName;
@@ -124,10 +124,11 @@ if (isset($_POST['update'])) {
         $format = array('jpg', 'jpeg', 'png', 'svg');
 
         if (!in_array($path, $format)) {
-            echo "<script>
-alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');
-document.location.href = './setting.php'
-</script>";
+            echo
+            "<script>
+            alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');
+            document.location.href = './setting.php'
+            </script>";
             exit;
         }
 
@@ -144,32 +145,36 @@ document.location.href = './setting.php'
         if (move_uploaded_file($image['tmp_name'], $folder)) {
 
             $update = mysqli_query($conn, "UPDATE user SET username = '$username_update', nama = '$nama_update', email =
-'$email_update', telepon = '$telepon_update', image = '$img' WHERE id_user = '{$data_user['id_user']}' ");
+            '$email_update', telepon = '$telepon_update', image = '$img' WHERE id_user = '{$data_user['id_user']}' ");
             if ($update) {
-                echo "<script>
-alert('Data Berhasil Diubah Dengan Gambar');
-document.location.href = './setting.php'
-</script>";
+                echo
+                "<script>
+                alert('Data Berhasil Diubah Dengan Gambar');
+                document.location.href = './setting.php'
+                </script>";
             } else {
-                echo "<script>
-alert('Data Tidak Berhasil Diubah!');
-document.location.href = './setting.php'
-</script>";
+                echo
+                "<script>
+                alert('Data Tidak Berhasil Diubah!');
+                document.location.href = './setting.php'
+                </script>";
             }
         }
     } else {
         $update = mysqli_query($conn, "UPDATE user SET username = '$username_update', nama = '$nama_update', email =
-'$email_update', telepon = '$telepon_update' WHERE id_user = '{$data_user['id_user']}' ");
+        '$email_update', telepon = '$telepon_update' WHERE id_user = '{$data_user['id_user']}' ");
         if ($update) {
-            echo "<script>
-alert('Data Berhasil Diubah Tanpa Gambar');
-document.location.href = './setting.php'
-</script>";
+            echo
+            "<script>
+            alert('Data Berhasil Diubah Tanpa Gambar');
+            document.location.href = './setting.php'
+            </script>";
         } else {
-            echo "<script>
-alert('Data Tidak Berhasil Diubah!');
-document.location.href = './setting.php'
-</script>";
+            echo
+            "<script>
+            alert('Data Tidak Berhasil Diubah!');
+            document.location.href = './setting.php'
+            </script>";
         }
     }
 }
@@ -194,15 +199,17 @@ if (isset($_POST['delete_product'])) {
         $id_product = $row_delete_product['id_product'];
         $delete_product = mysqli_query($conn, "DELETE FROM product WHERE id_product = '$id_product'");
         if ($delete_product) {
-            echo "<script>
-alert('Berhasil Dihapus!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Berhasil Dihapus!');
+            document.location.href = './service_produk'
+            </script>";
         } else {
-            echo "<script>
-alert('Tidak Berhasil Dihapus!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Tidak Berhasil Dihapus!');
+            document.location.href = './service_produk'
+            </script>";
         }
     }
 }
@@ -226,15 +233,17 @@ if (isset($_POST['delete_service'])) {
         $id_service = $row_delete_service['id_product'];
         $delete_service = mysqli_query($conn, "DELETE FROM product WHERE id_product = '$id_service'");
         if ($delete_service) {
-            echo "<script>
-alert('Berhasil Dihapus!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Berhasil Dihapus!');
+            document.location.href = './service_produk'
+            </script>";
         } else {
-            echo "<script>
-alert('Tidak Berhasil Dihapus!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Tidak Berhasil Dihapus!');
+            document.location.href = './service_produk'
+            </script>";
         }
     }
 }
@@ -265,10 +274,11 @@ if (isset($_POST['edit_product'])) {
         $format = array('jpg', 'jpeg', 'png', 'svg');
 
         if (!in_array($path, $format)) {
-            echo "<script>
-alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Hanya Format JPG, JPEG, PNG & SVG Yang Diperbolehkan!');
+            document.location.href = './service_produk'
+            </script>";
             exit;
         }
 
@@ -285,35 +295,39 @@ document.location.href = './service_produk'
         if (move_uploaded_file($image['tmp_name'], $folder)) {
             $date = date('Y-m-d h:i:s');
             $update_product_list = mysqli_query($conn, "UPDATE product SET nama_product = '$nm_product', jumlah_product =
-'$jml_product', harga_product = '$hrg_product', desk_product = '$desk_product', image_product = '$img', tanggal_upload =
-'$date' WHERE id_product = '{$data_edit_product['id_product']}' ");
+            '$jml_product', harga_product = '$hrg_product', desk_product = '$desk_product', image_product = '$img', tanggal_upload =
+            '$date' WHERE id_product = '{$data_edit_product['id_product']}' ");
             if ($update_product_list) {
-                echo "<script>
-alert('Data Berhasil Diubah Dengan Gambar');
-document.location.href = './service_produk'
-</script>";
+                echo
+                "<script>
+                alert('Data Berhasil Diubah Dengan Gambar');
+                document.location.href = './service_produk'
+                </script>";
             } else {
-                echo "<script>
-alert('Data Tidak Berhasil Diubah!');
-document.location.href = './service_produk'
-</script>";
+                echo
+                "<script>
+                alert('Data Tidak Berhasil Diubah!');
+                document.location.href = './service_produk'
+                </script>";
             }
         }
     } else {
         $date = date('Y-m-d h:i:s');
         $update_product_list = mysqli_query($conn, "UPDATE product SET nama_product = '$nm_product', jumlah_product =
-'$jml_product', harga_product = '$hrg_product', desk_product = '$desk_product', tanggal_upload = '$date' WHERE
-id_product = '{$data_edit_product['id_product']}' ");
+        '$jml_product', harga_product = '$hrg_product', desk_product = '$desk_product', tanggal_upload = '$date' WHERE
+        id_product = '{$data_edit_product['id_product']}' ");
         if ($update_product_list) {
-            echo "<script>
-alert('Data Berhasil Diubah Tanpa Gambar');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Data Berhasil Diubah Tanpa Gambar');
+            document.location.href = './service_produk'
+            </script>";
         } else {
-            echo "<script>
-alert('Data Tidak Berhasil Diubah!');
-document.location.href = './service_produk'
-</script>";
+            echo
+            "<script>
+            alert('Data Tidak Berhasil Diubah!');
+            document.location.href = './service_produk'
+            </script>";
         }
     }
 }
@@ -492,7 +506,7 @@ document.location.href = './service_produk'
             exit;
         }
 
-        $img = rand() . "-" . $path;
+        $img = "Product" . "-" . rand() . "-" . $path;
         $folder = "./vendor/img/product_service/" . $img;
         $date = date('Y-m-d h:i:s');
         $status = "Ready";
@@ -581,7 +595,7 @@ document.location.href = './service_produk'
             exit;
         }
 
-        $img = rand() . "-" . $path;
+        $img = "Service" . "-" . rand() . "-" . $path;
         $folder = "./vendor/img/product_service/" . $img;
 
         // Memindahkan Image Baru Ke Dalam Folder Yang Telah Disediakan

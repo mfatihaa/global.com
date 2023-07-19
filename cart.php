@@ -116,8 +116,8 @@ if (empty($_SESSION['id_pelanggan']) && empty($_SESSION['username'])) {
                     <input type="text" class="form-control shadow-none"
                         value="<?= $_SESSION['pelanggan']['telepon']; ?>" disabled>
                 </div>
-                <div class="col-md-12 mt-3">
-                    <label class="form-label">Pilih Tanggal Kehadiran</label>
+                <div class="col-md-4 mt-3">
+                    <label class="form-label">Pilih Tanggal Kehadiran :</label>
                     <input type="date" class="form-control shadow-none mt-2" name="date" required>
                 </div>
             </div>
